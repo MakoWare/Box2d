@@ -48,16 +48,6 @@ var currentTest = null;
 
 class HTML5CanvasTestBed {
   constructor() {
-    window.requestAnimFrame = (function(){
-      return  window.requestAnimationFrame       ||
-              window.webkitRequestAnimationFrame ||
-              window.mozRequestAnimationFrame    ||
-              window.oRequestAnimationFrame      ||
-              window.msRequestAnimationFrame     ||
-              function( callback ){
-                window.setTimeout(callback, 1000 / 60);
-              };
-    })();
   }
 
   static myRound(val,places) {
@@ -263,27 +253,27 @@ class HTML5CanvasTestBed {
     canvasOffset.y = canvas.height/2;
 
     canvas.addEventListener('mousemove', function(evt) {
-      this.onMouseMove(canvas,evt);
+      HTML5CanvasTestBed.onMouseMove(canvas,evt);
     }, false);
 
     canvas.addEventListener('mousedown', function(evt) {
-      this.onMouseDown(canvas,evt);
+      HTML5CanvasTestBed.onMouseDown(canvas,evt);
     }, false);
 
     canvas.addEventListener('mouseup', function(evt) {
-      this.onMouseUp(canvas,evt);
+      HTML5CanvasTestBed.onMouseUp(canvas,evt);
     }, false);
 
     canvas.addEventListener('mouseout', function(evt) {
-      this.onMouseOut(canvas,evt);
+      HTML5CanvasTestBed.onMouseOut(canvas,evt);
     }, false);
 
     canvas.addEventListener('keydown', function(evt) {
-      this.onKeyDown(canvas,evt);
+      HTML5CanvasTestBed.onKeyDown(canvas,evt);
     }, false);
 
     canvas.addEventListener('keyup', function(evt) {
-      this.onKeyUp(canvas,evt);
+      HTML5CanvasTestBed.onKeyUp(canvas,evt);
     }, false);
 
     myDebugDraw = DebugDraw.getCanvasDebugDraw();
@@ -402,8 +392,8 @@ class HTML5CanvasTestBed {
 
   static animate() {
     if ( run )
-      this.requestAnimFrame( animate );
-    this.step();
+      window.requestAnimFrame( HTML5CanvasTestBed.animate );
+    HTML5CanvasTestBed.step();
   }
 
   static pause() {
@@ -415,5 +405,15 @@ class HTML5CanvasTestBed {
 
 }
 
+window.requestAnimFrame = (function(){
+  return  window.requestAnimationFrame       ||
+          window.webkitRequestAnimationFrame ||
+          window.mozRequestAnimationFrame    ||
+          window.oRequestAnimationFrame      ||
+          window.msRequestAnimationFrame     ||
+          function( callback ){
+            window.setTimeout(callback, 1000 / 60);
+          };
+})();
 
 export default HTML5CanvasTestBed;

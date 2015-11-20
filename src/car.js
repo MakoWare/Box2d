@@ -232,7 +232,7 @@ embox2dTest_car.prototype.step = function() {
     var pos = this.carBody.GetPosition();
     var vel = this.carBody.GetLinearVelocity();
     var futurePos = new b2Vec2( pos.get_x() + 0.15 * vel.get_x(), pos.get_y() + 0.15 * vel.get_y() );
-    setViewCenterWorld( futurePos );
+    testbed.setViewCenterWorld( futurePos );
 }
 
 embox2dTest_car.prototype.onKeyDown = function(canvas, evt) {
