@@ -1,6 +1,6 @@
 import worldConfig from 'src/components/world/worldConfig';
 import canvas from 'src/components/canvas/canvas';
-
+import Orientation from 'src/components/input/orientation';
 
 class InputController {
   constructor(config) {

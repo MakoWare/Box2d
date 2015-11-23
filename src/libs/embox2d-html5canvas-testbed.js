@@ -41,15 +41,28 @@ var canvasOffset = {
   y: 0
 };
 var viewCenterPixel = {
-  x:320,
-  y:240
+  x: canvas.width / 2,
+  y: canvas.height / 2
 };
 var currentTest = null;
 
+//Put In constructor later
+function updateEnvironmentVariables(){
+  console.log("halp");
+  viewCenterPixel = {
+    x: canvas.width / 2,
+    y: canvas.height / 2
+  };
+
+}
+window.addEventListener('resize', updateEnvironmentVariables, false);
+
+//^^^^^
+
 class HTML5CanvasTestBed {
   constructor() {
-  }
 
+  }
   static myRound(val,places) {
     var c = 1;
     for (var i = 0; i < places; i++)
