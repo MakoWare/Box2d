@@ -317,7 +317,7 @@ class HTML5CanvasTestBed {
     if ( World.world != null )
       Box2D.destroy(World.world);
     // world = new Box2D.b2World( new Box2D.b2Vec2(0.0, -10.0) );
-    World.createWorld(new Box2D.b2Vec2(0.0, -10.0));
+    World.createWorld(new Box2D.b2Vec2(0.0, -40.0));
     World.world.SetDebugDraw(myDebugDraw);
     mouseJointGroundBody = World.world.CreateBody( new Box2D.b2BodyDef() );
     var e = document.getElementById("testSelection");
