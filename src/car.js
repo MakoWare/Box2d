@@ -225,7 +225,7 @@ embox2dTest_car.prototype.setup = function() {
 embox2dTest_car.prototype.updateMotorSpeed = function() {
   //console.log(Orientation);
   this.rearWheelJoint.SetMotorSpeed(-Orientation.x);
-  /* if ( (this.moveFlags & MOVE_LEFT) == MOVE_LEFT )
+  /* If ( (this.moveFlags & MOVE_LEFT) == MOVE_LEFT )
      this.rearWheelJoint.SetMotorSpeed(50);
      else if ( (this.moveFlags & MOVE_RIGHT) == MOVE_RIGHT )
      this.rearWheelJoint.SetMotorSpeed(-50);

@@ -1,6 +1,6 @@
 import canvas from 'src/components/canvas/canvas';
 import DebugDraw from 'src/libs/embox2d-html5canvas-debugDraw';
-import embox2dTest_car from 'src/car';
+import gravityTest from 'src/gravityTest';
 import World from 'src/components/world/world';
 
 var e_shapeBit = 0x0001;
@@ -323,8 +323,7 @@ class HTML5CanvasTestBed {
     var e = document.getElementById("testSelection");
     // var v = "embox2dTest_car";
     // eval( "currentTest = new "+v+"();" );
-    currentTest = new embox2dTest_car();
-    currentTest.setup();
+    currentTest = new gravityTest();
   }
 
   static resetScene() {
