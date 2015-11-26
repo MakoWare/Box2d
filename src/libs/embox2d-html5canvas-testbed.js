@@ -50,19 +50,21 @@ class HTML5CanvasTestBed {
   constructor() {
   }
 
-  static myRound(val,places) {
-    var c = 1;
-    for (var i = 0; i < places; i++)
-      c *= 10;
-    return Math.round(val*c)/c;
-  }
+  // moved to Util
+  // static myRound(val,places) {
+  //   var c = 1;
+  //   for (var i = 0; i < places; i++)
+  //     c *= 10;
+  //   return Math.round(val*c)/c;
+  // }
 
-  static getWorldPointFromPixelPoint(pixelPoint) {
-    return {
-      x: (pixelPoint.x - canvasOffset.x)/PTM,
-      y: (pixelPoint.y - (canvas.height - canvasOffset.y))/PTM
-    };
-  }
+  // moved to World
+  // static getWorldPointFromPixelPoint(pixelPoint) {
+  //   return {
+  //     x: (pixelPoint.x - canvasOffset.x)/PTM,
+  //     y: (pixelPoint.y - (canvas.height - canvasOffset.y))/PTM
+  //   };
+  // }
 
   static updateMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
@@ -73,14 +75,15 @@ class HTML5CanvasTestBed {
     mousePosWorld = this.getWorldPointFromPixelPoint(mousePosPixel);
   }
 
-  static setViewCenterWorld(b2vecpos, instantaneous) {
-    var currentViewCenterWorld = this.getWorldPointFromPixelPoint( viewCenterPixel );
-    var toMoveX = b2vecpos.get_x() - currentViewCenterWorld.x;
-    var toMoveY = b2vecpos.get_y() - currentViewCenterWorld.y;
-    var fraction = instantaneous ? 1 : 0.25;
-    canvasOffset.x -= this.myRound(fraction * toMoveX * PTM, 0);
-    canvasOffset.y += this.myRound(fraction * toMoveY * PTM, 0);
-  }
+  // moved to World
+  // static setViewCenterWorld(b2vecpos, instantaneous) {
+  //   var currentViewCenterWorld = this.getWorldPointFromPixelPoint( viewCenterPixel );
+  //   var toMoveX = b2vecpos.get_x() - currentViewCenterWorld.x;
+  //   var toMoveY = b2vecpos.get_y() - currentViewCenterWorld.y;
+  //   var fraction = instantaneous ? 1 : 0.25;
+  //   canvasOffset.x -= this.myRound(fraction * toMoveX * PTM, 0);
+  //   canvasOffset.y += this.myRound(fraction * toMoveY * PTM, 0);
+  // }
 
   static onMouseMove(canvas, evt) {
     prevMousePosPixel = mousePosPixel;
@@ -279,6 +282,9 @@ class HTML5CanvasTestBed {
     myDebugDraw = DebugDraw.getCanvasDebugDraw();
     myDebugDraw.SetFlags(e_shapeBit);
 
+    ////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
+    // TODO:
     myQueryCallback = new Box2D.JSQueryCallback();
 
     myQueryCallback.ReportFixture = function(fixturePtr) {
@@ -290,6 +296,8 @@ class HTML5CanvasTestBed {
       this.m_fixture = fixture;
       return false;
     };
+    ////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
   }
 
   static changeTest() {
@@ -319,6 +327,7 @@ class HTML5CanvasTestBed {
     this.draw();
   }
 
+  // moved to BaseApp
   static step(timestamp) {
 
     if ( currentTest && currentTest.step )
@@ -343,36 +352,37 @@ class HTML5CanvasTestBed {
     }
   }
 
-  static draw() {
-
-    //black background
-    context.fillStyle = 'rgb(0,0,0)';
-    context.fillRect( 0, 0, canvas.width, canvas.height );
-
-    context.save();
-    context.translate(canvasOffset.x, canvasOffset.y);
-    context.scale(1,-1);
-    context.scale(PTM,PTM);
-    context.lineWidth /= PTM;
-
-    DebugDraw.drawAxes(context);
-
-    context.fillStyle = 'rgb(255,255,0)';
-    World.world.DrawDebugData();
-
-    if ( mouseJoint != null ) {
-      //mouse joint is not drawn with regular joints in debug draw
-      var p1 = mouseJoint.GetAnchorB();
-      var p2 = mouseJoint.GetTarget();
-      context.strokeStyle = 'rgb(204,204,204)';
-      context.beginPath();
-      context.moveTo(p1.get_x(),p1.get_y());
-      context.lineTo(p2.get_x(),p2.get_y());
-      context.stroke();
-    }
-
-    context.restore();
-  }
+  // moved to BaseApp
+  // static draw() {
+  //
+  //   //black background
+  //   context.fillStyle = 'rgb(0,0,0)';
+  //   context.fillRect( 0, 0, canvas.width, canvas.height );
+  //
+  //   context.save();
+  //   context.translate(canvasOffset.x, canvasOffset.y);
+  //   context.scale(1,-1);
+  //   context.scale(PTM,PTM);
+  //   context.lineWidth /= PTM;
+  //
+  //   DebugDraw.drawAxes(context);
+  //
+  //   context.fillStyle = 'rgb(255,255,0)';
+  //   World.world.DrawDebugData();
+  //
+  //   if ( mouseJoint != null ) {
+  //     //mouse joint is not drawn with regular joints in debug draw
+  //     var p1 = mouseJoint.GetAnchorB();
+  //     var p2 = mouseJoint.GetTarget();
+  //     context.strokeStyle = 'rgb(204,204,204)';
+  //     context.beginPath();
+  //     context.moveTo(p1.get_x(),p1.get_y());
+  //     context.lineTo(p2.get_x(),p2.get_y());
+  //     context.stroke();
+  //   }
+  //
+  //   context.restore();
+  // }
 
   static updateStats() {
     if ( ! showStats )

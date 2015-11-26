@@ -1,14 +1,29 @@
 import Box2D from 'src/components/box2d/box2d';
-import canvas from 'src/components/canvas/canvas';
+// import canvas from 'src/components/canvas/canvas';
 
-var context = canvas.getContext('2d');
+
 
 class DebugDraw {
-  constructor() {
 
+
+
+  constructor(canvas) {
+    this.canvas = canvas;
+    this.context = canvas.getContext('2d');
+    this.debugDraw = this.getCanvasDebugDraw();
+
+    _using(this,this.debugDraw);
   }
 
-  static drawAxes(ctx) {
+  initBits(){
+    this.e_shapeBit = 0x0001;
+    this.e_jointBit = 0x0002;
+    this.e_aabbBit = 0x0004;
+    this.e_pairBit = 0x0008;
+    this.e_centerOfMassBit = 0x0010;
+  }
+
+  drawAxes(ctx) {
       ctx.strokeStyle = 'rgb(192,0,0)';
       ctx.beginPath();
       ctx.moveTo(0, 0);
@@ -21,110 +36,116 @@ class DebugDraw {
       ctx.stroke();
   }
 
-  static setColorFromDebugDrawCallback(color) {
+  setColorFromDebugDrawCallback(color) {
       var col = Box2D.wrapPointer(color, Box2D.b2Color);
       var red = (col.get_r() * 255)|0;
       var green = (col.get_g() * 255)|0;
       var blue = (col.get_b() * 255)|0;
       var colStr = red+","+green+","+blue;
-      context.fillStyle = "rgba("+colStr+",0.5)";
-      context.strokeStyle = "rgb("+colStr+")";
+      this.context.fillStyle = "rgba("+colStr+",0.5)";
+      this.context.strokeStyle = "rgb("+colStr+")";
   }
 
-  static drawSegment(vert1, vert2) {
+  drawSegment(vert1, vert2) {
       var vert1V = Box2D.wrapPointer(vert1, Box2D.b2Vec2);
       var vert2V = Box2D.wrapPointer(vert2, Box2D.b2Vec2);
-      context.beginPath();
-      context.moveTo(vert1V.get_x(),vert1V.get_y());
-      context.lineTo(vert2V.get_x(),vert2V.get_y());
-      context.stroke();
+      this.context.beginPath();
+      this.context.moveTo(vert1V.get_x(),vert1V.get_y());
+      this.context.lineTo(vert2V.get_x(),vert2V.get_y());
+      this.context.stroke();
   }
 
-  static drawPolygon(vertices, vertexCount, fill) {
-      context.beginPath();
+  drawPolygon(vertices, vertexCount, fill) {
+      this.context.beginPath();
       for(var tmpI=0;tmpI<vertexCount;tmpI++) {
           var vert = Box2D.wrapPointer(vertices+(tmpI*8), Box2D.b2Vec2);
           if ( tmpI == 0 )
-              context.moveTo(vert.get_x(),vert.get_y());
+              this.context.moveTo(vert.get_x(),vert.get_y());
           else
-              context.lineTo(vert.get_x(),vert.get_y());
+              this.context.lineTo(vert.get_x(),vert.get_y());
       }
-      context.closePath();
+      this.context.closePath();
       if (fill)
-          context.fill();
-      context.stroke();
+          this.context.fill();
+      this.context.stroke();
   }
 
-  static drawCircle(center, radius, axis, fill) {
+  drawCircle(center, radius, axis, fill) {
       var centerV = Box2D.wrapPointer(center, Box2D.b2Vec2);
       var axisV = Box2D.wrapPointer(axis, Box2D.b2Vec2);
 
-      context.beginPath();
-      context.arc(centerV.get_x(),centerV.get_y(), radius, 0, 2 * Math.PI, false);
+      this.context.beginPath();
+      this.context.arc(centerV.get_x(),centerV.get_y(), radius, 0, 2 * Math.PI, false);
       if (fill)
-          context.fill();
-      context.stroke();
+          this.context.fill();
+      this.context.stroke();
 
       if (fill) {
           //render axis marker
           var vert2V = copyVec2(centerV);
           vert2V.op_add( scaledVec2(axisV, radius) );
-          context.beginPath();
-          context.moveTo(centerV.get_x(),centerV.get_y());
-          context.lineTo(vert2V.get_x(),vert2V.get_y());
-          context.stroke();
+          this.context.beginPath();
+          this.context.moveTo(centerV.get_x(),centerV.get_y());
+          this.context.lineTo(vert2V.get_x(),vert2V.get_y());
+          this.context.stroke();
       }
   }
 
-  static drawTransform(transform) {
+  drawTransform(transform) {
       var trans = Box2D.wrapPointer(transform,Box2D.b2Transform);
       var pos = trans.get_p();
       var rot = trans.get_q();
 
-      context.save();
-      context.translate(pos.get_x(), pos.get_y());
-      context.scale(0.5,0.5);
-      context.rotate(rot.GetAngle());
-      context.lineWidth *= 2;
+      this.context.save();
+      this.context.translate(pos.get_x(), pos.get_y());
+      this.context.scale(0.5,0.5);
+      this.context.rotate(rot.GetAngle());
+      this.context.lineWidth *= 2;
       this.drawAxes(context);
-      context.restore();
+      this.context.restore();
   }
 
-  static getCanvasDebugDraw() {
+  getCanvasDebugDraw() {
       var debugDraw = new Box2D.JSDraw();
 
       debugDraw.DrawSegment = function(vert1, vert2, color) {
-          DebugDraw.setColorFromDebugDrawCallback(color);
-          DebugDraw.drawSegment(vert1, vert2);
-      };
+          this.setColorFromDebugDrawCallback(color);
+          this.drawSegment(vert1, vert2);
+      }.bind(this);
 
       debugDraw.DrawPolygon = function(vertices, vertexCount, color) {
-          DebugDraw.setColorFromDebugDrawCallback(color);
-          DebugDraw.drawPolygon(vertices, vertexCount, false);
-      };
+          this.setColorFromDebugDrawCallback(color);
+          this.drawPolygon(vertices, vertexCount, false);
+      }.bind(this);
 
       debugDraw.DrawSolidPolygon = function(vertices, vertexCount, color) {
-          DebugDraw.setColorFromDebugDrawCallback(color);
-          DebugDraw.drawPolygon(vertices, vertexCount, true);
-      };
+          this.setColorFromDebugDrawCallback(color);
+          this.drawPolygon(vertices, vertexCount, true);
+      }.bind(this);
 
       debugDraw.DrawCircle = function(center, radius, color) {
-          DebugDraw.setColorFromDebugDrawCallback(color);
+          this.setColorFromDebugDrawCallback(color);
           var dummyAxis = Box2D.b2Vec2(0,0);
-          DebugDraw.drawCircle(center, radius, dummyAxis, false);
-      };
+          this.drawCircle(center, radius, dummyAxis, false);
+      }.bind(this);
 
       debugDraw.DrawSolidCircle = function(center, radius, axis, color) {
-          DebugDraw.setColorFromDebugDrawCallback(color);
-          DebugDraw.drawCircle(center, radius, axis, true);
-      };
+          this.setColorFromDebugDrawCallback(color);
+          this.drawCircle(center, radius, axis, true);
+      }.bind(this);
 
       debugDraw.DrawTransform = function(transform) {
-          DebugDraw.drawTransform(transform);
-      };
+          this.drawTransform(transform);
+      }.bind(this);
 
       return debugDraw;
   }
+  // TODO: implement better bit flag management
+  // setShapeBit(bit){
+  //   if(bit){
+  //
+  //   }
+  // }
 
 }
 
