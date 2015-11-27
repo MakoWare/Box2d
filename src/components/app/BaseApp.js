@@ -42,6 +42,8 @@ class BaseApp {
 
     this.context.save();
 
+
+
     this.draw(this.context);
 
     // context.translate(canvasOffset.x, canvasOffset.y);

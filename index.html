@@ -4,26 +4,8 @@
 
     <script type="text/javascript" src="src/libs/box2d/2.3.1/box2d_2.3.1.min.js"></script>
     <script type="text/javascript" src="src/libs/embox2d-helpers.js"></script>
-    <!-- <script type="text/javascript" src="src/libs/embox2d-html5canvas-debugDraw.js"></script> -->
-    <!-- <script type="text/javascript" src="src/libs/embox2d-html5canvas-testbed.js"></script> -->
-
-    <!-- <script type="text/javascript" src="src/car.js"></script> -->
-
-    <!--
-         <script type="text/javascript" src="tests/template.js"></script>
-       -->
-    <script type="text/javascript">
-    //  var Box2D;
-    //  if (!Box2D) Box2D = (typeof Box2D !== 'undefined' ? Box2D : null) || Module;
-    //  window.onload = function() {
-    //   //  using(Box2D, "b2.+")
-    //     //  init();
-    //   //  changeTest();
-    //   //  animate();
-    //  };
-    </script>
   </head>
-  <body>
+  <body style="margin: 0px; overflow: hidden">
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
 
@@ -31,14 +13,6 @@
      System.import('src/main');
     </script>
 
-    <div style="text-align:center">
-      <!--
-           If you change the size of the canvas, you'll also need to change
-           the value of 'viewCenterPixel' in embox2d-html5canvas-testbed.js
-         -->
-      <div style="margin:auto;width:640px;padding:2px;border:1px solid #888;text-align:left">
-        <canvas id="canvas" width="640" height="480" tabindex='1'></canvas>
-      </div>
-    </div>
+    <canvas id="canvas" tabindex='1'></canvas>
   </body>
 </html>

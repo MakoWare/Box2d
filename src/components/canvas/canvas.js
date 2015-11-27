@@ -1,5 +1,3 @@
-
-
 class Canvas {
   constructor(id) {
     id = id || 'canvas';
@@ -9,10 +7,23 @@ class Canvas {
       x:0,
       y:0
     };
+
+    window.addEventListener('resize', this.resize.bind(this), false);
+    this.resize();
+    this.focus();
+  }
+
+  resize(){
+    this.el.width = window.innerWidth;
+    this.el.height = window.innerHeight;
   }
 
   focus(){
     this.el.focus();
+  }
+
+  getElement() {
+    return this.el;
   }
 
   getContext(dimension){
