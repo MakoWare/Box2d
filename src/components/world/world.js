@@ -34,7 +34,6 @@ class World {
   }
 
   setViewCenterWorld(b2vecpos, instantaneous) {
-    console.log("Set View");
     var currentViewCenterWorld = this.getWorldPointFromPixelPoint( viewCenterPixel );
     var toMoveX = b2vecpos.get_x() - currentViewCenterWorld.x;
     var toMoveY = b2vecpos.get_y() - currentViewCenterWorld.y;

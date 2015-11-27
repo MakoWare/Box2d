@@ -43,7 +43,6 @@ class BaseApp {
     this.context.save();
 
 
-
     this.draw(this.context);
 
     // context.translate(canvasOffset.x, canvasOffset.y);
@@ -93,11 +92,9 @@ class BaseApp {
     //   statusUpdateCounter = 0;
     // }
 
-    console.log('step');
   }
 
   _animate() {
-    console.log('animate');
     if ( this.run ){
       window._requestAnimFrame( this._animate );
     }

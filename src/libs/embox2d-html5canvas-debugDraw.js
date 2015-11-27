@@ -1,12 +1,6 @@
 import Box2D from 'src/components/box2d/box2d';
-// import canvas from 'src/components/canvas/canvas';
-
-
 
 class DebugDraw {
-
-
-
   constructor(canvas) {
     this.canvas = canvas;
     this.context = canvas.getContext('2d');
