@@ -6,7 +6,7 @@ class BaseApp {
   constructor() {
     this.canvas = new Canvas();
     this.context = this.canvas.getContext();
-    this.world = new World(null, this.canvas);
+    this.world = new World(new Box2D.b2Vec2(0.0, -10), this.canvas);
     this.run = true;
     this.lastTime = Date.now();
 
@@ -84,7 +84,7 @@ class BaseApp {
     // }
     //
     // var current = Date.now();
-    // World.world.Step(1/60, 3, 2);
+    this.world.Step(1/60, 3, 2);
     // var frametime = (Date.now() - current);
     // frameTime60 = frameTime60 * (59/60) + frametime * (1/60);
     //
