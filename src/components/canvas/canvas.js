@@ -8,8 +8,8 @@ class Canvas {
       y:0
     };
 
-    window.addEventListener('resize', this.resize.bind(this), false);
-    this.resize();
+    // window.addEventListener('resize', this.resize.bind(this), false);
+    // this.resize();
     this.focus();
   }
 
@@ -29,6 +29,14 @@ class Canvas {
   getContext(dimension){
     dimension = dimension || '2d';
     return this.el.getContext(dimension);
+  }
+
+  height(){
+    return this.el.height;
+  }
+
+  width(){
+    return this.el.width;
   }
 }
 

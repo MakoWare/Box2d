@@ -6,8 +6,9 @@ class BaseApp {
   constructor() {
     this.canvas = new Canvas();
     this.context = this.canvas.getContext();
-    this.world = new World();
+    this.world = new World(null, this.canvas);
     this.run = true;
+    this.lastTime = Date.now();
 
     window._requestAnimFrame = (function(){
       return  window.requestAnimationFrame       ||
@@ -34,7 +35,7 @@ class BaseApp {
     console.log('base app draw');
   }
 
-  _draw() {
+  _draw(timestamp) {
 
     //black background
     this.context.fillStyle = 'rgb(0,0,0)';
@@ -43,17 +44,19 @@ class BaseApp {
     this.context.save();
 
 
-    this.draw(this.context);
 
-    // context.translate(canvasOffset.x, canvasOffset.y);
-    // context.scale(1,-1);
-    // context.scale(PTM,PTM);
-    // context.lineWidth /= PTM;
+
+    this.context.translate(this.canvas.offset.x, this.canvas.offset.y);
+    this.context.scale(1,-1);
+    this.context.scale(this.world.getPTM(),this.world.getPTM());
+    this.context.lineWidth /= this.world.getPTM();
 
     // DebugDraw.drawAxes(context);
     //
     // context.fillStyle = 'rgb(255,255,0)';
     // World.world.DrawDebugData();
+
+    this.draw(this.context, timestamp);
 
     // if ( mouseJoint != null ) {
     //   //mouse joint is not drawn with regular joints in debug draw
@@ -70,7 +73,7 @@ class BaseApp {
   }
 
   _step(timestamp) {
-
+    // console.log(timestamp);
     // if ( currentTest && currentTest.step )
     //   currentTest.step();
     //
@@ -85,7 +88,7 @@ class BaseApp {
     // var frametime = (Date.now() - current);
     // frameTime60 = frameTime60 * (59/60) + frametime * (1/60);
     //
-    this._draw();
+    this._draw(timestamp);
     // statusUpdateCounter++;
     // if ( statusUpdateCounter > 20 ) {
     //   this.updateStats();
@@ -98,7 +101,12 @@ class BaseApp {
     if ( this.run ){
       window._requestAnimFrame( this._animate );
     }
-    this._step();
+    var dateNow = Date.now(),
+        diffTime = (dateNow - this.lastTime) / 1000;
+
+    this.lastTime = dateNow;
+
+    this._step(diffTime);
   }
 
   pause() {
