@@ -1,4 +1,5 @@
 import Util from 'src/components/util/util';
+import Box2D from 'src/components/box2d/box2d';
 
 var PTM = 32;
 
@@ -23,6 +24,19 @@ class Camera {
 
     this.updateEnvironmentVariables();
     window.addEventListener('resize', this.updateEnvironmentVariables.bind(this), false);
+  }
+
+  update(timestamp){
+    if(this.chaseEntity){
+      var pos = this.chaseEntity.GetPosition();
+      var vel = this.chaseEntity.GetLinearVelocity();
+      var futurePos = new Box2D.b2Vec2( pos.get_x() + 0.15 * vel.get_x(), pos.get_y() + 0.15 * vel.get_y() );
+      this.setViewCenterWorld( futurePos );
+    }
+  }
+
+  setChaseEntity(ent){
+    this.chaseEntity = ent;
   }
 
   getWorldPointFromPixelPoint(pixelPoint) {

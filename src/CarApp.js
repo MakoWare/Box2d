@@ -20,7 +20,10 @@ class CarApp extends BaseApp {
     this.camera.setViewCenterWorld(new Box2D.b2Vec2(0,0), true);
 
     this.createGround();
-    this.createCar();
+    this.createLoop();
+    var car = this.createCar();
+
+    this.camera.setChaseEntity(car);
 
     this.canvas.$el.on('keydown', this.onKeyDown.bind(this));
     this.canvas.$el.on('keyup', this.onKeyUp.bind(this));
@@ -95,6 +98,37 @@ class CarApp extends BaseApp {
     ground.CreateFixture(fd);
   }
 
+  createLoop(){
+
+    var verts = [];
+    verts.push([4.0,0.0,6.0,1.0]);
+    verts.push([6.0,1.0,7.0,2.0]);
+    verts.push([7.0,2.0,8.0,4.0]);
+    verts.push([8.0,4.0,8.0,5.0]);
+    verts.push([8.0,5.0,7.0,7.0]);
+    verts.push([7.0,7.0,6.0,8.0]);
+
+    var ground,
+        shape,
+        fd,
+        vert;
+
+    for(var i=0,l=verts.length; i<l; i++){
+      vert = verts[i];
+      ground = this.world.CreateBody( new Box2D.b2BodyDef() );
+      shape = new Box2D.b2EdgeShape();
+      fd = new Box2D.b2FixtureDef();
+      fd.set_shape(shape);
+      fd.set_density(0.0);
+      fd.set_friction(0.9);
+      //
+      shape.Set(new Box2D.b2Vec2(vert[0],vert[1]), new Box2D.b2Vec2(vert[2],vert[3]));
+      ground.CreateFixture(fd);
+    }
+
+
+  }
+
   createCar(){
       var carVerts = [];
       carVerts.push( new Box2D.b2Vec2(-1.5, -0.5) );
@@ -114,12 +148,12 @@ class CarApp extends BaseApp {
 
 
       var circleShape = new Box2D.b2CircleShape();
-      circleShape.set_m_radius(0.4);
+      circleShape.set_m_radius(0.5);
 
       var fd = new Box2D.b2FixtureDef();
       fd.set_shape(circleShape);
       fd.set_density(1.0);
-      fd.set_friction(0.9);
+      fd.set_friction(0.8);
 
       bd.set_position( new Box2D.b2Vec2(-1.0, 0.35) );
       var wheelBody1 = this.world.CreateBody(bd);
@@ -151,6 +185,8 @@ class CarApp extends BaseApp {
       jd.set_frequencyHz(m_hz);
       jd.set_dampingRatio(m_zeta);
       this.wheelJoint2 = Box2D.castObject( this.world.CreateJoint(jd), Box2D.b2WheelJoint );
+
+      return this.carBody;
   }
 }
 

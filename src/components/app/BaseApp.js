@@ -97,6 +97,7 @@ class BaseApp {
     // frameTime60 = frameTime60 * (59/60) + frametime * (1/60);
     //
     this._draw(this.context, timestamp);
+    this.camera.update(timestamp);
     // statusUpdateCounter++;
     // if ( statusUpdateCounter > 20 ) {
     //   this.updateStats();
