@@ -1,5 +1,6 @@
 import Canvas from 'src/components/canvas/canvas';
 import World from 'src/components/world/world';
+import Util from 'src/components/util/util';
 
 
 class BaseApp {
@@ -7,8 +8,9 @@ class BaseApp {
     this.canvas = new Canvas();
     this.context = this.canvas.getContext();
     this.world = new World(null, this.canvas);
-    this.run = true;
+    this.running = false;
     this.lastTime = Date.now();
+    this.config = Util.getConfig();
 
     window._requestAnimFrame = (function(){
       return  window.requestAnimationFrame       ||
@@ -35,41 +37,45 @@ class BaseApp {
     console.log('base app draw');
   }
 
-  _draw(timestamp) {
+  _draw(ctx, timestamp) {
 
     //black background
-    this.context.fillStyle = 'rgb(0,0,0)';
-    this.context.fillRect( 0, 0, this.canvas.el.width, this.canvas.el.height );
+    ctx.fillStyle = 'rgb(0,0,0)';
+    ctx.fillRect( 0, 0, this.canvas.el.width, this.canvas.el.height );
 
-    this.context.save();
-
-
+    ctx.save();
 
 
-    this.context.translate(this.canvas.offset.x, this.canvas.offset.y);
-    this.context.scale(1,-1);
-    this.context.scale(this.world.getPTM(),this.world.getPTM());
-    this.context.lineWidth /= this.world.getPTM();
+    // console.log(ctx);
 
-    // DebugDraw.drawAxes(context);
-    //
-    // context.fillStyle = 'rgb(255,255,0)';
-    // World.world.DrawDebugData();
+    ctx.translate(this.canvas.offset.x, this.canvas.offset.y);
+    ctx.scale(1,-1);
+    ctx.scale(this.world.getPTM(),this.world.getPTM());
+    ctx.lineWidth /= this.world.getPTM();
 
-    this.draw(this.context, timestamp);
+    if(this.config.world.drawAxes){
+      this.world.drawAxes(ctx);
+    }
+
+    if(this.debugDraw && this.config.world.drawDebug){
+      this.world.DrawDebugData();
+    }
+
+
+    this.draw(ctx, timestamp);
 
     // if ( mouseJoint != null ) {
     //   //mouse joint is not drawn with regular joints in debug draw
     //   var p1 = mouseJoint.GetAnchorB();
     //   var p2 = mouseJoint.GetTarget();
-    //   context.strokeStyle = 'rgb(204,204,204)';
-    //   context.beginPath();
-    //   context.moveTo(p1.get_x(),p1.get_y());
-    //   context.lineTo(p2.get_x(),p2.get_y());
-      // this.context.stroke();
+    //   ctx.strokeStyle = 'rgb(204,204,204)';
+    //   ctx.beginPath();
+    //   ctx.moveTo(p1.get_x(),p1.get_y());
+    //   ctx.lineTo(p2.get_x(),p2.get_y());
+      // ctx.stroke();
     // }
 
-    this.context.restore();
+    ctx.restore();
   }
 
   _step(timestamp) {
@@ -84,11 +90,11 @@ class BaseApp {
     // }
     //
     // var current = Date.now();
-    // World.world.Step(1/60, 3, 2);
+    this.world.Step(timestamp, 3, 2);
     // var frametime = (Date.now() - current);
     // frameTime60 = frameTime60 * (59/60) + frametime * (1/60);
     //
-    this._draw(timestamp);
+    this._draw(this.context, timestamp);
     // statusUpdateCounter++;
     // if ( statusUpdateCounter > 20 ) {
     //   this.updateStats();
@@ -98,22 +104,28 @@ class BaseApp {
   }
 
   _animate() {
-    if ( this.run ){
+    if ( this.running ){
       window._requestAnimFrame( this._animate );
+
+      var dateNow = Date.now(),
+          diffTime = (dateNow - this.lastTime) / 1000;
+
+      this.lastTime = dateNow;
+
+      this._step(diffTime);
     }
-    var dateNow = Date.now(),
-        diffTime = (dateNow - this.lastTime) / 1000;
-
-    this.lastTime = dateNow;
-
-    this._step(diffTime);
   }
 
   pause() {
-    this.run = !this.run;
-    if (this.run)
+    this.running = !this.running;
+    if (this.running)
       this._animate();
     // this.updateStats();
+  }
+
+  run(){
+    this.running = true;
+    this._animate();
   }
 }
 
