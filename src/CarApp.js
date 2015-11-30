@@ -17,7 +17,7 @@ class CarApp extends BaseApp {
 
 
 
-    this.world.setViewCenterWorld(new Box2D.b2Vec2(0,0), true);
+    this.camera.setViewCenterWorld(new Box2D.b2Vec2(0,0), true);
 
     this.createGround();
     this.createCar();

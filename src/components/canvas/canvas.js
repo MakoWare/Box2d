@@ -2,20 +2,7 @@ import Util from 'src/components/util/util';
 
 class Canvas {
   constructor(config) {
-    var id;
-
-
-
     this.setupFullscreen();
-
-
-    this.offset = {
-      x:0,
-      y:0
-    };
-
-
-
 
     this.focus();
   }

@@ -1,4 +1,5 @@
 import Canvas from 'src/components/canvas/canvas';
+import Camera from 'src/components/base/camera';
 import World from 'src/components/world/world';
 import Util from 'src/components/util/util';
 
@@ -7,7 +8,8 @@ class BaseApp {
   constructor() {
     this.canvas = new Canvas();
     this.context = this.canvas.getContext();
-    this.world = new World(null, this.canvas);
+    this.world = new World();
+    this.camera = new Camera(this.canvas);
     this.running = false;
     this.lastTime = Date.now();
     this.config = Util.getConfig();
@@ -48,10 +50,10 @@ class BaseApp {
 
     // console.log(ctx);
 
-    ctx.translate(this.canvas.offset.x, this.canvas.offset.y);
+    ctx.translate(this.camera.getOffsetX(), this.camera.getOffsetY());
     ctx.scale(1,-1);
-    ctx.scale(this.world.getPTM(),this.world.getPTM());
-    ctx.lineWidth /= this.world.getPTM();
+    ctx.scale(this.camera.getPTM(),this.camera.getPTM());
+    ctx.lineWidth /= this.camera.getPTM();
 
     if(this.config.world.drawAxes){
       this.world.drawAxes(ctx);
