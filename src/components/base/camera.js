@@ -17,10 +17,15 @@ var offset = {
   y:0
 };
 
+var futurePos = new Box2D.b2Vec2(0,0);
+
+
+
 class Camera {
 
   constructor(canvas) {
     this.canvas = canvas;
+
 
     this.updateEnvironmentVariables();
     window.addEventListener('resize', this.updateEnvironmentVariables.bind(this), false);
@@ -30,8 +35,13 @@ class Camera {
     if(this.chaseEntity){
       var pos = this.chaseEntity.GetPosition();
       var vel = this.chaseEntity.GetLinearVelocity();
-      var futurePos = new Box2D.b2Vec2( pos.get_x() + 0.15 * vel.get_x(), pos.get_y() + 0.15 * vel.get_y() );
+      futurePos.set_x( pos.get_x() + 0.15 * vel.get_x() );
+      futurePos.set_y( pos.get_y() + 0.15 * vel.get_y() );
       this.setViewCenterWorld( futurePos );
+    }
+
+    if(this.canvas.$fps.is(':visible')){
+      this.canvas.$fps.html(''+Math.ceil(1/timestamp)+' FPS');
     }
   }
 

@@ -10,7 +10,8 @@ import CarApp from 'src/CarApp';
 
 var config = {
   canvas: {
-    fullscreen: true
+    fullscreen: true,
+    fps: true
   },
   world: {
     gravity: {

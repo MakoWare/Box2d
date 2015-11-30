@@ -2,6 +2,7 @@
 var _config = {
   canvas: {
     fullscreen: false,
+    fps: false
   },
   world: {
     gravity: {

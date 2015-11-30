@@ -10,8 +10,11 @@ class Canvas {
   setupFullscreen(){
     var id = Util.readConfig('canvas','id', 'canvas');
     var fullscreen = Util.readConfig('canvas', 'fullscreen', false);
+    var fps = Util.readConfig('canvas', 'fps');
 
     var container = $('#container');
+    this.$fps = $('#fps');
+    fps ? this.$fps.show(): this.$fps.hide();
 
     if(fullscreen){
       // add correct divs
