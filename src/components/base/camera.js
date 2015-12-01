@@ -19,13 +19,21 @@ var offset = {
 
 var futurePos = new Box2D.b2Vec2(0,0);
 
+var average;
+var averageArray = [];
+var timeTotal = 0;
+var averageCount = 60;
 
+var _frames = 0;
 
 class Camera {
 
   constructor(canvas) {
     this.canvas = canvas;
+    this.config = Util.readConfig('canvas');
 
+    // this.fpsWorker = new Worker('src/components/base/fps.js');
+    // this.fpsWorker.onmessage = this.onFPS.bind(this);
 
     this.updateEnvironmentVariables();
     window.addEventListener('resize', this.updateEnvironmentVariables.bind(this), false);
@@ -33,16 +41,22 @@ class Camera {
 
   update(timestamp){
     if(this.chaseEntity){
-      var pos = this.chaseEntity.GetPosition();
-      var vel = this.chaseEntity.GetLinearVelocity();
-      futurePos.set_x( pos.get_x() + 0.15 * vel.get_x() );
-      futurePos.set_y( pos.get_y() + 0.15 * vel.get_y() );
+      futurePos = this.chaseEntity.GetPosition();
+      // var vel = this.chaseEntity.GetLinearVelocity();
+      // futurePos.set_x( pos.get_x() + 0.15 * vel.get_x() );
+      // futurePos.set_y( pos.get_y() + 0.15 * vel.get_y() );
       this.setViewCenterWorld( futurePos );
     }
 
-    if(this.canvas.$fps.is(':visible')){
-      this.canvas.$fps.html(''+Math.ceil(1/timestamp)+' FPS');
+    if(this.config.fps){
+      // this.fpsWorker.postMessage(timestamp);
+      this.calculateFPS(timestamp);
+      this.canvas.$fps.html(this.fps);
     }
+  }
+
+  onFPS(event){
+    this.canvas.$fps.html(Math.ceil(event.data));
   }
 
   setChaseEntity(ent){
@@ -99,6 +113,25 @@ class Camera {
       offset.x = obj;
       offset.y = y;
     }
+  }
+
+  calculateFPS(timestamp){
+    timeTotal += timestamp;
+    // averageArray.push(timestamp);
+    //
+    // if(averageArray.length>averageCount){
+    //   timeTotal -= averageArray.shift();
+    //   average = timeTotal / averageCount;
+    //   return 1 / average;
+    // }
+    // return 0;
+
+    if(timeTotal >= 1.0){
+      this.fps = _frames;
+      timeTotal = 0;
+      _frames = 0;
+    }
+    _frames++;
   }
 }
 

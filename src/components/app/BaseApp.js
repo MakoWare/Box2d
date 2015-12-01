@@ -20,6 +20,10 @@ class BaseApp {
               window.mozRequestAnimationFrame    ||
               window.oRequestAnimationFrame      ||
               window.msRequestAnimationFrame     ||
+              (function(){
+                console.log('falling back to basic requestAnimationFrame');
+                return false;
+              })()                               ||
               function( callback ){
                 window.setTimeout(callback, 1000 / 60);
               };

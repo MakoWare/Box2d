@@ -21,7 +21,10 @@ class CarApp extends BaseApp {
 
     this.createGround();
     this.createLoop();
-    var car = this.createCar();
+    var car = this.createCar({
+      x:-2,
+      y:4
+    },0.5);
 
     this.camera.setChaseEntity(car);
 
@@ -87,15 +90,24 @@ class CarApp extends BaseApp {
   }
 
   createGround(){
-    var ground = this.world.CreateBody( new Box2D.b2BodyDef() );
-    var shape = new Box2D.b2EdgeShape();
-    var fd = new Box2D.b2FixtureDef();
-    fd.set_shape(shape);
-    fd.set_density(0.0);
-    fd.set_friction(0.9);
-    //
-    shape.Set(new Box2D.b2Vec2(-550.0, 0.0), new Box2D.b2Vec2(550.0, 0.0));
-    ground.CreateFixture(fd);
+
+    var ground,
+        shape,
+        fd;
+
+    for(var i=-550.0; i<551.0; i++){
+      ground = this.world.CreateBody( new Box2D.b2BodyDef() );
+      shape = new Box2D.b2EdgeShape();
+      fd = new Box2D.b2FixtureDef();
+      fd.set_shape(shape);
+      fd.set_density(0.0);
+      fd.set_friction(0.9);
+
+      shape.Set(new Box2D.b2Vec2(i, 0.0), new Box2D.b2Vec2(i+1, 0.0));
+      ground.CreateFixture(fd);
+    }
+
+
   }
 
   createLoop(){
@@ -129,20 +141,22 @@ class CarApp extends BaseApp {
 
   }
 
-  createCar(){
+  createCar(carPos, carLength){
+      carPos = carPos || {x:0,y:0};
+      carLength = carLength || 0;
       var carVerts = [];
       carVerts.push( new Box2D.b2Vec2(-1.5, -0.5) );
-      carVerts.push( new Box2D.b2Vec2(1.5, -0.5) );
-      carVerts.push( new Box2D.b2Vec2(1.5, 0.0) );
-      carVerts.push( new Box2D.b2Vec2(0.0, 0.9) );
+      carVerts.push( new Box2D.b2Vec2(carLength+1.5, -0.5) );
+      carVerts.push( new Box2D.b2Vec2(carLength+1.5, 0.0) );
+      carVerts.push( new Box2D.b2Vec2(carLength+0.0, 0.9) );
       carVerts.push( new Box2D.b2Vec2(-1.15, 0.9) );
       carVerts.push( new Box2D.b2Vec2(-1.5, 0.2) );
       var chassisShape = new this.world.createPolygonShape(carVerts);
 
       var bd = new Box2D.b2BodyDef();
       // bd.set_type(b2_dynamicBody);
-      bd.set_type(Module.b2_dynamicBody);
-      bd.set_position( new Box2D.b2Vec2(0,1) );
+      bd.set_type(Box2D.b2_dynamicBody);
+      bd.set_position( new Box2D.b2Vec2(carPos.x,carPos.y+1) );
       this.carBody = this.world.CreateBody(bd);
       this.carBody.CreateFixture(chassisShape, 1);
 
@@ -155,11 +169,11 @@ class CarApp extends BaseApp {
       fd.set_density(1.0);
       fd.set_friction(0.8);
 
-      bd.set_position( new Box2D.b2Vec2(-1.0, 0.35) );
+      bd.set_position( new Box2D.b2Vec2(carPos.x-1.0, carPos.y+0.35) );
       var wheelBody1 = this.world.CreateBody(bd);
       wheelBody1.CreateFixture(fd);
 
-      bd.set_position( new Box2D.b2Vec2(1.0, 0.4) );
+      bd.set_position( new Box2D.b2Vec2(carPos.x+carLength+1.0, carPos.y+0.4) );
       var wheelBody2 = this.world.CreateBody(bd);
       wheelBody2.CreateFixture(fd);
 
