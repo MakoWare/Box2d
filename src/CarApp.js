@@ -21,7 +21,7 @@ class CarApp extends BaseApp {
 
 
     //Entities
-    this.manager = new EntityManager();
+    this.manager = new EntityManager(this.canvas.el);
 
     var ground = new Ground(this.world);
     this.manager.registerEntity(ground);
