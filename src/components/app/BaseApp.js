@@ -52,7 +52,6 @@ class BaseApp {
     ctx.save();
 
 
-    // console.log(ctx);
 
     this.camera.setTransform(ctx);
 
