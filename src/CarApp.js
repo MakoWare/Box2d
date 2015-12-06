@@ -1,6 +1,7 @@
 import BaseApp from 'src/components/app/BaseApp';
 import Box2D from 'src/components/box2d/box2d';
 import Util from 'src/components/util/util';
+import RubeLoader from 'src/components/rube/RubeLoader';
 import DebugDraw from 'src/components/box2d/debugDraw';
 
 class CarApp extends BaseApp {

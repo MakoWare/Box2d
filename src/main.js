@@ -5,6 +5,7 @@
 
 import Util from 'src/components/util/util';
 import CarApp from 'src/CarApp';
+import RubeApp from 'src/RubeApp';
 
 
 
@@ -28,6 +29,6 @@ Util.setConfig(config);
 
 
 
-var app = new CarApp();
+var app = new RubeApp();
 
 app.run();
