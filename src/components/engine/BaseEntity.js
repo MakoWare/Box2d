@@ -20,6 +20,19 @@ class BaseEntity {
   setState(){}
 
 
+  getPosition(){
+    return this.pos = this.body.GetPosition();
+  }
+
+  getAngle(){
+    return this.angle = this.body.GetAngle();
+  }
+
+  draw(ctx, delta){
+    ctx.save();
+
+    ctx.restore();
+  }
 }
 
 export default BaseEntity;

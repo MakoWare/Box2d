@@ -7,6 +7,7 @@ import AssetManager from 'src/components/base/assetManager';
 import EntityManager from 'src/components/engine/EntityManager.js';
 import Ball from 'src/ball.js';
 import Ground from 'src/ground.js';
+import CircleEntity from 'src/components/engine/CircleEntity';
 
 class CarApp extends BaseApp {
 
@@ -18,8 +19,6 @@ class CarApp extends BaseApp {
     this.debugDraw.SetFlags(DebugDraw.e_shapeBit);
     this.entities = [];
     this.reverse = false;
-
-    this.world.setViewCenterWorld(new Box2D.b2Vec2(0,0), true);
 
     this.camera.setViewCenterWorld(new Box2D.b2Vec2(0,0), true);
 
@@ -62,32 +61,35 @@ class CarApp extends BaseApp {
       this.camera.update(delta);
       this.drawDebug();
 
+      this.manager.step();
+      this.manager.draw(ctx, delta);
+
       {
         // entity draw wrapper for front wheel
         // var o = this.wheelBody2.GetFixture();
-        var bPos = this.wheelBody2.GetPosition();
-        var rad = this.wheelBody2.GetFixtureList().GetShape().get_m_radius();
-        var size = rad*2;
-
-        ctx.save();
-        // this.camera.setTransform(ctx);
-        ctx.translate(bPos.get_x(), bPos.get_y());
-        ctx.rotate(this.wheelBody2.GetAngle());
-        ctx.drawImage(this.wheelImage, -rad, -rad, size, size);
-        ctx.restore();
+        // var bPos = this.wheelBody2.GetPosition();
+        // var rad = this.wheelBody2.GetFixtureList().GetShape().get_m_radius();
+        // var size = rad*2;
+        //
+        // ctx.save();
+        // // this.camera.setTransform(ctx);
+        // ctx.translate(bPos.get_x(), bPos.get_y());
+        // ctx.rotate(this.wheelBody2.GetAngle());
+        // ctx.drawImage(this.wheelImage, -rad, -rad, size, size);
+        // ctx.restore();
       }
       {
         // entity draw wrapper for rear wheel
-        var bPos = this.wheelBody1.GetPosition();
-        var rad = this.wheelBody1.GetFixtureList().GetShape().get_m_radius();
-        var size = rad*2;
-
-        ctx.save();
-        // this.camera.setTransform(ctx);
-        ctx.translate(bPos.get_x(), bPos.get_y());
-        ctx.rotate(this.wheelBody1.GetAngle());
-        ctx.drawImage(this.wheelImage, -rad, -rad, size, size);
-        ctx.restore();
+        // var bPos = this.wheelBody1.GetPosition();
+        // var rad = this.wheelBody1.GetFixtureList().GetShape().get_m_radius();
+        // var size = rad*2;
+        //
+        // ctx.save();
+        // // this.camera.setTransform(ctx);
+        // ctx.translate(bPos.get_x(), bPos.get_y());
+        // ctx.rotate(this.wheelBody1.GetAngle());
+        // ctx.drawImage(this.wheelImage, -rad, -rad, size, size);
+        // ctx.restore();
       }
     }
 
@@ -105,7 +107,11 @@ class CarApp extends BaseApp {
 
   onAssetsLoaded(am){
     this.wheelImage = am.getImage('wheel');
-    console.log(this.wheelImage);
+
+    this.manager.registerEntity(new CircleEntity(this.wheelBody2, this.wheelImage));
+    this.manager.registerEntity(new CircleEntity(this.wheelBody1, 'wheel'));
+
+    // console.log(this.wheelImage);
   }
 
   moveRight(down){

@@ -6,11 +6,13 @@ class EntityManager {
     this.entityUID = 0;
     this.reverse = false;
 
-    canvas.addEventListener('keydown', function(evt) {
-      console.log(this.reverse);
-      evt.preventDefault();
-      this.reverse = !this.reverse;
-    }.bind(this), false);
+    // canvas.addEventListener('keydown', function(evt) {
+    //   if(evt.keyCode === 32){
+    //     evt.preventDefault();
+    //     this.reverse = !this.reverse;
+    //     console.log(this.reverse);
+    //   }
+    // }.bind(this), false);
   }
 
   step(){
@@ -24,6 +26,12 @@ class EntityManager {
         entity.popState();
       });
     }
+  }
+
+  draw(ctx,delta){
+    this.entities.forEach((entity)=> {
+      entity.draw(ctx, delta);
+    });
   }
 
   registerEntity(entity){
