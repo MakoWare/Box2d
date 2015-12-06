@@ -57,13 +57,24 @@ class CarApp extends BaseApp {
         var size = rad*2;
 
         ctx.save();
+        // this.camera.setTransform(ctx);
+        ctx.translate(bPos.get_x(), bPos.get_y());
         ctx.rotate(this.wheelBody2.GetAngle());
-        ctx.drawImage(this.wheelImage, bPos.get_x()-rad, bPos.get_y()-rad, size, size);
+        ctx.drawImage(this.wheelImage, -rad, -rad, size, size);
         ctx.restore();
       }
       {
         // entity draw wrapper for rear wheel
-        // ctx.drawImage(this.wheelImage, 0, 0, 3, 3);
+        var bPos = this.wheelBody1.GetPosition();
+        var rad = this.wheelBody1.GetFixtureList().GetShape().get_m_radius();
+        var size = rad*2;
+
+        ctx.save();
+        // this.camera.setTransform(ctx);
+        ctx.translate(bPos.get_x(), bPos.get_y());
+        ctx.rotate(this.wheelBody1.GetAngle());
+        ctx.drawImage(this.wheelImage, -rad, -rad, size, size);
+        ctx.restore();
       }
     }
 

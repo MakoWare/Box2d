@@ -133,6 +133,13 @@ class Camera {
     }
     _frames++;
   }
+
+  setTransform(ctx){
+    ctx.translate(this.getOffsetX(), this.getOffsetY());
+    ctx.scale(1,-1);
+    ctx.scale(this.getPTM(),this.getPTM());
+    ctx.lineWidth /= this.getPTM();
+  }
 }
 
 

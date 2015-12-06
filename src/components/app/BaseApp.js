@@ -54,10 +54,7 @@ class BaseApp {
 
     // console.log(ctx);
 
-    ctx.translate(this.camera.getOffsetX(), this.camera.getOffsetY());
-    ctx.scale(1,-1);
-    ctx.scale(this.camera.getPTM(),this.camera.getPTM());
-    ctx.lineWidth /= this.camera.getPTM();
+    this.camera.setTransform(ctx);
 
     this.draw(ctx, timestamp);
 
