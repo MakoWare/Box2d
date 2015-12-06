@@ -2,6 +2,7 @@ import BaseApp from 'src/components/app/BaseApp';
 import Box2D from 'src/components/box2d/box2d';
 import Util from 'src/components/util/util';
 import DebugDraw from 'src/components/box2d/debugDraw';
+import AssetManager from 'src/components/base/assetManager';
 
 class CarApp extends BaseApp {
 
@@ -30,10 +31,45 @@ class CarApp extends BaseApp {
 
     this.canvas.$el.on('keydown', this.onKeyDown.bind(this));
     this.canvas.$el.on('keyup', this.onKeyUp.bind(this));
+
+
+    // load some assets
+    AssetManager.loadResource('wheel', 'http://pngimg.com/upload/car_wheel_PNG1074.png');
+
+    AssetManager.setOnAssetsLoadedCallback(this.onAssetsLoaded.bind(this));
   }
 
-  draw(ctx){
+  draw(ctx, delta){
 
+
+    if(AssetManager.isLoading()){
+      AssetManager.step();
+    } else {
+      this.world.Step(delta, 3, 2);
+      this.camera.update(delta);
+      this.drawDebug();
+
+      {
+        // entity draw wrapper for front wheel
+        // var o = this.wheelBody2.GetFixture();
+        var bPos = this.wheelBody2.GetPosition();
+        var rad = this.wheelBody2.GetFixtureList().GetShape().get_m_radius();
+        var size = rad*2;
+
+        ctx.save();
+        ctx.rotate(this.wheelBody2.GetAngle());
+        ctx.drawImage(this.wheelImage, bPos.get_x()-rad, bPos.get_y()-rad, size, size);
+        ctx.restore();
+      }
+      {
+        // entity draw wrapper for rear wheel
+        // ctx.drawImage(this.wheelImage, 0, 0, 3, 3);
+      }
+    }
+
+
+
+    this.drawAxes(ctx);
 
 
     // ctx.fillStyle = "green";
@@ -41,6 +77,11 @@ class CarApp extends BaseApp {
     //
     // ctx.fillStyle = "blue";
     // ctx.fillRect(0, 0, 1, 1);
+  }
+
+  onAssetsLoaded(am){
+    this.wheelImage = am.getImage('wheel');
+    console.log(this.wheelImage);
   }
 
   moveRight(down){
@@ -170,11 +211,11 @@ class CarApp extends BaseApp {
       fd.set_friction(0.8);
 
       bd.set_position( new Box2D.b2Vec2(carPos.x-1.0, carPos.y+0.35) );
-      var wheelBody1 = this.world.CreateBody(bd);
+      var wheelBody1 = this.wheelBody1 = this.world.CreateBody(bd);
       wheelBody1.CreateFixture(fd);
 
       bd.set_position( new Box2D.b2Vec2(carPos.x+carLength+1.0, carPos.y+0.4) );
-      var wheelBody2 = this.world.CreateBody(bd);
+      var wheelBody2 = this.wheelBody2 = this.world.CreateBody(bd);
       wheelBody2.CreateFixture(fd);
 
       var m_hz = 4.0;

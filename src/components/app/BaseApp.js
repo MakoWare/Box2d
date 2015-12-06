@@ -59,15 +59,6 @@ class BaseApp {
     ctx.scale(this.camera.getPTM(),this.camera.getPTM());
     ctx.lineWidth /= this.camera.getPTM();
 
-    if(this.config.world.drawAxes){
-      this.world.drawAxes(ctx);
-    }
-
-    if(this.debugDraw && this.config.world.drawDebug){
-      this.world.DrawDebugData();
-    }
-
-
     this.draw(ctx, timestamp);
 
     // if ( mouseJoint != null ) {
@@ -84,6 +75,18 @@ class BaseApp {
     ctx.restore();
   }
 
+  drawDebug(override){
+    if(this.debugDraw && (this.config.world.drawDebug || override)){
+      this.world.DrawDebugData();
+    }
+  }
+
+  drawAxes(ctx, override){
+    if(ctx && (this.config.world.drawAxes || override)){
+      this.world.drawAxes(ctx);
+    }
+  }
+
   _step(timestamp) {
     // console.log(timestamp);
     // if ( currentTest && currentTest.step )
@@ -96,12 +99,11 @@ class BaseApp {
     // }
     //
     // var current = Date.now();
-    this.world.Step(timestamp, 3, 2);
+
     // var frametime = (Date.now() - current);
     // frameTime60 = frameTime60 * (59/60) + frametime * (1/60);
     //
     this._draw(this.context, timestamp);
-    this.camera.update(timestamp);
     // statusUpdateCounter++;
     // if ( statusUpdateCounter > 20 ) {
     //   this.updateStats();
