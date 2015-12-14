@@ -1,9 +1,9 @@
 import Util from 'src/components/util/util';
 
 class Canvas {
-  constructor(config) {
+  constructor() {
     this.setupFullscreen();
-
+    this.config = Util.readConfig('canvas');
     this.focus();
   }
 

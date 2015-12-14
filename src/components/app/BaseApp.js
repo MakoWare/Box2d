@@ -57,6 +57,9 @@ class BaseApp {
 
     this.draw(ctx, timestamp);
 
+    // this.drawAxes(ctx);
+    // this.drawGrid(ctx);
+
     // if ( mouseJoint != null ) {
     //   //mouse joint is not drawn with regular joints in debug draw
     //   var p1 = mouseJoint.GetAnchorB();
@@ -77,11 +80,17 @@ class BaseApp {
     }
   }
 
-  drawAxes(ctx, override){
-    if(ctx && (this.config.world.drawAxes || override)){
-      this.world.drawAxes(ctx);
-    }
-  }
+  // drawAxes(ctx, override){
+  //   if(ctx && (this.config.world.drawAxes || override)){
+  //     this.canvas.drawAxes(ctx);
+  //   }
+  // }
+  //
+  // drawGrid(ctx, override){
+  //   if(ctx && (this.config.world.drawGrid || override)){
+  //     this.world.drawGrid(ctx);
+  //   }
+  // }
 
   _step(timestamp) {
     // console.log(timestamp);

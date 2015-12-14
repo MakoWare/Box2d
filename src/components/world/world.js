@@ -17,19 +17,6 @@ class World {
     Util.using(this,this.world);
   }
 
-  drawAxes(ctx) {
-    ctx.strokeStyle = 'rgb(192,0,0)';
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(1, 0);
-    ctx.stroke();
-    ctx.strokeStyle = 'rgb(0,192,0)';
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(0, 1);
-    ctx.stroke();
-  }
-
   // http://stackoverflow.com/questions/12792486/emscripten-bindings-how-to-create-an-accessible-c-c-array-from-javascript
   createChainShape(vertices, closedLoop) {
       var shape = new Box2D.b2ChainShape();

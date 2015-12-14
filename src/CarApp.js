@@ -8,6 +8,8 @@ import EntityManager from 'src/components/engine/EntityManager.js';
 import Ball from 'src/ball.js';
 import Ground from 'src/ground.js';
 import CircleEntity from 'src/components/engine/CircleEntity';
+import PolygonEntity from 'src/components/engine/PolygonEntity';
+import CarEntity from 'src/CarEntity';
 
 class CarApp extends BaseApp {
 
@@ -24,12 +26,11 @@ class CarApp extends BaseApp {
 
     this.createGround();
     this.createLoop();
-    var car = this.createCar({
-      x:-2,
-      y:4
-    },0.5);
+    // var car = this.createCar({
+    //   x:-2,
+    //   y:4
+    // },0.5);
 
-    this.camera.setChaseEntity(car);
 
     this.canvas.$el.on('keydown', this.onKeyDown.bind(this));
     this.canvas.$el.on('keyup', this.onKeyUp.bind(this));
@@ -43,11 +44,11 @@ class CarApp extends BaseApp {
     //Entities
     this.manager = new EntityManager(this.canvas.el);
 
-    var ground = new Ground(this.world);
-    this.manager.registerEntity(ground);
+    // var ground = new Ground(this.world);
+    // this.manager.registerEntity(ground);
 
-    var ball = new Ball(this.world);
-    this.manager.registerEntity(ball);
+    // var ball = new Ball(this.world);
+    // this.manager.registerEntity(ball);
 
   }
 
@@ -63,39 +64,11 @@ class CarApp extends BaseApp {
 
       this.manager.step();
       this.manager.draw(ctx, delta);
-
-      {
-        // entity draw wrapper for front wheel
-        // var o = this.wheelBody2.GetFixture();
-        // var bPos = this.wheelBody2.GetPosition();
-        // var rad = this.wheelBody2.GetFixtureList().GetShape().get_m_radius();
-        // var size = rad*2;
-        //
-        // ctx.save();
-        // // this.camera.setTransform(ctx);
-        // ctx.translate(bPos.get_x(), bPos.get_y());
-        // ctx.rotate(this.wheelBody2.GetAngle());
-        // ctx.drawImage(this.wheelImage, -rad, -rad, size, size);
-        // ctx.restore();
-      }
-      {
-        // entity draw wrapper for rear wheel
-        // var bPos = this.wheelBody1.GetPosition();
-        // var rad = this.wheelBody1.GetFixtureList().GetShape().get_m_radius();
-        // var size = rad*2;
-        //
-        // ctx.save();
-        // // this.camera.setTransform(ctx);
-        // ctx.translate(bPos.get_x(), bPos.get_y());
-        // ctx.rotate(this.wheelBody1.GetAngle());
-        // ctx.drawImage(this.wheelImage, -rad, -rad, size, size);
-        // ctx.restore();
-      }
     }
 
 
 
-    this.drawAxes(ctx);
+    // this.drawAxes(ctx);
 
 
     // ctx.fillStyle = "green";
@@ -108,39 +81,28 @@ class CarApp extends BaseApp {
   onAssetsLoaded(am){
     this.wheelImage = am.getImage('wheel');
 
-    this.manager.registerEntity(new CircleEntity(this.wheelBody2, this.wheelImage));
-    this.manager.registerEntity(new CircleEntity(this.wheelBody1, 'wheel'));
+    // var c = new PolygonEntity();
+
+    this.car = new CarEntity(this.world, {
+      pos: {
+        x: -2,
+        y: 4
+      },
+      size: 0.5
+    });
+    this.camera.setChaseEntity(this.car);
+    this.manager.registerEntity(this.car);
 
     // console.log(this.wheelImage);
-  }
-
-  moveRight(down){
-    if(down){
-      this.rearWheelJoint.SetMotorSpeed(-50);
-      this.wheelJoint2.SetMotorSpeed(-50);
-    } else {
-      this.rearWheelJoint.SetMotorSpeed(0);
-      this.wheelJoint2.SetMotorSpeed(0);
-    }
-  }
-
-  moveLeft(down){
-    if(down){
-      this.rearWheelJoint.SetMotorSpeed(50);
-      this.wheelJoint2.SetMotorSpeed(50);
-    } else {
-      this.rearWheelJoint.SetMotorSpeed(0);
-      this.wheelJoint2.SetMotorSpeed(0);
-    }
   }
 
   onKeyDown(event){
     switch (event.keyCode) {
       case 39: // right
-        this.moveRight(true);
+        this.car ? this.car.moveRight(true) : false;
         break;
       case 37: // left
-        this.moveLeft(true);
+        this.car ? this.car.moveLeft(true) : false;
         break;
       default:
       console.log(event.keyCode);
@@ -150,10 +112,10 @@ class CarApp extends BaseApp {
   onKeyUp(event){
     switch (event.keyCode) {
       case 39: // right
-        this.moveRight(false);
+        this.car ? this.car.moveRight(false) : false;
         break;
       case 37: // left
-        this.moveLeft(false);
+        this.car ? this.car.moveLeft(false) : false;
         break;
       default:
       console.log(event.keyCode);

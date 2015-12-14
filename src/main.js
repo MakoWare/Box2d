@@ -10,16 +10,21 @@ import CarApp from 'src/CarApp';
 
 var config = {
   canvas: {
-    fullscreen: true,
-    fps: true
+    fullscreen: true
+  },
+  camera: {
+    fps: true,
+    extras: {
+      axes: true,
+      grid: true
+    }
   },
   world: {
     gravity: {
       x: 0,
       y: -9.8,
     },
-    drawDebug: true,
-    drawAxes: true,
+    drawDebug: true
   }
 };
 

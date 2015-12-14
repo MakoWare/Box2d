@@ -1,32 +1,26 @@
 import BaseEntity from 'src/components/engine/BaseEntity';
 import AssetManager from 'src/components/base/assetManager';
+import Util from 'src/components/util/util';
 
 class CircleEntity extends BaseEntity {
 
-  constructor(body, image) {
-    super();
-    this.body = body;
+  constructor(body, image, options) {
+    super(body,image,options);
 
-    if(typeof image === 'string'){
-      // use asset manager to get image
-      this.image = AssetManager.getImage(image);
-    } else if(image.constructor.name === "HTMLImageElement"){
-      // we have image set it
-      this.image = image;
-    }
-    
   }
 
   draw(ctx, delta){
-    this.getPosition();
-    this.getSize();
+    if(this.image){
+      this.getPosition();
+      this.getSize();
 
-    ctx.save();
-    // this.camera.setTransform(ctx);
-    ctx.translate(this.pos.get_x(), this.pos.get_y());
-    ctx.rotate(this.getAngle());
-    ctx.drawImage(this.image, -this.rad, -this.rad, this.size, this.size);
-    ctx.restore();
+      ctx.save();
+      // this.camera.setTransform(ctx);
+      ctx.translate(this.pos.get_x(), this.pos.get_y());
+      ctx.rotate(this.getAngle());
+      ctx.drawImage(this.image, -this.rad, -this.rad, this.size, this.size);
+      ctx.restore();
+    }
   }
 
 

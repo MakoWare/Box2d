@@ -30,7 +30,8 @@ class Camera {
 
   constructor(canvas) {
     this.canvas = canvas;
-    this.config = Util.readConfig('canvas');
+    this.context = this.canvas.getContext();
+    this.config = Util.readConfig('camera');
 
     // this.fpsWorker = new Worker('src/components/base/fps.js');
     // this.fpsWorker.onmessage = this.onFPS.bind(this);
@@ -41,7 +42,7 @@ class Camera {
 
   update(timestamp){
     if(this.chaseEntity){
-      futurePos = this.chaseEntity.GetPosition();
+      futurePos = this.chaseEntity.getPosition();
       // var vel = this.chaseEntity.GetLinearVelocity();
       // futurePos.set_x( pos.get_x() + 0.15 * vel.get_x() );
       // futurePos.set_y( pos.get_y() + 0.15 * vel.get_y() );
@@ -53,6 +54,51 @@ class Camera {
       this.calculateFPS(timestamp);
       this.canvas.$fps.html(this.fps);
     }
+
+    if(this.config.extras){
+      this.drawExtras();
+    }
+  }
+
+  drawExtras(ctx){
+    ctx = this.context;
+
+
+    if(ctx && this.config.extras.axes){
+      this.drawAxes(ctx);
+    }
+
+    // not ready yet
+    // if(ctx && this.config.extras.grid){
+    //   this.drawGrid(ctx);
+    // }
+  }
+
+  drawAxes(ctx) {
+    ctx.strokeStyle = 'rgb(192,0,0)';
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(1, 0);
+    ctx.stroke();
+    ctx.strokeStyle = 'rgb(0,192,0)';
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, 1);
+    ctx.stroke();
+  }
+
+  drawGrid(ctx){
+    var bounds = this.getViewportBounds();
+    ctx.strokeStyle = 'rgb(0,192,0)';
+    ctx.beginPath();
+    ctx.moveTo(bounds.x, bounds.y);
+    ctx.lineTo(bounds.w, bounds.h);
+    ctx.stroke();
+    // ctx.strokeStyle = 'rgb(0,192,0)';
+    // ctx.beginPath();
+    // ctx.moveTo(0, 0);
+    // ctx.lineTo(0, 1);
+    // ctx.stroke();
   }
 
   onFPS(event){
@@ -64,9 +110,17 @@ class Camera {
   }
 
   getWorldPointFromPixelPoint(pixelPoint) {
-    singleWorldPoint.x = (pixelPoint.x - offset.x) / PTM;
-    singleWorldPoint.y = (pixelPoint.y - (this.canvas.height() - offset.y)) / PTM;
+    singleWorldPoint.x = this._getWorldPointFromPixelPoint_x(pixelPoint.x)
+    singleWorldPoint.y = this._getWorldPointFromPixelPoint_y(pixelPoint.y);
     return singleWorldPoint;
+  }
+
+  _getWorldPointFromPixelPoint_x(x){
+    return (x - offset.x) / PTM;
+  }
+
+  _getWorldPointFromPixelPoint_y(y){
+    return (y - (this.canvas.height() - offset.y)) / PTM;
   }
 
   setViewCenterWorld(b2vecpos, instantaneous) {
@@ -83,6 +137,16 @@ class Camera {
       x: this.canvas.width() / 2,
       y: this.canvas.height() / 2
     };
+  }
+
+  getViewportBounds(){
+    var bounds = {
+      x: this._getWorldPointFromPixelPoint_x(0),
+      y: this._getWorldPointFromPixelPoint_y(0),
+      w: this._getWorldPointFromPixelPoint_x(this.canvas.width()),
+      h: this._getWorldPointFromPixelPoint_y(this.canvas.height()),
+    }
+    return bounds;
   }
 
   getPTM(){
