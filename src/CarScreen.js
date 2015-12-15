@@ -2,6 +2,7 @@ import Screen from 'src/components/screen/screen';
 import AssetManager from 'src/components/base/assetManager';
 import EntityManager from 'src/components/engine/EntityManager';
 import CarEntity from 'src/CarEntity';
+import App from 'src/components/app/app';
 
 class CarScreen extends Screen {
   constructor(camera, world, options) {
@@ -22,6 +23,17 @@ class CarScreen extends Screen {
     this.camera.setChaseEntity(this.car);
     this.entityManager.registerEntity(this.car);
 
+    this.inputListener = App.input.newEventListener({
+      '39':'right',
+      '37':'left'
+    }, true);
+
+    this.inputListener.left = (down)=>{
+      this.car.moveLeft(down);
+    }
+    this.inputListener.right = (down)=>{
+      this.car.moveRight(down);
+    }
 
   }
 

@@ -5,6 +5,7 @@ class Canvas {
     this.setupFullscreen();
     this.config = Util.readConfig('canvas');
     this.focus();
+
   }
 
   setupFullscreen(){
@@ -49,6 +50,14 @@ class Canvas {
   set$Element(canvas){
     this.$el = canvas;
     this.el = this.$el[0];
+  }
+
+  addEventListener(){
+    this.el.addEventListener.apply(this.el, arguments);
+  }
+
+  removeEventListener(){
+    this.el.removeEventListener.apply(this.el, arguments);
   }
 
   getContext(dimension){

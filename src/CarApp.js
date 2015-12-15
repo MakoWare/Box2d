@@ -34,8 +34,8 @@ class CarApp extends BaseApp {
     // },0.5);
 
 
-    this.canvas.$el.on('keydown', this.onKeyDown.bind(this));
-    this.canvas.$el.on('keyup', this.onKeyUp.bind(this));
+    // this.canvas.$el.on('keydown', this.onKeyDown.bind(this));
+    // this.canvas.$el.on('keyup', this.onKeyUp.bind(this));
 
     this.screenListener = this.screenManager.newListener(true);
 
@@ -47,9 +47,7 @@ class CarApp extends BaseApp {
       }
     };
 
-    this.loadingScreen = new LoadingScreen(this.camera, {
-      delay: 2
-    });
+    this.loadingScreen = new LoadingScreen(this.camera);
     this.screenManager.addScreen(this.loadingScreen);
 
     //Entities

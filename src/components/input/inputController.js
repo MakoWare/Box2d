@@ -1,42 +1,74 @@
-import worldConfig from 'src/components/world/worldConfig';
-import canvas from 'src/components/canvas/canvas';
+import Util from 'src/components/util/util';
 
+let listeners = [];
+let defaultKeyConfig = {
+  keys: {
+
+  },
+  preventDefault: true
+}
 
 class InputController {
-  constructor(config) {
-
-    this.config = config;
-    // this.worldConfig = config.world;
-    // this.worldConfig = WorldConfig;
-    // this.canvas = config.world.canvas;
+  constructor(canvas) {
+    this.canvas = canvas;
 
     this.initKeys();
+    // this.initMouse();
   }
 
   // input methods
 
+  addEventListener(listener){
+    listeners.push(listener);
+  }
+
+  newEventListener(keyConfig, alsoAdd){
+    var l = new InputEventListener(keyConfig);
+    if(alsoAdd){
+      this.addEventListener(l);
+    }
+    return l;
+  }
+
   //  -- keyboard
   initKeys() {
+    console.log(this.canvas);
     canvas.addEventListener('keydown', function(evt) {
-      evt.preventDefault();
+      // evt.preventDefault();
       this.onKeyDown(canvas,evt);
     }.bind(this), false);
 
     canvas.addEventListener('keyup', function(evt) {
-      evt.preventDefault();
+      // evt.preventDefault();
       this.onKeyUp(canvas,evt);
     }.bind(this), false);
   }
 
   onKeyDown(canvas, evt) {
-    console.log(evt.keyCode);
+    // console.log(evt.keyCode);
+    var l;
+    try {
+      l = listeners[listeners.length-1];
+      if(l){
+        var cfg = l.keyConfig;
+        l[cfg[evt.keyCode]].call(l,true,evt);
+      }
+    } catch (e) {
+    }
 
-    // draw();
-    console.log('do draw()');
   }
 
   onKeyUp(canvas, evt) {
-    console.log(evt.keyCode);
+    // console.log(evt.keyCode);
+    var l;
+    try {
+      l = listeners[listeners.length-1];
+      if(l){
+        var cfg = l.keyConfig;
+        l[cfg[evt.keyCode]].call(l,false,evt);
+      }
+    } catch (e) {
+    }
   }
 
 
@@ -102,4 +134,61 @@ class InputController {
 
 }
 
-export default new InputController();
+class InputEventListener {
+  constructor(keyConfig) {
+    this.keyConfig = Util.extend(keyConfig, defaultKeyConfig);
+  }
+
+  start(){
+  }
+
+  select(){
+  }
+
+  home(){  // ps/xb button
+  }
+
+  left(){
+  }
+
+  right(){
+  }
+
+  up(){
+  }
+
+  down(){
+  }
+
+  l1(){
+  }
+
+  l2(){
+  }
+
+  l3(){
+  }
+
+  r1(){
+  }
+
+  r2(){
+  }
+
+  r3(){
+  }
+
+  triangle(){
+  }
+
+  square(){
+  }
+
+  circle(){
+  }
+
+  cross(){
+  }
+}
+
+export default InputController;

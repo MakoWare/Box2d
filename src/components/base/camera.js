@@ -40,6 +40,10 @@ class Camera {
     window.addEventListener('resize', this.updateEnvironmentVariables.bind(this), false);
   }
 
+  getCanvas(){
+    return this.canvas;
+  }
+
   update(timestamp){
     if(this.chaseEntity){
       futurePos = this.chaseEntity.getPosition();

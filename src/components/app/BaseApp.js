@@ -3,6 +3,8 @@ import Camera from 'src/components/base/camera';
 import World from 'src/components/world/world';
 import Util from 'src/components/util/util';
 import ScreenManager from 'src/components/screen/screenManager';
+import App from 'src/components/app/app';
+import InputController from 'src/components/input/inputController';
 
 
 class BaseApp {
@@ -32,6 +34,11 @@ class BaseApp {
     })();
 
     this._animate = this._animate.bind(this);
+
+    App.input = new InputController(this.canvas);
+    App.canvas = this.canvas;
+    App.context = this.context;
+    App.config = this.config;
   }
 
   setDebugDraw(debugDraw){
