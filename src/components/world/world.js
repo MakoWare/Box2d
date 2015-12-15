@@ -1,6 +1,5 @@
 import Box2D from 'src/components/box2d/box2d';
 import Util from 'src/components/util/util';
-// import Canvas from 'src/components/canvas/canvas';
 
 // var canvasOffset = {
 //   x: 0,
@@ -15,6 +14,13 @@ class World {
     b2Vec2 = b2Vec2 || new Box2D.b2Vec2(x,y);
     this.world = new Box2D.b2World(b2Vec2);
     Util.using(this,this.world);
+    this.config = Util.readConfig('world');
+  }
+
+  drawDebug(override){
+    if(this.config.drawDebug || override){
+      this.world.DrawDebugData();
+    }
   }
 
   // http://stackoverflow.com/questions/12792486/emscripten-bindings-how-to-create-an-accessible-c-c-array-from-javascript

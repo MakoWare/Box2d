@@ -10,6 +10,8 @@ import Ground from 'src/ground.js';
 import CircleEntity from 'src/components/engine/CircleEntity';
 import PolygonEntity from 'src/components/engine/PolygonEntity';
 import CarEntity from 'src/CarEntity';
+import LoadingScreen from 'src/LoadingScreen';
+import CarScreen from 'src/CarScreen';
 
 class CarApp extends BaseApp {
 
@@ -35,14 +37,23 @@ class CarApp extends BaseApp {
     this.canvas.$el.on('keydown', this.onKeyDown.bind(this));
     this.canvas.$el.on('keyup', this.onKeyUp.bind(this));
 
+    this.screenListener = this.screenManager.newListener(true);
 
-    // load some assets
-    AssetManager.loadResource('wheel', 'http://pngimg.com/upload/car_wheel_PNG1074.png');
+    this.screenListener.onScreenFinished = (screen, manager)=>{
+      // console.log('screen is done: ', screen);
+      if(screen === this.loadingScreen){
+        // console.log('loading screen is done');
+        manager.addScreen(new CarScreen(this.camera, this.world), true);
+      }
+    };
 
-    AssetManager.setOnAssetsLoadedCallback(this.onAssetsLoaded.bind(this));
+    this.loadingScreen = new LoadingScreen(this.camera, {
+      delay: 2
+    });
+    this.screenManager.addScreen(this.loadingScreen);
 
     //Entities
-    this.manager = new EntityManager(this.canvas.el);
+    this.manager = new EntityManager();
 
     // var ground = new Ground(this.world);
     // this.manager.registerEntity(ground);
@@ -55,6 +66,7 @@ class CarApp extends BaseApp {
   draw(ctx, delta){
 
 
+    /*
     if(AssetManager.isLoading()){
       AssetManager.step();
     } else {
@@ -65,7 +77,7 @@ class CarApp extends BaseApp {
       this.manager.step();
       this.manager.draw(ctx, delta);
     }
-
+    */
 
 
     // this.drawAxes(ctx);
@@ -79,19 +91,7 @@ class CarApp extends BaseApp {
   }
 
   onAssetsLoaded(am){
-    this.wheelImage = am.getImage('wheel');
 
-    // var c = new PolygonEntity();
-
-    this.car = new CarEntity(this.world, {
-      pos: {
-        x: -2,
-        y: 4
-      },
-      size: 0.5
-    });
-    this.camera.setChaseEntity(this.car);
-    this.manager.registerEntity(this.car);
 
     // console.log(this.wheelImage);
   }

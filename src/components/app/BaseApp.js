@@ -2,6 +2,7 @@ import Canvas from 'src/components/canvas/canvas';
 import Camera from 'src/components/base/camera';
 import World from 'src/components/world/world';
 import Util from 'src/components/util/util';
+import ScreenManager from 'src/components/screen/screenManager';
 
 
 class BaseApp {
@@ -13,6 +14,7 @@ class BaseApp {
     this.running = false;
     this.lastTime = Date.now();
     this.config = Util.getConfig();
+    this.screenManager = new ScreenManager();
 
     window._requestAnimFrame = (function(){
       return  window.requestAnimationFrame       ||
@@ -43,7 +45,7 @@ class BaseApp {
     console.log('base app draw');
   }
 
-  _draw(ctx, timestamp) {
+  _draw(ctx, delta) {
 
     //black background
     ctx.fillStyle = 'rgb(0,0,0)';
@@ -55,7 +57,8 @@ class BaseApp {
 
     this.camera.setTransform(ctx);
 
-    this.draw(ctx, timestamp);
+    this.screenManager.draw(ctx, delta);
+    this.draw(ctx, delta);
 
     // this.drawAxes(ctx);
     // this.drawGrid(ctx);
