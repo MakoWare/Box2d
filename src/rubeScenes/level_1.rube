@@ -38,6 +38,30 @@
       "bitplane32"
     ]
   },
+  "customPropertyDefs" : 
+  [
+    
+    {
+      "class" : "body",
+      "comboboxEntries" : 
+      [
+        
+        {
+          "entry" : "Wall"
+        }
+      ],
+      "displayName" : "Class",
+      "name" : "Class",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "Stateful",
+      "name" : "Stateful",
+      "type" : "bool"
+    }
+  ],
   "metaworld" : 
   {
     "allowSleep" : true,
@@ -66,6 +90,19 @@
         "angle" : 0,
         "angularVelocity" : 0,
         "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "name" : "Class",
+            "string" : "Player"
+          },
+          
+          {
+            "bool" : true,
+            "name" : "Stateful"
+          }
+        ],
         "fixture" : 
         [
           
@@ -106,6 +143,14 @@
         "angle" : 0,
         "angularVelocity" : 0,
         "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "name" : "Class",
+            "string" : "Wall"
+          }
+        ],
         "fixture" : 
         [
           
@@ -143,6 +188,14 @@
         "angle" : 0,
         "angularVelocity" : 0,
         "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "name" : "Class",
+            "string" : "Wall"
+          }
+        ],
         "fixture" : 
         [
           
@@ -180,6 +233,14 @@
         "angle" : 0,
         "angularVelocity" : 0,
         "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "name" : "Class",
+            "string" : "Wall"
+          }
+        ],
         "fixture" : 
         [
           
@@ -217,6 +278,14 @@
         "angle" : 0,
         "angularVelocity" : 0,
         "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "name" : "Class",
+            "string" : "Wall"
+          }
+        ],
         "fixture" : 
         [
           

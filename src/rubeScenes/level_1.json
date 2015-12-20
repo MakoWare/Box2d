@@ -9,6 +9,14 @@
 			"angle" : 0,
 			"angularVelocity" : 0,
 			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"name" : "Class",
+					"string" : "Wall"
+				}
+			],
 			"fixture" : 
 			[
 				
@@ -40,6 +48,14 @@
 			"angle" : 0,
 			"angularVelocity" : 0,
 			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"name" : "Class",
+					"string" : "Wall"
+				}
+			],
 			"fixture" : 
 			[
 				
@@ -71,6 +87,14 @@
 			"angle" : 0,
 			"angularVelocity" : 0,
 			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"name" : "Class",
+					"string" : "Wall"
+				}
+			],
 			"fixture" : 
 			[
 				
@@ -102,6 +126,14 @@
 			"angle" : 0,
 			"angularVelocity" : 0,
 			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"name" : "Class",
+					"string" : "Wall"
+				}
+			],
 			"fixture" : 
 			[
 				
@@ -133,6 +165,19 @@
 			"angle" : 0,
 			"angularVelocity" : 0,
 			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"name" : "Class",
+					"string" : "Player"
+				},
+				
+				{
+					"bool" : true,
+					"name" : "Stateful"
+				}
+			],
 			"fixture" : 
 			[
 				

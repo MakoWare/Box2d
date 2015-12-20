@@ -10,9 +10,7 @@ class BaseEntity {
     this.options = options;
 
 
-    this.states = [];
     this.entities = [];
-    this.maxStates = 600;
   }
 
   setImage(image){
@@ -28,19 +26,6 @@ class BaseEntity {
     }
     this.image = img;
   }
-
-  pushState(){
-    if(this.states.length == this.maxStates){
-      this.shiftState();
-    }
-  }
-
-  popState(){
-
-  }
-
-  setState(){}
-
 
   getPosition(){
     return this.pos = this.body.GetPosition();
