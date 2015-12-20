@@ -1,5 +1,5 @@
 import Util from 'src/components/util/util';
-//import YourApp from here;
+import TimeSquaredApp from 'src/t2/TimeSquaredApp';
 
 
 var config = {
@@ -27,5 +27,5 @@ Util.setConfig(config);
 
 
 
-//var app = new YourApp();
-//app.run();
+var app = new TimeSquaredApp();
+app.run();

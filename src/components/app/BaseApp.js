@@ -49,7 +49,7 @@ class BaseApp {
   }
 
   draw(){
-    console.log('base app draw');
+    
   }
 
   _draw(ctx, delta) {
