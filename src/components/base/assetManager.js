@@ -1,5 +1,5 @@
 import Asset from 'src/components/base/asset';
-
+import RubeAsset from 'src/components/base/rubeAsset';
 
 class AssetManager {
   constructor() {
@@ -9,13 +9,15 @@ class AssetManager {
     this.promiseQueue = [];
   }
 
-  loadResource(name, url){
-    var asset = new Asset(name, url);
-    this.loadQueue.push(asset);
+  loadResource(name, url, type, options){
+    var asset = this.NewAsset(name, url, type, options);
+    if(asset){
+      this.loadQueue.push(asset);
 
-    this.loading = true;
+      this.loading = true;
 
-    asset.promise.then(this.onAssetResolve.bind(this), this.onAssetReject.bind(this));
+      asset.promise.then(this.onAssetResolve.bind(this), this.onAssetReject.bind(this));
+    }
   }
 
   getAsset(name){
@@ -65,6 +67,20 @@ class AssetManager {
 
   setOnAssetsLoadedCallback(callback){
     this.onAssetsLoadedCallback = callback;
+  }
+
+  NewAsset(name, url, type, options){
+    type = type || 'image';
+    switch (type) {
+      case 'image':
+        return new Asset(name, url, type, options);
+        break;
+      case 'rube':
+        return new RubeAsset(name, url, type, options);
+        break;
+      default:
+        return null;
+    }
   }
 }
 

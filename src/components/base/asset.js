@@ -1,14 +1,16 @@
 
 
 class Asset {
-  constructor(name, url) {
+  constructor(name, url, type, options) {
     this.name = name;
     this.url = url;
+    this.type = type || 'image';
+    this.options = options || {};
+
     this.data = new Image();
     this.promise = new Promise((resolve,reject)=>{
       this.data.onload = this.onload(resolve,reject);
     });
-
 
   }
 

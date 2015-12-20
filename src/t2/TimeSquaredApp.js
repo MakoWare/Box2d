@@ -17,8 +17,10 @@ class TimeSquaredApp extends BaseApp {
 
     this.screenListener.onScreenFinished = (screen, manager)=>{
       if(screen === this.loadingScreen){
-        // console.log('loading screen is done');
-        manager.addScreen(new GameScreen(this.camera), true);
+        console.log('loading screen is done');
+        var game = new GameScreen(this.camera);
+        game.world = screen.world;
+        manager.addScreen(game, true);
       }
     };
 

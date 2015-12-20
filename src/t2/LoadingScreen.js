@@ -1,5 +1,6 @@
 import Screen from 'src/components/screen/screen';
 import AssetManager from 'src/components/base/assetManager';
+import World from 'src/components/world/world';
 
 class LoadingScreen extends Screen {
   constructor(camera, options) {
@@ -17,8 +18,10 @@ class LoadingScreen extends Screen {
 
     this._timeout = 0;
 
+    this.world = new World();
+
     // load some assets
-    
+    AssetManager.loadResource('level_1','src/rubeScenes/level_1.json', 'rube', this.world);
     AssetManager.setOnAssetsLoadedCallback(this.onAssetsLoaded.bind(this));
   }
 
