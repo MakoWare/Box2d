@@ -42,12 +42,14 @@ class CarApp extends BaseApp {
     this.screenListener.onScreenFinished = (screen, manager)=>{
       // console.log('screen is done: ', screen);
       if(screen === this.loadingScreen){
-        // console.log('loading screen is done');
+        console.log('loading screen is done');
         manager.addScreen(new CarScreen(this.camera, this.world), true);
       }
     };
 
-    this.loadingScreen = new LoadingScreen(this.camera);
+    this.loadingScreen = new LoadingScreen(this.camera,{
+
+    });
     this.screenManager.addScreen(this.loadingScreen);
 
     //Entities
@@ -94,31 +96,31 @@ class CarApp extends BaseApp {
     // console.log(this.wheelImage);
   }
 
-  onKeyDown(event){
-    switch (event.keyCode) {
-      case 39: // right
-        this.car ? this.car.moveRight(true) : false;
-        break;
-      case 37: // left
-        this.car ? this.car.moveLeft(true) : false;
-        break;
-      default:
-      console.log(event.keyCode);
-    }
-  }
-
-  onKeyUp(event){
-    switch (event.keyCode) {
-      case 39: // right
-        this.car ? this.car.moveRight(false) : false;
-        break;
-      case 37: // left
-        this.car ? this.car.moveLeft(false) : false;
-        break;
-      default:
-      console.log(event.keyCode);
-    }
-  }
+  // onKeyDown(event){
+  //   switch (event.keyCode) {
+  //     case 39: // right
+  //       this.car ? this.car.moveRight(true) : false;
+  //       break;
+  //     case 37: // left
+  //       this.car ? this.car.moveLeft(true) : false;
+  //       break;
+  //     default:
+  //     console.log(event.keyCode);
+  //   }
+  // }
+  //
+  // onKeyUp(event){
+  //   switch (event.keyCode) {
+  //     case 39: // right
+  //       this.car ? this.car.moveRight(false) : false;
+  //       break;
+  //     case 37: // left
+  //       this.car ? this.car.moveLeft(false) : false;
+  //       break;
+  //     default:
+  //     console.log(event.keyCode);
+  //   }
+  // }
 
   createGround(){
 

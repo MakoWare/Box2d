@@ -18,13 +18,14 @@ class LoadingScreen extends Screen {
     this._timeout = 0;
     // load some assets
     AssetManager.loadResource('wheel', 'http://pngimg.com/upload/car_wheel_PNG1074.png');
+    AssetManager.loadResource('car', 'http://colorfulnewslonvig.blog.com/files/2012/07/berlinette-F12-linier.png');
     AssetManager.setOnAssetsLoadedCallback(this.onAssetsLoaded.bind(this));
   }
 
   draw(ctx, delta){
     ctx.save();
 
-    this.camera.update(delta);
+    this.camera.update(ctx,delta);
 
     ctx.scale(1,-1);
     ctx.fillStyle = 'green';

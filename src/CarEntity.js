@@ -6,6 +6,16 @@ class CarEntity extends PolygonEntity {
     super()
     this.world = world;
 
+    this.setImage('car');
+
+    this.carDim = {
+      size: 5,
+      w:5000,
+      h:1653
+    }
+
+
+
     this.createCar(options.pos, options.size);
     this.addEntity(new CircleEntity(this.wheelBody2, 'wheel'));
     this.addEntity(new CircleEntity(this.wheelBody1, 'wheel'));
@@ -71,6 +81,42 @@ class CarEntity extends PolygonEntity {
       this.wheelJoint2 = Box2D.castObject( this.world.CreateJoint(jd), Box2D.b2WheelJoint );
 
       return this.body;
+  }
+
+  draw(ctx){
+    this.getPosition();
+    var s = this.getSize();
+
+    ctx.save();
+    // this.camera.setTransform(ctx);
+
+    ctx.translate(this.pos.get_x(), this.pos.get_y());
+    ctx.scale(-1,-1);
+    // ctx.rotate(this.getAngle());
+    ctx.drawImage(this.image, 0,0, s.w, s.h );
+
+    ctx.strokeStyle = 'blue';
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.lineTo(1,0);
+    ctx.stroke();
+
+    ctx.strokeStyle = 'yellow';
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.lineTo(0,1);
+    ctx.stroke();
+
+    ctx.restore();
+
+    super.draw(ctx);
+  }
+
+  getSize(){
+    return {
+      w: this.carDim.size,
+      h: (this.carDim.h*this.carDim.size)/this.carDim.w
+    }
   }
 
   moveRight(down){

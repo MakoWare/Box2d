@@ -8,7 +8,7 @@ class Screen {
   }
 
   draw(ctx, delta){
-    this.camera.update(delta);
+    this.camera.update(ctx,delta);
   }
 
   finish(){

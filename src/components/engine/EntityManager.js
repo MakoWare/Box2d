@@ -35,7 +35,7 @@ class EntityManager {
   }
 
   registerEntity(entity){
-    entity.id = this.entityUID++;
+    entity._id = this.entityUID++;
     this.entities.push(entity);
   }
 

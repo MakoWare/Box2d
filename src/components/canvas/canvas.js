@@ -11,7 +11,7 @@ class Canvas {
   setupFullscreen(){
     var id = Util.readConfig('canvas','id', 'canvas');
     var fullscreen = Util.readConfig('canvas', 'fullscreen', false);
-    var fps = Util.readConfig('canvas', 'fps');
+    var fps = Util.readConfig('camera', 'fps');
 
     var container = $('#container');
     this.$fps = $('#fps');

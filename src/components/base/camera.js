@@ -44,7 +44,8 @@ class Camera {
     return this.canvas;
   }
 
-  update(timestamp){
+  update(ctx, delta){
+    this.setTransform(ctx);
     if(this.chaseEntity){
       futurePos = this.chaseEntity.getPosition();
       // var vel = this.chaseEntity.GetLinearVelocity();
@@ -54,8 +55,9 @@ class Camera {
     }
 
     if(this.config.fps){
-      // this.fpsWorker.postMessage(timestamp);
-      this.calculateFPS(timestamp);
+      // this.fpsWorker.postMessage(delta);
+      // console.log('draw fps');
+      this.calculateFPS(delta);
       this.canvas.$fps.html(this.fps);
     }
 
@@ -95,8 +97,8 @@ class Camera {
     var bounds = this.getViewportBounds();
     ctx.strokeStyle = 'rgb(0,192,0)';
     ctx.beginPath();
-    ctx.moveTo(bounds.x, bounds.y);
-    ctx.lineTo(bounds.w, bounds.h);
+    ctx.moveTo(bounds.w/2, 0);
+    ctx.lineTo(bounds.w/2, bounds.h);
     ctx.stroke();
     // ctx.strokeStyle = 'rgb(0,192,0)';
     // ctx.beginPath();

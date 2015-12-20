@@ -4,18 +4,35 @@ import BaseEntity from 'src/components/engine/BaseEntity';
 class Ground extends BaseEntity {
 
   constructor(world){
-    super(world);
+    super();
+    this.world = world;
 
+    var ground,
+        shape,
+        fd;
 
-    var ground = this.world.CreateBody( new Box2D.b2BodyDef() );
-    var shape = new Box2D.b2EdgeShape();
-    var fd = new Box2D.b2FixtureDef();
-    fd.set_shape(shape);
-    fd.set_density(0.0);
-    fd.set_friction(0.6);
+    for(var i=-550.0; i<551.0; i++){
+      ground = this.world.CreateBody( new Box2D.b2BodyDef() );
+      shape = new Box2D.b2EdgeShape();
+      fd = new Box2D.b2FixtureDef();
+      fd.set_shape(shape);
+      fd.set_density(0.0);
+      fd.set_friction(0.9);
 
-    shape.Set(new Box2D.b2Vec2(-550.0, -20.0), new Box2D.b2Vec2(550.0, 10.0));
-    ground.CreateFixture(fd);
+      shape.Set(new Box2D.b2Vec2(i, 0.0), new Box2D.b2Vec2(i+1, 0.0));
+      ground.CreateFixture(fd);
+    }
+
+  }
+
+  draw(ctx){
+    ctx.save();
+    ctx.strokeStyle = 'green';
+    ctx.beginPath();
+    ctx.moveTo(-550,0);
+    ctx.lineTo(550,0);
+    ctx.stroke();
+    ctx.restore();
   }
 
   pushState(){
