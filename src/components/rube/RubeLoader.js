@@ -1,7 +1,7 @@
 import Box2D from 'src/components/box2d/box2d';
 
 Object.prototype.hasOwnProperty = function(property) {
-    return typeof(this[property]) !== 'undefined'
+  return typeof(this[property]) !== 'undefined'
 };
 
 class RubeLoader {
@@ -408,7 +408,7 @@ class RubeLoader {
         if ( b.customProperties[i].name == propertyName &&
           b.customProperties[i][propertyType] == valueToMatch)
           bodies.push(b);
-      }        
+      }
     }
     return bodies;
   }
