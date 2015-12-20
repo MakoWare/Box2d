@@ -75,13 +75,13 @@ class RubeLoader {
     return body;
   }
 
-  loadFixtureFromRUBE(body, fixtureJso) {    
+  loadFixtureFromRUBE(body, fixtureJso) {
     var fd = new Box2D.b2FixtureDef();
     fd.set_density(fixtureJso.density || 0);
     fd.set_friction(fixtureJso.friction || 0);
     fd.set_restitution(fixtureJso.restitution || 0);
     fd.set_isSensor(fixtureJso.sensor || 0);
-    
+
     var filter = new Box2D.b2Filter();
 
     filter.set_categoryBits(fixtureJso['filter-categoryBits'] || 1);
@@ -91,50 +91,50 @@ class RubeLoader {
     fd.set_filter(filter);
 
     if (fixtureJso.hasOwnProperty('circle')) {
-      
+
       var shape = new Box2D.b2CircleShape();
 
       shape.set_m_radius(fixtureJso.circle.radius || 0);
       if ( fixtureJso.circle.center )
-        shape.set_m_p(this.parseVec(fixtureJso.circle.center)); 
-      else 
+        shape.set_m_p(this.parseVec(fixtureJso.circle.center));
+      else
         shape.set_m_p(new Box2D.b2Vec2(0, 0));
 
       fd.set_shape(shape);
-      
-      var fixture = body.CreateFixture(fd);        
+
+      var fixture = body.CreateFixture(fd);
       if ( fixtureJso.name )
         fixture.name = fixtureJso.name;
     }
     else if (fixtureJso.hasOwnProperty('polygon')) {
-      
+
       var verts = [];
       for (var v = 0; v < fixtureJso.polygon.vertices.x.length; v++) {
         verts.push( new Box2D.b2Vec2( fixtureJso.polygon.vertices.x[v], fixtureJso.polygon.vertices.y[v] ) );
       }
 
-      
-      var shape = createPolygonShape(verts);
+
+      var shape = this.createPolygonShape(verts);
 
       fd.set_shape(shape);
-      
 
-      var fixture = body.CreateFixture(fd);   
-      
+
+      var fixture = body.CreateFixture(fd);
+
       if ( fixture && fixtureJso.name )
         fixture.name = fixtureJso.name;
     }
     else if (fixtureJso.hasOwnProperty('chain')) {
-      
+
       var verts = [];
-      for (var v = 0; v < fixtureJso.chain.vertices.x.length; v++) 
+      for (var v = 0; v < fixtureJso.chain.vertices.x.length; v++)
         verts.push(new Box2D.b2Vec2(fixtureJso.chain.vertices.x[v], fixtureJso.chain.vertices.y[v]));
 
 
-      shape = createChainShape(verts);
+      shape = this.createChainShape(verts);
       fd.set_shape(shape);
-      
-      var fixture = body.CreateFixture(fd);        
+
+      var fixture = body.CreateFixture(fd);
       if ( fixtureJso.name )
         fixture.name = fixtureJso.name;
 
@@ -165,18 +165,18 @@ class RubeLoader {
     if ( ! jointJso.hasOwnProperty('type') ) {
       console.log("Joint does not have a 'type' property");
       return null;
-    }    
+    }
     if ( jointJso.bodyA >= loadedBodies.length ) {
       console.log("Index for bodyA is invalid: " + jointJso.bodyA );
       return null;
-    }    
+    }
     if ( jointJso.bodyB >= loadedBodies.length ) {
       console.log("Index for bodyB is invalid: " + jointJso.bodyB );
       return null;
     }
-    
+
     var joint = null;
-    
+
     if ( jointJso.type == "revolute" ) {
       var jd = new Box2D.b2RevoluteJointDef();
       jd.set_bodyA(loadedBodies[jointJso.bodyA]);
@@ -204,9 +204,9 @@ class RubeLoader {
       jd.set_dampingRatio(jointJso.dampingRatio || 0);
       jd.set_frequencyHz(jointJso.frequency || 0);
       jd.set_length(jointJso.length || 0);
-      
+
       joint = world.CreateJoint(jd);
-    } 
+    }
     else if ( jointJso.type == "rope") {
       var jd = new Box2D.b2RopeJointDef();
 
@@ -230,7 +230,7 @@ class RubeLoader {
         jd.set_angularOffset(jointJso.refAngle || 0);
         jd.set_maxForce(jointJso.maxForce || 0);
         jd.set_maxTorque(jointJso.maxTorque || 0);
-        jd.set_correctionFactor(jointJso.correctionFactor || 0);    
+        jd.set_correctionFactor(jointJso.correctionFactor || 0);
 
         joint = world.CreateJoint(jd);
       } else {
@@ -251,7 +251,7 @@ class RubeLoader {
       jd.set_maxMotorForce(jointJso.maxMotorForce || 0);
       jd.set_motorSpeed(jointJso.motorSpeed || 0);
       jd.set_referenceAngle(jointJso.refAngle || 0);
-      jd.set_upperTranslation(jointJso.upperLimit || 0);        
+      jd.set_upperTranslation(jointJso.upperLimit || 0);
       joint = world.CreateJoint(jd);
     }
     else if ( jointJso.type == "wheel" ) {
@@ -273,7 +273,7 @@ class RubeLoader {
     }
     else if ( jointJso.type == "friction" ) {
       var jd = new Box2D.b2FrictionJointDef();
-      
+
       jd.set_bodyA(loadedBodies[jointJso.bodyA]);
       jd.set_bodyB(loadedBodies[jointJso.bodyB]);
       jd.set_collideConnected(jointJso.collideConnected || false);
@@ -285,7 +285,7 @@ class RubeLoader {
     }
     else if ( jointJso.type == "weld" ) {
       var jd = new Box2D.b2WeldJointDef();
-      
+
       jd.set_bodyA(loadedBodies[jointJso.bodyA]);
       jd.set_bodyB(loadedBodies[jointJso.bodyB]);
       jd.set_collideConnected(jointJso.collideConnected || false);
@@ -308,7 +308,7 @@ class RubeLoader {
   makeClone(obj) {
     var newObj = (obj instanceof Array) ? [] : {};
     for (var i in obj) {
-      if (obj[i] && typeof obj[i] == "object") 
+      if (obj[i] && typeof obj[i] == "object")
         newObj[i] = makeClone(obj[i]);
       else
         newObj[i] = obj[i];
@@ -325,19 +325,20 @@ class RubeLoader {
   //load the scene into an already existing world variable
   loadSceneIntoWorld(worldJso, world) {
     var success = true;
-    
+
     var loadedBodies = [];
     if ( worldJso.hasOwnProperty('body') ) {
       for (var i = 0; i < worldJso.body.length; i++) {
         var bodyJso = worldJso.body[i];
         var body = this.loadBodyFromRUBE(bodyJso, world);
-        if ( body )
+        if ( body ) {
           loadedBodies.push( body );
-        else
+        } else {
           success = false;
+        }
       }
     }
-    
+
     var loadedJoints = [];
     if ( worldJso.hasOwnProperty('joint') ) {
       for (var i = 0; i < worldJso.joint.length; i++) {
@@ -349,8 +350,8 @@ class RubeLoader {
         //    success = false;
       }
     }
-    
-    
+
+
     return success;
   }
 
@@ -439,12 +440,49 @@ class RubeLoader {
     }
     return defaultValue;
   }
+
+  // http://stackoverflow.com/questions/12792486/emscripten-bindings-how-to-create-an-accessible-c-c-array-from-javascript
+  createChainShape(vertices, closedLoop) {
+      var shape = new Box2D.b2ChainShape();
+      var buffer = Box2D.allocate(vertices.length * 8, 'float', Box2D.ALLOC_STACK);
+      var offset = 0;
+      for (var i=0;i<vertices.length;i++) {
+          Box2D.setValue(buffer+(offset), vertices[i].get_x(), 'float'); // x
+          Box2D.setValue(buffer+(offset+4), vertices[i].get_y(), 'float'); // y
+          offset += 8;
+      }
+      var ptr_wrapped = Box2D.wrapPointer(buffer, Box2D.b2Vec2);
+      if ( closedLoop )
+          shape.CreateLoop(ptr_wrapped, vertices.length);
+      else
+          shape.CreateChain(ptr_wrapped, vertices.length);
+      return shape;
+  }
+
+  createPolygonShape(vertices) {
+      var shape = new Box2D.b2PolygonShape();
+      var buffer = Box2D.allocate(vertices.length * 8, 'float', Box2D.ALLOC_STACK);
+      var offset = 0;
+      for (var i=0;i<vertices.length;i++) {
+          Box2D.setValue(buffer+(offset), vertices[i].get_x(), 'float'); // x
+          Box2D.setValue(buffer+(offset+4), vertices[i].get_y(), 'float'); // y
+          offset += 8;
+      }
+      var ptr_wrapped = Box2D.wrapPointer(buffer, Box2D.b2Vec2);
+      shape.Set(ptr_wrapped, vertices.length);
+      return shape;
+  }
+
+  createRandomPolygonShape(radius) {
+      var numVerts = 3.5 + Math.random() * 5;
+      numVerts = numVerts | 0;
+      var verts = [];
+      for (var i = 0; i < numVerts; i++) {
+          var angle = i / numVerts * 360.0 * 0.0174532925199432957;
+          verts.push( new b2Vec2( radius * Math.sin(angle), radius * -Math.cos(angle) ) );
+      }
+      return this.createPolygonShape(verts);
+  }
 }
 
 export default RubeLoader;
-
-
-
-
-
-

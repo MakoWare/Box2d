@@ -11,7 +11,8 @@ var config = {
     extras: {
       axes: true,
       grid: true
-    }
+    },
+    ptm: 20
   },
   world: {
     gravity: {

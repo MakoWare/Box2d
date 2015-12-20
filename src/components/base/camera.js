@@ -3,7 +3,6 @@ import Box2D from 'src/components/box2d/box2d';
 
 var PTM = 32;
 
-var PTM = 32;
 var viewCenterPixel = {
   x: 0,
   y: 0
@@ -32,6 +31,7 @@ class Camera {
     this.canvas = canvas;
     this.context = this.canvas.getContext();
     this.config = Util.readConfig('camera');
+    PTM = Util.readConfig('camera', 'ptm', 32);
 
     // this.fpsWorker = new Worker('src/components/base/fps.js');
     // this.fpsWorker.onmessage = this.onFPS.bind(this);

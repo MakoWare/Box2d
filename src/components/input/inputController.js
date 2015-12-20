@@ -32,7 +32,6 @@ class InputController {
 
   //  -- keyboard
   initKeys() {
-    console.log(this.canvas);
     canvas.addEventListener('keydown', function(evt) {
       // evt.preventDefault();
       this.onKeyDown(canvas,evt);
