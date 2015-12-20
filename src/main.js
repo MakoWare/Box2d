@@ -1,11 +1,5 @@
-//import Box2D from 'src/components/box2d/box2d';
-
-// import InputController from "src/components/input/inputController";
-// import testbed from 'src/libs/embox2d-html5canvas-testbed';
-
 import Util from 'src/components/util/util';
-import CarApp from 'src/CarApp';
-
+//import YourApp from here;
 
 
 var config = {
@@ -33,6 +27,5 @@ Util.setConfig(config);
 
 
 
-var app = new CarApp();
-
-app.run();
+//var app = new YourApp();
+//app.run();
