@@ -57,9 +57,37 @@
     
     {
       "class" : "body",
+      "displayName" : "length",
+      "name" : "length",
+      "type" : "float"
+    },
+    
+    {
+      "class" : "body",
       "displayName" : "Stateful",
       "name" : "Stateful",
       "type" : "bool"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "position",
+      "name" : "position",
+      "type" : "vec2"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "speed",
+      "name" : "speed",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "Color",
+      "name" : "Color",
+      "type" : "color"
     }
   ],
   "metaworld" : 
@@ -94,13 +122,37 @@
         [
           
           {
+            "int" : 10,
+            "name" : "speed"
+          },
+          
+          {
+            "float" : 1,
+            "name" : "length"
+          },
+          
+          {
             "name" : "Class",
             "string" : "Player"
           },
           
           {
+            "name" : "position",
+            "vec2" : 
+            {
+              "x" : 1,
+              "y" : 1
+            }
+          },
+          
+          {
             "bool" : true,
             "name" : "Stateful"
+          },
+          
+          {
+            "color" : [ 255, 77, 47, 255 ],
+            "name" : "Color"
           }
         ],
         "fixture" : 

@@ -169,6 +169,11 @@
 			[
 				
 				{
+					"int" : 10,
+					"name" : "speed"
+				},
+				
+				{
 					"name" : "Class",
 					"string" : "Player"
 				},
@@ -176,6 +181,25 @@
 				{
 					"bool" : true,
 					"name" : "Stateful"
+				},
+				
+				{
+					"float" : 1,
+					"name" : "length"
+				},
+				
+				{
+					"name" : "position",
+					"vec2" : 
+					{
+						"x" : 1,
+						"y" : 1
+					}
+				},
+				
+				{
+					"color" : [ 255, 77, 47, 255 ],
+					"name" : "Color"
 				}
 			],
 			"fixture" : 

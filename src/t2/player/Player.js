@@ -34,8 +34,8 @@ class Player extends StatefulPolygonEntity {
 
   moveRight(keyDown){
     if(keyDown){
-      console.log("player.moveRight()");
-      var impulse = body.GetMass() * this.speed;
+      console.log("player.moveRight");
+      var impulse = this.body.GetMass() * this.speed;
       this.body.ApplyLinearImpulse(new Box2d.b2Vec2(0, impulse), this.body.GetWorldCenter());
     }
   }
