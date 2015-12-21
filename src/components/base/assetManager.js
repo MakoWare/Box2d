@@ -25,6 +25,15 @@ class AssetManager {
   }
 
   getImage(name){
+    var asset = this.getAsset(name);
+    if(asset.type==='image'){
+      return asset.data;
+    } else {
+      return null;
+    }
+  }
+
+  getData(name){
     return this.getAsset(name).data;
   }
 

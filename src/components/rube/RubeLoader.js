@@ -1,4 +1,5 @@
 import Box2D from 'src/components/box2d/box2d';
+import RubeScene from 'src/components/rube/RubeScene';
 
 Object.prototype.hasOwnProperty = function(property) {
   return typeof(this[property]) !== 'undefined'
@@ -72,6 +73,7 @@ class RubeLoader {
       body.name = bodyJso.name;
     if ( bodyJso.hasOwnProperty('customProperties') )
       body.customProperties = bodyJso.customProperties;
+
     return body;
   }
 
@@ -325,6 +327,7 @@ class RubeLoader {
   //load the scene into an already existing world variable
   loadSceneIntoWorld(worldJso, world) {
     var success = true;
+    this.scene = new RubeScene(worldJso, world);
 
     var loadedBodies = [];
     if ( worldJso.hasOwnProperty('body') ) {
@@ -338,6 +341,7 @@ class RubeLoader {
         }
       }
     }
+    this.scene.bodies = loadedBodies;
 
     var loadedJoints = [];
     if ( worldJso.hasOwnProperty('joint') ) {
@@ -350,9 +354,11 @@ class RubeLoader {
         //    success = false;
       }
     }
+    this.scene.joints = loadedJoints;
+    this.scene._success = success;
 
 
-    return success;
+    return this.scene;
   }
 
   //create a world variable and return it if loading succeeds

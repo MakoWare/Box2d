@@ -35,9 +35,9 @@ class RubeAsset extends Asset {
     return () => {
       if (this.xobj.readyState == 4 && this.xobj.status == "200") {
         // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-        var scene = JSON.parse(this.xobj.responseText);
-        var success = this.rubeLoader.loadSceneIntoWorld(scene, this.world);
-        if(success){
+        var sceneJson = JSON.parse(this.xobj.responseText);
+        this.data = this.rubeLoader.loadSceneIntoWorld(sceneJson, this.world);
+        if(this.data._success){
           resolve(this);
         } else {
           reject(this);
