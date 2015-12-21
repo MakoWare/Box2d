@@ -74,8 +74,40 @@ class RubeLoader {
     }
     if(bodyJso.hasOwnProperty('customProperties')){
       body.customProperties = bodyJso.customProperties;
+      this.parseCustomProperties(body);
     }
     return body;
+  }
+
+  parseCustomProperties(body){
+    body.props = body.props || {};
+    var types = ['string','vec2','color','float','int','bool'];
+    body.customProperties.forEach( (prop)=>{
+      // var data = {};
+      // data[prop.name] = prop.string || prop.vec2 || prop.color || null;
+      // if(data[prop.name]===null){
+      //   data[prop.name] = prop.float!==undefined?prop.float:null;
+      // }
+      // if(data[prop.name]===null){
+      //   data[prop.name] = prop.int!==undefined?prop.int:null;
+      // }
+      // if(data[prop.name]===null){
+      //   data[prop.name] = prop.bool!==undefined?prop.bool:null;
+      // }
+      // body.props.push(data);
+
+      types.forEach( (type)=>{
+        if(prop[type]!==undefined){
+          prop.value = prop[type];
+          prop.type = type;
+        }
+      });
+
+      body.props[prop.name] = {
+        type:prop.type,
+        value:prop.value
+      };
+    });
   }
 
   loadFixtureFromRUBE(body, fixtureJso) {

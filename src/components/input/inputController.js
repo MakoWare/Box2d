@@ -10,6 +10,7 @@ let defaultKeyConfig = {
 class InputController {
   constructor(canvas) {
     this.canvas = canvas;
+    this.config = Util.readConfig('input');
 
     this.initKeys();
     // this.initMouse();
@@ -55,11 +56,18 @@ class InputController {
             if(l[key].call(l,true,evt) === false){
               continue;
             }
-            break;
+            return;
           }
         }
       }
+      if(this.config.logUnmappedKeys){
+        console.log(evt.keyCode);
+      }
     } catch (e) {
+    } finally {
+      if(this.config.logAllKeys){
+        console.log(evt.keyCode);
+      }
     }
 
   }

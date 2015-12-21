@@ -20,6 +20,10 @@ var config = {
       y: -9.8,
     },
     drawDebug: true
+  },
+  input: {
+    logAllKeys:false,
+    logUnmappedKeys:true,
   }
 };
 
