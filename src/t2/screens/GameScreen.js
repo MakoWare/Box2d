@@ -36,7 +36,6 @@ class GameScreen extends Screen {
 
     ctx.restore();
   }
-
 }
 
 export default GameScreen;

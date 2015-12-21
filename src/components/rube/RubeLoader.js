@@ -63,17 +63,18 @@ class RubeLoader {
 
     body.SetMassData(md);
 
-    if ( bodyJso.hasOwnProperty('fixture') ) {
+    if(bodyJso.hasOwnProperty('fixture')){
       for (var k = 0; k < bodyJso['fixture'].length; k++) {
         var fixtureJso = bodyJso['fixture'][k];
         this.loadFixtureFromRUBE(body, fixtureJso);
       }
     }
-    if ( bodyJso.hasOwnProperty('name') )
+    if(bodyJso.hasOwnProperty('name')){
       body.name = bodyJso.name;
-    if ( bodyJso.hasOwnProperty('customProperties') )
+    }
+    if(bodyJso.hasOwnProperty('customProperties')){
       body.customProperties = bodyJso.customProperties;
-
+    }
     return body;
   }
 
