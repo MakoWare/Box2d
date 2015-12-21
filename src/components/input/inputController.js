@@ -2,10 +2,9 @@ import Util from 'src/components/util/util';
 
 let listeners = [];
 let defaultKeyConfig = {
-  keys: {
-
-  },
-  preventDefault: true
+  options: {
+    preventDefault: true
+  }
 }
 
 class InputController {
@@ -47,10 +46,18 @@ class InputController {
     // console.log(evt.keyCode);
     var l;
     try {
-      l = listeners[listeners.length-1];
-      if(l){
-        var cfg = l.keyConfig;
-        l[cfg[evt.keyCode]].call(l,true,evt);
+      for(var i=listeners.length-1; i>=0; i--){
+        l = listeners[i];
+        if(l){
+          var cfg = l.keyConfig;
+          var key = cfg[evt.keyCode];
+          if(key){
+            if(l[key].call(l,true,evt) === false){
+              continue;
+            }
+            break;
+          }
+        }
       }
     } catch (e) {
     }
@@ -61,10 +68,18 @@ class InputController {
     // console.log(evt.keyCode);
     var l;
     try {
-      l = listeners[listeners.length-1];
-      if(l){
-        var cfg = l.keyConfig;
-        l[cfg[evt.keyCode]].call(l,false,evt);
+      for(var i=listeners.length-1; i>=0; i--){
+        l = listeners[i];
+        if(l){
+          var cfg = l.keyConfig;
+          var key = cfg[evt.keyCode];
+          if(key){
+            if(l[key].call(l,false,evt) === false){
+              continue;
+            }
+            break;
+          }
+        }
       }
     } catch (e) {
     }

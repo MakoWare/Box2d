@@ -4,6 +4,7 @@ import Level1 from 'src/t2/levels/level1';
 import RubeLoader from 'src/components/rube/RubeLoader';
 import DebugDraw from 'src/components/box2d/debugDraw';
 import Box2D from 'src/components/box2d/box2d';
+import App from 'src/components/app/app';
 
 class GameScreen extends Screen {
   constructor(camera, world, options) {
