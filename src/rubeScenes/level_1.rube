@@ -151,7 +151,7 @@
           },
           
           {
-            "color" : [ 255, 77, 47, 255 ],
+            "color" : [ 82, 255, 41, 255 ],
             "name" : "Color"
           }
         ],
@@ -163,7 +163,6 @@
             "friction" : 0.2,
             "id" : 5,
             "name" : "playerFixture",
-            "restitution" : 0.5,
             "shapes" : 
             [
               
@@ -188,6 +187,7 @@
           "x" : 1,
           "y" : 1
         },
+        "sleepingAllowed" : false,
         "type" : "dynamic"
       },
       

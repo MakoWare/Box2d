@@ -1,12 +1,14 @@
 import StatefulPolygonEntity from 'src/components/engine/StatefulPolygonEntity';
 import App from 'src/components/app/app';
+import Box2D from 'src/components/box2d/box2d';
 
 class Player extends StatefulPolygonEntity {
   constructor(body, image, options){
     super(body, image, options);
 
-    this.speed = 10;
+    this.speed = 50;
     this.initMoveListeners();
+    console.log(this);
   }
 
   initMoveListeners(){
@@ -36,25 +38,29 @@ class Player extends StatefulPolygonEntity {
     if(keyDown){
       console.log("player.moveRight");
       var impulse = this.body.GetMass() * this.speed;
-      this.body.ApplyLinearImpulse(new Box2d.b2Vec2(0, impulse), this.body.GetWorldCenter());
+      this.body.ApplyForce(new Box2D.b2Vec2(impulse, 0), this.body.GetWorldCenter());
     }
   }
 
   moveLeft(keyDown){
     if(keyDown){
       console.log("player.moveLeft()");
+      var impulse = this.body.GetMass() * this.speed;
+      this.body.ApplyForce(new Box2D.b2Vec2(-impulse, 0), this.body.GetWorldCenter());
     }
   }
 
   moveUp(keyDown){
     if(keyDown){
-      console.log("player.moveUp()");
+      var impulse = this.body.GetMass() * this.speed;
+      this.body.ApplyForce(new Box2D.b2Vec2(0, impulse), this.body.GetWorldCenter());
     }
   }
 
   moveDown(keyDown){
     if(keyDown){
-      console.log("player.moveDown()");
+      var impulse = this.body.GetMass() * this.speed;
+      this.body.ApplyForce(new Box2D.b2Vec2(0, -impulse), this.body.GetWorldCenter());
     }
   }
 }

@@ -32,6 +32,9 @@ class RubeLoader {
     bd.set_bullet(bodyJso.bullet || false);
     bd.set_fixedRotation(bodyJso.fixedRotation || false);
     bd.set_linearDamping(bodyJso.linearDamping || false);
+    if(!bodyJso.allowSleep){
+      bd.set_allowSleep(false);
+    }
 
     if ( bodyJso.hasOwnProperty('linearVelocity') && bodyJso.linearVelocity instanceof Object )
       bd.set_linearVelocity(this.parseVec( bodyJso.linearVelocity ));

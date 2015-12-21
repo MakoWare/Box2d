@@ -46,50 +46,43 @@ class InputController {
   onKeyDown(canvas, evt) {
     // console.log(evt.keyCode);
     var l;
-    try {
-      for(var i=listeners.length-1; i>=0; i--){
-        l = listeners[i];
-        if(l){
-          var cfg = l.keyConfig;
-          var key = cfg[evt.keyCode];
-          if(key){
-            if(l[key].call(l,true,evt) === false){
-              continue;
-            }
-            return;
+
+    for(var i=listeners.length-1; i>=0; i--){
+      l = listeners[i];
+      if(l){
+        var cfg = l.keyConfig;
+        var key = cfg[evt.keyCode];
+        if(key){
+          if(l[key].call(l,true,evt) === false){
+            continue;
           }
+          return;
         }
       }
-      if(this.config.logUnmappedKeys){
-        console.log(evt.keyCode);
-      }
-    } catch (e) {
-    } finally {
-      if(this.config.logAllKeys){
-        console.log(evt.keyCode);
-      }
     }
-
+    if(this.config.logUnmappedKeys){
+      console.log(evt.keyCode);
+    }
+    if(this.config.logAllKeys){
+      console.log(evt.keyCode);
+    }
   }
 
   onKeyUp(canvas, evt) {
     // console.log(evt.keyCode);
     var l;
-    try {
-      for(var i=listeners.length-1; i>=0; i--){
-        l = listeners[i];
-        if(l){
-          var cfg = l.keyConfig;
-          var key = cfg[evt.keyCode];
-          if(key){
-            if(l[key].call(l,false,evt) === false){
-              continue;
-            }
-            break;
+    for(var i=listeners.length-1; i>=0; i--){
+      l = listeners[i];
+      if(l){
+        var cfg = l.keyConfig;
+        var key = cfg[evt.keyCode];
+        if(key){
+          if(l[key].call(l,false,evt) === false){
+            continue;
           }
+          break;
         }
       }
-    } catch (e) {
     }
   }
 
