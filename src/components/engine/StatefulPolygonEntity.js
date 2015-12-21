@@ -5,7 +5,7 @@ class StatefulPolygonEntity extends PolygonEntity {
     super(body, image, options);
     this.stateful = true;
     this.states = [];
-    this.maxStates = 6000;
+    this.maxStates = 1000;
   }
 
   pushState(){
@@ -23,7 +23,7 @@ class StatefulPolygonEntity extends PolygonEntity {
   }
 
   shiftState(){
-
+    this.states.shift();
   }
 
   setState(){
@@ -33,7 +33,12 @@ class StatefulPolygonEntity extends PolygonEntity {
   }
 
   draw(){
-    if(this.states.length < this.maxStates && !this.reverse){
+    if(this.states.length > this.maxStates){
+      this.shiftState();
+      this.pushState();
+    }
+
+    if(!this.reverse && this.states.length < this.maxStates){
       this.pushState();
     } else {
       this.popState();
