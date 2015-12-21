@@ -8,7 +8,6 @@ class Player extends StatefulPolygonEntity {
 
     this.speed = 50;
     this.initMoveListeners();
-    console.log(this);
   }
 
   initMoveListeners(){
@@ -16,7 +15,8 @@ class Player extends StatefulPolygonEntity {
       '39':'right',
       '37':'left',
       '38':'up',
-      '40':'down'
+      '40':'down',
+      '32':'cross'
     }, true);
 
     this.inputListener.left = (down)=>{
@@ -32,13 +32,17 @@ class Player extends StatefulPolygonEntity {
     this.inputListener.down = (down)=>{
       this.moveDown(down);
     }
+    this.inputListener.cross = (down)=>{
+      this.revertState(down);
+    }
+
   }
 
   moveRight(keyDown){
     if(keyDown){
       console.log("player.moveRight");
       var impulse = this.body.GetMass() * this.speed;
-      this.body.ApplyForce(new Box2D.b2Vec2(impulse, 0), this.body.GetWorldCenter());
+      this.body.ApplyLinearImpulse(new Box2D.b2Vec2(impulse, 0), this.body.GetWorldCenter());
     }
   }
 
@@ -46,22 +50,34 @@ class Player extends StatefulPolygonEntity {
     if(keyDown){
       console.log("player.moveLeft()");
       var impulse = this.body.GetMass() * this.speed;
-      this.body.ApplyForce(new Box2D.b2Vec2(-impulse, 0), this.body.GetWorldCenter());
+      this.body.ApplyLinearImpulse(new Box2D.b2Vec2(-impulse, 0), this.body.GetWorldCenter());
     }
   }
 
   moveUp(keyDown){
     if(keyDown){
       var impulse = this.body.GetMass() * this.speed;
-      this.body.ApplyForce(new Box2D.b2Vec2(0, impulse), this.body.GetWorldCenter());
+      this.body.ApplyLinearImpulse(new Box2D.b2Vec2(0, impulse), this.body.GetWorldCenter());
     }
   }
 
   moveDown(keyDown){
     if(keyDown){
       var impulse = this.body.GetMass() * this.speed;
-      this.body.ApplyForce(new Box2D.b2Vec2(0, -impulse), this.body.GetWorldCenter());
+      this.body.ApplyLinearImpulse(new Box2D.b2Vec2(0, -impulse), this.body.GetWorldCenter());
     }
+  }
+
+  revertState(keyDown){
+    if(keyDown){
+      this.reverse = true;
+    } else {
+      this.reverse = false;
+    }
+  }
+
+  draw(){
+    super.draw();
   }
 }
 
