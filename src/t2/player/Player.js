@@ -39,7 +39,7 @@ class Player extends StatefulPolygonEntity {
   }
 
   moveRight(keyDown){
-    if(keyDown){
+    if(keyDown && !this.reverse){
       console.log("player.moveRight");
       var impulse = this.body.GetMass() * this.speed;
       this.body.ApplyLinearImpulse(new Box2D.b2Vec2(impulse, 0), this.body.GetWorldCenter());
@@ -47,7 +47,7 @@ class Player extends StatefulPolygonEntity {
   }
 
   moveLeft(keyDown){
-    if(keyDown){
+    if(keyDown && !this.reverse){
       console.log("player.moveLeft()");
       var impulse = this.body.GetMass() * this.speed;
       this.body.ApplyLinearImpulse(new Box2D.b2Vec2(-impulse, 0), this.body.GetWorldCenter());
@@ -55,14 +55,14 @@ class Player extends StatefulPolygonEntity {
   }
 
   moveUp(keyDown){
-    if(keyDown){
+    if(keyDown && !this.reverse){
       var impulse = this.body.GetMass() * this.speed;
       this.body.ApplyLinearImpulse(new Box2D.b2Vec2(0, impulse), this.body.GetWorldCenter());
     }
   }
 
   moveDown(keyDown){
-    if(keyDown){
+    if(keyDown && !this.reverse){
       var impulse = this.body.GetMass() * this.speed;
       this.body.ApplyLinearImpulse(new Box2D.b2Vec2(0, -impulse), this.body.GetWorldCenter());
     }
@@ -76,8 +76,17 @@ class Player extends StatefulPolygonEntity {
     }
   }
 
-  draw(){
+  draw(ctx, delta){
     super.draw();
+
+    ctx.save();
+
+    var pos = this.body.GetPosition();
+    ctx.fillStyle = 'red';
+    ctx.translate(-0.5,-0.5); // x-w/2, y-h/2
+    ctx.fillRect(pos.get_x(),pos.get_y(),1,1);
+
+    ctx.restore();
   }
 }
 

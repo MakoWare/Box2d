@@ -35,16 +35,17 @@ class StatefulPolygonEntity extends PolygonEntity {
   draw(){
     if(this.states.length >= this.maxStates){
       this.shiftState();
-      this.pushState();
+      // this.pushState();
     }
 
     if(!this.reverse && this.states.length < this.maxStates){
       this.pushState();
     } else {
       this.popState();
+      this.setState();
     }
-    console.log(this.states.length);
-    this.setState();
+    // console.log(this.states.length);
+    // this.setState();
   }
 }
 

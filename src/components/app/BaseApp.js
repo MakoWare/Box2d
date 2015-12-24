@@ -35,7 +35,7 @@ class BaseApp {
 
     this._animate = this._animate.bind(this);
 
-    App.input = new InputController(this.canvas);
+    App.input = this.input = new InputController(this.canvas);
     App.canvas = this.canvas;
     App.context = this.context;
     App.config = this.config;
@@ -49,7 +49,7 @@ class BaseApp {
   }
 
   draw(){
-    
+
   }
 
   _draw(ctx, delta) {
@@ -119,6 +119,7 @@ class BaseApp {
     // frameTime60 = frameTime60 * (59/60) + frametime * (1/60);
     //
     this._draw(this.context, timestamp);
+    this.input.step(timestamp);
     // statusUpdateCounter++;
     // if ( statusUpdateCounter > 20 ) {
     //   this.updateStats();

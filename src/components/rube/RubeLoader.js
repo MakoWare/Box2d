@@ -114,6 +114,7 @@ class RubeLoader {
   }
 
   loadFixtureFromRUBE(body, fixtureJso) {
+    console.log(body);
     var fd = new Box2D.b2FixtureDef();
     fd.set_density(fixtureJso.density || 0);
     fd.set_friction(fixtureJso.friction || 0);
@@ -131,18 +132,22 @@ class RubeLoader {
     if (fixtureJso.hasOwnProperty('circle')) {
 
       var shape = new Box2D.b2CircleShape();
+      var radius = fixtureJso.circle.radius || 0;
+      var center = this.parseVec(fixtureJso.circle.center);
 
-      shape.set_m_radius(fixtureJso.circle.radius || 0);
-      if ( fixtureJso.circle.center )
-        shape.set_m_p(this.parseVec(fixtureJso.circle.center));
-      else
-        shape.set_m_p(new Box2D.b2Vec2(0, 0));
+
+      shape.set_m_radius(radius);
+      shape.set_m_p(center);
 
       fd.set_shape(shape);
 
       var fixture = body.CreateFixture(fd);
       if ( fixtureJso.name )
         fixture.name = fixtureJso.name;
+
+      body.shapeType = 'circle';
+      body.radius = radius;
+      body.center = center;
     }
     else if (fixtureJso.hasOwnProperty('polygon')) {
 
@@ -161,6 +166,9 @@ class RubeLoader {
 
       if ( fixture && fixtureJso.name )
         fixture.name = fixtureJso.name;
+
+      body.shapeType = 'polygon';
+      body.verts = verts;
     }
     else if (fixtureJso.hasOwnProperty('chain')) {
 
@@ -176,6 +184,8 @@ class RubeLoader {
       if ( fixtureJso.name )
         fixture.name = fixtureJso.name;
 
+      body.shapeType = 'chain';
+      body.verts = verts;
     }
     else {
       console.log("Could not find shape type for fixture");
@@ -190,7 +200,7 @@ class RubeLoader {
   }
 
   parseVec(obj) {
-    if (obj instanceof Object)
+    if (obj && obj instanceof Object)
       return new Box2D.b2Vec2(obj.x || 0, obj.y || 0);
     else
       return new Box2D.b2Vec2(0,0);

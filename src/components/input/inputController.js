@@ -14,6 +14,7 @@ class InputController {
 
     this.initKeys();
     // this.initMouse();
+    this.initGamepads();
   }
 
   // input methods
@@ -145,7 +146,32 @@ class InputController {
 
   //    -- mouse helper function
 
+  //  -- gamepad
+  initGamepads(){
+    this.gamepads = navigator.getGamepads() || [];
+    window.addEventListener("gamepadconnected", (e)=>{
+      console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
+        e.gamepad.index, e.gamepad.id,
+        e.gamepad.buttons.length, e.gamepad.axes.length);
+      console.log(e.gamepad);
+      this.gamepads = navigator.getGamepads() || [];
+    });
+    console.log(this.gamepads);
+  }
 
+  step(){
+    var gp;
+    for(var i=0;i<this.gamepads.length;i++){
+      gp = this.gamepads[i];
+      if(gp){
+        gp.buttons.forEach( (b)=>{
+          if(b.pressed){
+            console.log(b);
+          }
+        });
+      }
+    }
+  }
 
 }
 
