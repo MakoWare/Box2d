@@ -114,7 +114,6 @@ class RubeLoader {
   }
 
   loadFixtureFromRUBE(body, fixtureJso) {
-    console.log(body);
     var fd = new Box2D.b2FixtureDef();
     fd.set_density(fixtureJso.density || 0);
     fd.set_friction(fixtureJso.friction || 0);

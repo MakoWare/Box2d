@@ -25,7 +25,7 @@ class GameScreen extends Screen {
     this.camera.setPTM(34);
     this.camera.setViewCenterWorld(new Box2D.b2Vec2(10,10),true);
 
-    this.level = new Level(scene);
+    this.level = new Level(scene, this.world);
   }
 
   draw(ctx, delta){

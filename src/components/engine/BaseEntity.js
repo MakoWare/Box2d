@@ -11,6 +11,7 @@ class BaseEntity {
 
 
     this.entities = [];
+    this.body.entityData = this;
   }
 
   setImage(image){
@@ -33,6 +34,19 @@ class BaseEntity {
 
   getAngle(){
     return this.angle = this.body.GetAngle();
+  }
+
+  involvedInContact(contactPtr){
+    var contact = Box2D.wrapPointer(contactPtr, Box2D.b2Contact);
+    var entityA = contact.GetFixtureA().GetBody().entityData;
+    var entityB = contact.GetFixtureB().GetBody().entityData;
+    if(entityA == this){
+      return entityB;
+    } else if(entityB == this){
+      return entityA;
+    } else {
+      return false;
+    }
   }
 
   draw(ctx, delta){

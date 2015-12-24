@@ -4,8 +4,10 @@ import Wall from 'src/t2/wall/Wall';
 import EntityManager from 'src/components/engine/EntityManager';
 
 class Level extends BaseLevel {
-  constructor(scene) {
+  constructor(scene, world) {
     super();
+
+    this.world = world;
     this.scene = scene;
     this.entityManager = new EntityManager();
 
@@ -14,7 +16,7 @@ class Level extends BaseLevel {
 
       switch (body.props.Class.value) {
         case 'Player':
-          var obj = new Player(body);
+          var obj = new Player(body, null, null, this.world);
           this.scene.objects[body.name] = obj;
           this.entityManager.registerEntity(obj);
           break;
@@ -26,7 +28,7 @@ class Level extends BaseLevel {
         default:
 
       }
-    });
+    }.bind(this));
 
 
   }
