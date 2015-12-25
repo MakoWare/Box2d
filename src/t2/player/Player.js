@@ -40,6 +40,27 @@ class Player extends StatefulPolygonEntity {
     this.inputListener.cross = (down)=>{
       this.revertState(down);
     }
+    this.inputListener.leftStick = (xVal,yVal,event)=>{
+      if(xVal>0.3){
+        this.moveRight(true);
+      } else if(xVal<-0.3){
+        this.moveLeft(true);
+      } else {
+        this.moveRight(false);
+        this.moveLeft(false);
+      }
+
+      if(yVal>0.3){
+        this.moveDown(true);
+      } else if(yVal<-0.3){
+        this.moveUp(true);
+      } else {
+        this.moveDown(false);
+        this.moveUp(false);
+      }
+
+
+    }
   }
 
   initContactListeners(){

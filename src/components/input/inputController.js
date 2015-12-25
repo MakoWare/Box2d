@@ -6,13 +6,22 @@ let defaultKeyConfig = {
     preventDefault: true
   }
 }
-let ps4Mapping = ['cross','circle','square','triangle','l1','r1','l2','r2','extra','start','l3','r3','up','down','left','right','home','select'];
+let ps4Mapping = {
+  buttons: ['cross','circle','square','triangle','l1','r1','l2','r2','extra','start','l3','r3','up','down','left','right','home','select'],
+  axes: ['lx','ly','rx','ry'],
+  sticks: {
+    lx:'leftStick',
+    ly:'leftStick',
+    rx:'rightStick',
+    ry:'rightStick'
+  }
+};
 
 let gamepadMaps = {
   'Wireless Controller (STANDARD GAMEPAD Vendor: 054c Product: 05c4)':ps4Mapping // ps4 controller
 };
 
-let gamepadsAxisDeadZone = 0.01;
+let gamepadsAxisDeadZone = 0.045;
 let gamepadsConfig = {};
 // let gamepadTypeMaps = [{id:'054c',type:'ps4'}];
 
@@ -164,6 +173,12 @@ class InputController {
       [], // gamepad index 2
       []  // gamepad index 3
     ];
+    this.lastAxisStates = [
+      [], // gamepad index 0
+      [], // gamepad index 1
+      [], // gamepad index 2
+      []  // gamepad index 3
+    ];
     window.addEventListener("gamepadconnected", (e)=>{
       console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
         e.gamepad.index, e.gamepad.id,
@@ -176,6 +191,9 @@ class InputController {
       this.getGamepads();
     });
     // console.log(navigator.getGamepads());
+
+    // temp
+    this.most = this.least = 0;
   }
 
   getGamepads(){
@@ -209,17 +227,37 @@ class InputController {
           this.setLastState(i,ix,b.pressed);
         });
 
-        // gp.axes.forEach( (value,ix)=>{
-        //   var dz = this.getDeadZone(i);
-        //
-        //   if( ix==0){
-        //     console.log('axis %d event: %d',ix,value);
-        //   }
-        //
-        //
-        // });
+        gp.axes.forEach( (value,axis)=>{
+          var dz = this.getDeadZone(axis);
+          var lastState = this.getLastAxisState(i,axis);
+
+          if( value < -dz || value > dz ){
+            // if(value > this.most){
+            //   this.most = value;
+            // }
+            // if(value < this.least){
+            //   this.least = value;
+            // }
+            // console.log(dz,this.least,this.most);
+            this.gamepadAxisEvent(gp,axis,value,false);
+            // this.setLastAxisState(i,axis,false);
+          } else if(!lastState.zeroed){
+            this.gamepadAxisEvent(gp,axis,0,true);
+            // this.setLastAxisState(i,axis,true);
+          }
+
+        });
       }
     }
+  }
+
+  getLastAxisState(gpIndex,axis){
+    var b = this.lastAxisStates[gpIndex][axis] || {zeroed:true};
+    return b;
+  }
+
+  setLastAxisState(gpIndex,axis,state){
+    this.lastAxisStates[gpIndex][axis] = {zeroed:state};
   }
 
   getDeadZone(gamepadIndex){
@@ -251,7 +289,7 @@ class InputController {
   }
 
   gamepadButtonEvent(gamepad,button,down) {
-    button.id = gamepadMaps[gamepad.id][button.index];
+    button.id = gamepadMaps[gamepad.id].buttons[button.index];
     if(button.id){
       if(down){
         this.onGamepadDown(new GamepadButtonEvent(gamepad,button,down));
@@ -290,6 +328,50 @@ class InputController {
       var func = l[evt.keyIdentifier];
       if(!func){ continue;}
       if(func.call(l,false,evt) === false){
+        continue;
+      }
+      return;
+    }
+  }
+
+  getGamepadMap(gamepadId){
+    return gamepadMaps[gamepadId] || {};
+  }
+
+  gamepadAxisEvent(gamepad,axisIndex,value,zeroed){
+    this.setLastAxisState(gamepad.index,axisIndex,zeroed);
+    var gpMap = this.getGamepadMap(gamepad.id);
+    var axis = {};
+    axis.id = gpMap.axes[axisIndex];
+    axis.stick = gpMap.sticks[axis.id];
+    axis.index = axisIndex;
+    axis.value = value;
+    axis.zeroed = zeroed;
+
+    var evt = new GamepadAxisEvent(gamepad,axis);
+    evt.values = {};
+    if(axis.stick==='leftStick'){
+      evt.values.x = gamepad.getValueByAxisId('lx');
+      evt.values.y = gamepad.getValueByAxisId('ly');
+    } else if(axis.stick==='rightStick'){
+      evt.values.x = gamepad.getValueByAxisId('rx');
+      evt.values.y = gamepad.getValueByAxisId('ry');
+    }
+
+
+
+
+    this.onGamepadAxis(evt);
+  }
+
+  onGamepadAxis(evt){
+    var l;
+    for(var i=listeners.length-1; i>=0; i--){
+      l = listeners[i];
+      if(!l){ continue;}
+      var func = l[evt.stick];
+      if(!func){ continue;}
+      if(func.call(l,evt.values.x,evt.values.y,evt) === false){
         continue;
       }
       return;
@@ -357,6 +439,14 @@ class InputEventListener {
   extra(){
 
   }
+
+  leftStick(x,y,event){
+
+  }
+
+  rightStick(x,y,event){
+
+  }
 }
 
 class GamepadButtonEvent {
@@ -364,10 +454,33 @@ class GamepadButtonEvent {
     this.gamepad = gamepad;
     this.button = button;
     this.down = down;
-    this.type = 'gamepadButtonDown';
+    this.type = 'gamepadButtonEvent';
     this.keyCode = button.index;
     this.keyIdentifier = button.id;
   }
+}
+
+
+
+class GamepadAxisEvent {
+  constructor(gamepad,axis) {
+    this.gamepad = gamepad;
+    this.axis = axis;
+    this.stick = axis.stick;
+    this.keyCode = 200+axis.index;
+    this.keyIdentifier = axis.id;
+    this.values = axis.values;
+    this.type = 'gamepadAxisEvent';
+  }
+}
+
+Gamepad.prototype.getValueByAxisId = function(axisId){
+  var gp = gamepadMaps[this.id];
+  var ix = gp.axes.indexOf(axisId);
+  if(ix>-1){
+    return this.axes[ix];
+  }
+  return;
 }
 
 export default InputController;
