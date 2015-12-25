@@ -6,6 +6,15 @@ let defaultKeyConfig = {
     preventDefault: true
   }
 }
+let ps4Mapping = ['cross','circle','square','triangle','l1','r1','l2','r2','extra','start','l3','r3','up','down','left','right','home','select'];
+
+let gamepadMaps = {
+  'Wireless Controller (STANDARD GAMEPAD Vendor: 054c Product: 05c4)':ps4Mapping // ps4 controller
+};
+
+let gamepadsAxisDeadZone = 0.01;
+let gamepadsConfig = {};
+// let gamepadTypeMaps = [{id:'054c',type:'ps4'}];
 
 class InputController {
   constructor(canvas) {
@@ -33,32 +42,32 @@ class InputController {
 
   //  -- keyboard
   initKeys() {
-    canvas.addEventListener('keydown', function(evt) {
+    this.canvas.addEventListener('keydown', function(evt) {
       // evt.preventDefault();
-      this.onKeyDown(canvas,evt);
+      this.onKeyDown(this.canvas,evt);
     }.bind(this), false);
 
-    canvas.addEventListener('keyup', function(evt) {
+    this.canvas.addEventListener('keyup', function(evt) {
       // evt.preventDefault();
-      this.onKeyUp(canvas,evt);
+      this.onKeyUp(this.canvas,evt);
     }.bind(this), false);
   }
 
   onKeyDown(canvas, evt) {
-    // console.log(evt.keyCode);
+    // console.log(evt);
     var l;
 
     for(var i=listeners.length-1; i>=0; i--){
       l = listeners[i];
-      if(l){
-        var cfg = l.keyConfig;
-        var key = cfg[evt.keyCode];
-        if(key){
-          if(l[key].call(l,true,evt) === false){
-            continue;
-          }
-          return;
+      if(!l){ continue;}
+
+      var cfg = l.keyConfig;
+      var key = cfg[evt.keyCode];
+      if(key){
+        if(l[key].call(l,true,evt) === false){
+          continue;
         }
+        return;
       }
     }
     if(this.config.logUnmappedKeys){
@@ -148,28 +157,142 @@ class InputController {
 
   //  -- gamepad
   initGamepads(){
-    this.gamepads = navigator.getGamepads() || [];
+    this.gamepads = {};
+    this.lastButtonStates = [
+      [], // gamepad index 0
+      [], // gamepad index 1
+      [], // gamepad index 2
+      []  // gamepad index 3
+    ];
     window.addEventListener("gamepadconnected", (e)=>{
       console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
         e.gamepad.index, e.gamepad.id,
         e.gamepad.buttons.length, e.gamepad.axes.length);
       console.log(e.gamepad);
-      this.gamepads = navigator.getGamepads() || [];
+      this.getGamepads();
     });
-    console.log(this.gamepads);
+    window.addEventListener("gamepaddisconnected", (e)=>{
+      console.log('Gamepad disconnected: ',e);
+      this.getGamepads();
+    });
+    // console.log(navigator.getGamepads());
+  }
+
+  getGamepads(){
+    var gps = navigator.getGamepads() || [];
+    for(var i=0;i<gps.length;i++){
+      gp = this.gamepads[i];
+      if(gp){
+        this.gamepads[i] = gp;
+      }
+    }
+    return gps;
   }
 
   step(){
+    var gps = this.getGamepads();
     var gp;
-    for(var i=0;i<this.gamepads.length;i++){
-      gp = this.gamepads[i];
+    for(var i=0;i<gps.length;i++){
+      gp = gps[i];
       if(gp){
-        gp.buttons.forEach( (b)=>{
+        gp.buttons.forEach( (b,ix)=>{
+          // console.log(b.pressed, b.value);
+          var lastState = this.getLastState(i,ix);
+
           if(b.pressed){
-            console.log(b);
+            b.index = ix;
+            this.gamepadButtonEvent(gp,b,true);
+          } else if(lastState && lastState.pressed){
+            this.gamepadButtonEvent(gp,b,false);
           }
+
+          this.setLastState(i,ix,b.pressed);
         });
+
+        // gp.axes.forEach( (value,ix)=>{
+        //   var dz = this.getDeadZone(i);
+        //
+        //   if( ix==0){
+        //     console.log('axis %d event: %d',ix,value);
+        //   }
+        //
+        //
+        // });
       }
+    }
+  }
+
+  getDeadZone(gamepadIndex){
+    if(gamepadsConfig.hasOwnProperty(gamepadIndex) && gamepadsConfig[gamepadIndex].hasOwnProperty(deadZone)){
+      return gamepadsConfig[gamepadIndex].deadZone;
+    }
+    return gamepadsAxisDeadZone;
+  }
+
+  setDeadZone(deadZone,gamepadIndex){
+    if(gamepadIndex !== null && gamepadIndex !== undefined){
+      if(gamepadsConfig.hasOwnProperty(gamepadIndex)){
+        gamepadsConfig[gamepadIndex].deadZone = deadZone;
+      } else {
+        gamepadsConfig[gamepadIndex] = {deadZone: deadZone};
+      }
+    } else {
+      gamepadsAxisDeadZone = deadZone;
+    }
+  }
+
+  getLastState(i,ix){
+    var b = this.lastButtonStates[i][ix];
+    return b;
+  }
+
+  setLastState(i,ix,state){
+    this.lastButtonStates[i][ix] = {pressed:state};
+  }
+
+  gamepadButtonEvent(gamepad,button,down) {
+    button.id = gamepadMaps[gamepad.id][button.index];
+    if(button.id){
+      if(down){
+        this.onGamepadDown(new GamepadButtonEvent(gamepad,button,down));
+      } else {
+        this.onGamepadUp(new GamepadButtonEvent(gamepad,button,down));
+      }
+    }
+  }
+
+  onGamepadDown(evt){
+    var l;
+
+    if(this.config.logAllKeys){
+      console.log(evt.keyCode,evt.keyIdentifier);
+    }
+    for(var i=listeners.length-1; i>=0; i--){
+      l = listeners[i];
+      if(!l){ continue;}
+      var func = l[evt.keyIdentifier];
+      if(!func){ continue;}
+      if(func.call(l,true,evt) === false){
+        continue;
+      }
+      return;
+    }
+    if(this.config.logUnmappedKeys){
+      console.log(evt.keyCode,evt.keyIdentifier,evt.button.value);
+    }
+  }
+
+  onGamepadUp(evt){
+    var l;
+    for(var i=listeners.length-1; i>=0; i--){
+      l = listeners[i];
+      if(!l){ continue;}
+      var func = l[evt.keyIdentifier];
+      if(!func){ continue;}
+      if(func.call(l,false,evt) === false){
+        continue;
+      }
+      return;
     }
   }
 
@@ -229,6 +352,21 @@ class InputEventListener {
   }
 
   cross(){
+  }
+
+  extra(){
+
+  }
+}
+
+class GamepadButtonEvent {
+  constructor(gamepad,button,down) {
+    this.gamepad = gamepad;
+    this.button = button;
+    this.down = down;
+    this.type = 'gamepadButtonDown';
+    this.keyCode = button.index;
+    this.keyIdentifier = button.id;
   }
 }
 
