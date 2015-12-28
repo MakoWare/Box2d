@@ -17,7 +17,7 @@ var config = {
   world: {
     gravity: {
       x: 0,
-      y: -1
+      y: -10
     },
     drawDebug: true
   },

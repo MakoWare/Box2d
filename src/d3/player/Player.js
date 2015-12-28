@@ -156,14 +156,14 @@ class Player extends StatefulPolygonEntity {
   draw(ctx, delta){
     super.draw();
 
-    ctx.save();
+    /* ctx.save();
 
-    var pos = this.body.GetPosition();
-    ctx.fillStyle = "#" + this.color;
-    ctx.translate(-0.5,-0.5); // x-w/2, y-h/2
-    ctx.fillRect(pos.get_x(),pos.get_y(),1,1);
+       var pos = this.body.GetPosition();
+       ctx.fillStyle = "#" + this.color;
+       ctx.translate(-0.5,-0.5); // x-w/2, y-h/2
+       ctx.fillRect(pos.get_x(),pos.get_y(),1,1);
 
-    ctx.restore();
+       ctx.restore(); */
   }
 }
 

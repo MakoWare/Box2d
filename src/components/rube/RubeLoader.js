@@ -25,6 +25,10 @@ class RubeLoader {
     else
       bd.set_type(Box2D.b2_staticBody);
 
+    console.log(bodyJso);
+    if(bodyJso.active === false){
+      bd.set_active(false);
+    }
     bd.set_angle(bodyJso.angle || 0);
     bd.set_angularVelocity(bodyJso.angularVelocity || 0);
     bd.set_angularDamping(bodyJso.angularDamping || 0);
