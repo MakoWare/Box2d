@@ -1,11 +1,11 @@
 import Screen from 'src/components/screen/screen';
 import AssetManager from 'src/components/base/assetManager';
-import Level1 from 'src/t2/levels/level1';
+import Level1 from 'src/d3/levels/level1';
 import RubeLoader from 'src/components/rube/RubeLoader';
 import DebugDraw from 'src/components/box2d/debugDraw';
 import Box2D from 'src/components/box2d/box2d';
 import App from 'src/components/app/app';
-import Level from 'src/t2/levels/Level';
+import Level from 'src/d3/levels/Level';
 
 class GameScreen extends Screen {
   constructor(camera, world, options) {

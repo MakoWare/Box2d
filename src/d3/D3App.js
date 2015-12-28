@@ -1,9 +1,9 @@
 import BaseApp from 'src/components/app/BaseApp';
-import LoadingScreen from 'src/t2/LoadingScreen';
+import LoadingScreen from 'src/d3/LoadingScreen';
 import DebugDraw from 'src/components/box2d/debugDraw';
-import GameScreen from 'src/t2/screens/GameScreen';
+import GameScreen from 'src/d3/screens/GameScreen';
 
-class TimeSquaredApp extends BaseApp {
+class D3App extends BaseApp {
   constructor() {
     super();
 
@@ -30,4 +30,4 @@ class TimeSquaredApp extends BaseApp {
 }
 
 
-export default TimeSquaredApp;
+export default D3App;

@@ -1,5 +1,5 @@
 import Util from 'src/components/util/util';
-import TimeSquaredApp from 'src/t2/TimeSquaredApp';
+import D3App from 'src/d3/D3App';
 
 
 var config = {
@@ -32,5 +32,5 @@ Util.setConfig(config);
 
 
 
-var app = new TimeSquaredApp();
+var app = new D3App();
 app.run();

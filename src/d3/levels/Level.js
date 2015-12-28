@@ -1,6 +1,6 @@
-import BaseLevel from 'src/t2/levels/BaseLevel';
-import Player from 'src/t2/player/Player';
-import Wall from 'src/t2/wall/Wall';
+import BaseLevel from 'src/d3/levels/BaseLevel';
+import Player from 'src/d3/player/Player';
+import Wall from 'src/d3/wall/Wall';
 import EntityManager from 'src/components/engine/EntityManager';
 
 class Level extends BaseLevel {
