@@ -11,7 +11,10 @@ class BaseEntity {
 
 
     this.entities = [];
-    this.body.entityData = this;
+    if(this.body){
+      this.body.entityData = this;
+    }
+
   }
 
   setImage(image){

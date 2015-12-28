@@ -312,11 +312,12 @@ class InputController {
       if(!func){ continue;}
       if(func.call(l,true,evt) === false){
         continue;
+      } else {
+        return;
       }
-      return;
     }
     if(this.config.logUnmappedKeys){
-      console.log(evt.keyCode,evt.keyIdentifier,evt.button.value);
+      console.log(evt.keyCode,evt.keyIdentifier,evt.button.value, listeners.length===0?"No listeners":"");
     }
   }
 
@@ -329,8 +330,9 @@ class InputController {
       if(!func){ continue;}
       if(func.call(l,false,evt) === false){
         continue;
+      } else {
+        return;
       }
-      return;
     }
   }
 
