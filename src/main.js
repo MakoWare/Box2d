@@ -9,8 +9,8 @@ var config = {
   camera: {
     fps: true,
     extras: {
-      axes: true,
-      grid: true
+      axes: false,
+      grid: false
     },
     ptm: 20
   },
@@ -19,7 +19,7 @@ var config = {
       x: 0,
       y: 0
     },
-    drawDebug: true
+    drawDebug: false
   },
   input: {
     logAllKeys:false,

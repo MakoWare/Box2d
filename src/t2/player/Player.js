@@ -9,7 +9,7 @@ class Player extends StatefulPolygonEntity {
     this.world = world;
     this.maxVX = 10;
     this.maxVY = 50;
-    this.color = "E6FFFF";
+    this.color = "ecf0f1";
 
     this.initContactListeners();
     this.initMoveListeners();

@@ -4,7 +4,7 @@ import RubeLoader from 'src/components/rube/RubeLoader';
 class Wall extends PolygonEntity {
   constructor(body, image, options){
     super(body, image, options);
-    this.color = "DF740C";
+    this.color = "34495E";
 
   }
 
