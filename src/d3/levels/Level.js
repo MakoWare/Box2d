@@ -29,8 +29,6 @@ class Level extends BaseLevel {
 
       }
     }.bind(this));
-
-
   }
 
   draw(ctx, delta){

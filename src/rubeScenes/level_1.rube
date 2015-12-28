@@ -43,25 +43,15 @@
     
     {
       "class" : "body",
-      "displayName" : "Color",
-      "name" : "Color",
-      "type" : "color"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "speed",
-      "name" : "speed",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
       "comboboxEntries" : 
       [
         
         {
-          "entry" : "Wall"
+          "entry" : "Dimension"
+        },
+        
+        {
+          "entry" : "Player"
         }
       ],
       "displayName" : "Class",
@@ -71,23 +61,24 @@
     
     {
       "class" : "body",
-      "displayName" : "Stateful",
-      "name" : "Stateful",
-      "type" : "bool"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "length",
-      "name" : "length",
-      "type" : "float"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "position",
-      "name" : "position",
-      "type" : "vec2"
+      "comboboxEntries" : 
+      [
+        
+        {
+          "entry" : "1"
+        },
+        
+        {
+          "entry" : "2"
+        },
+        
+        {
+          "entry" : "3"
+        }
+      ],
+      "displayName" : "Dimension",
+      "name" : "Dimension",
+      "type" : "int"
     }
   ],
   "metaworld" : 
@@ -122,37 +113,13 @@
         [
           
           {
-            "int" : 10,
-            "name" : "speed"
-          },
-          
-          {
-            "float" : 1,
-            "name" : "length"
+            "int" : 2,
+            "name" : "Dimension"
           },
           
           {
             "name" : "Class",
             "string" : "Player"
-          },
-          
-          {
-            "name" : "position",
-            "vec2" : 
-            {
-              "x" : 1,
-              "y" : 1
-            }
-          },
-          
-          {
-            "bool" : true,
-            "name" : "Stateful"
-          },
-          
-          {
-            "color" : [ 82, 255, 41, 255 ],
-            "name" : "Color"
           }
         ],
         "fixture" : 
@@ -160,9 +127,10 @@
           
           {
             "density" : 1,
-            "id" : 1,
-            "name" : "bottomSensor",
-            "sensor" : true,
+            "filter-groupIndex" : 1,
+            "friction" : 0.2,
+            "id" : 3,
+            "name" : "Player",
             "shapes" : 
             [
               
@@ -174,26 +142,66 @@
             {
               "x" : 
               [
-                -0.09145379066467285,
-                0.08963203430175781,
-                0.08963203430175781,
-                -0.09145379066467285
+                -0.4706783294677734,
+                0.5293216705322266,
+                0.5293216705322266,
+                -0.4706783294677734
               ],
               "y" : 
               [
-                -0.5909134149551392,
-                -0.5909134149551392,
-                -0.4098275005817413,
-                -0.4098275005817413
+                -0.1921186447143555,
+                -0.1921186447143555,
+                0.8078813552856445,
+                0.8078813552856445
               ]
             }
+          }
+        ],
+        "id" : 3,
+        "linearVelocity" : 0,
+        "massData-I" : 0.2623173594474792,
+        "massData-center" : 
+        {
+          "x" : 0.02932167053222656,
+          "y" : 0.3078813552856445
+        },
+        "massData-mass" : 1,
+        "name" : "Player",
+        "position" : 
+        {
+          "x" : 1.451438426971436,
+          "y" : 1.172879219055176
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "active" : false,
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 1,
+            "name" : "Dimension"
           },
+          
+          {
+            "name" : "Class",
+            "string" : "Dimension"
+          }
+        ],
+        "fixedRotation" : true,
+        "fixture" : 
+        [
           
           {
             "density" : 1,
             "friction" : 0.2,
             "id" : 5,
-            "name" : "playerFixture",
+            "name" : "d1",
             "shapes" : 
             [
               
@@ -203,28 +211,60 @@
             ],
             "vertices" : 
             {
-              "x" : [ -0.5, 0.5, 0.5, -0.5 ],
-              "y" : [ -0.5, -0.5, 0.5, 0.5 ]
+              "x" : 
+              [
+                -5,
+                -5,
+                30.0,
+                30.0,
+                30.0,
+                28.0,
+                28.0,
+                25.0,
+                23.0,
+                23.0,
+                25.0,
+                25.0,
+                17.0,
+                17.0,
+                13.0,
+                13.0,
+                10,
+                10,
+                0.0,
+                0.0
+              ],
+              "y" : 
+              [
+                10,
+                -5,
+                -5,
+                0.0,
+                4,
+                4,
+                0.0,
+                0.0,
+                0.0,
+                2,
+                2,
+                4,
+                4,
+                0.0,
+                0.0,
+                4,
+                4,
+                0.0,
+                0.0,
+                10
+              ]
             }
           }
         ],
         "id" : 5,
         "linearVelocity" : 0,
-        "massData-I" : 0.1750560998916626,
-        "massData-center" : 
-        {
-          "x" : -2.892121483455412e-05,
-          "y" : -0.01588721945881844
-        },
-        "massData-mass" : 1.032792091369629,
-        "name" : "player",
-        "position" : 
-        {
-          "x" : 1,
-          "y" : 1
-        },
-        "sleepingAllowed" : false,
-        "type" : "dynamic"
+        "name" : "d1",
+        "position" : 0,
+        "type" : "static"
       },
       
       {
@@ -235,10 +275,16 @@
         [
           
           {
+            "int" : 2,
+            "name" : "Dimension"
+          },
+          
+          {
             "name" : "Class",
-            "string" : "Wall"
+            "string" : "Dimension"
           }
         ],
+        "fixedRotation" : true,
         "fixture" : 
         [
           
@@ -246,7 +292,7 @@
             "density" : 1,
             "friction" : 0.2,
             "id" : 6,
-            "name" : "fixture0",
+            "name" : "d2",
             "shapes" : 
             [
               
@@ -256,23 +302,20 @@
             ],
             "vertices" : 
             {
-              "x" : [ 0.0, 0.5, 0.5, 0.0 ],
-              "y" : [ -20.0, -20.0, 0.0, 0.0 ]
+              "x" : [ -5, -5, 30.0, 30.0, 23.04830169677734, 7, 7, 5, 5, 0.0, 0.0 ],
+              "y" : [ 10, -5, -5, 0.0, 0.01491641998291016, 0.0, 5, 5, 0.0, 0.0, 10 ]
             }
           }
         ],
         "id" : 6,
         "linearVelocity" : 0,
-        "name" : "rightWall",
-        "position" : 
-        {
-          "x" : 20.0,
-          "y" : 20.0
-        },
+        "name" : "d2",
+        "position" : 0,
         "type" : "static"
       },
       
       {
+        "active" : false,
         "angle" : 0,
         "angularVelocity" : 0,
         "awake" : true,
@@ -280,10 +323,16 @@
         [
           
           {
+            "int" : 3,
+            "name" : "Dimension"
+          },
+          
+          {
             "name" : "Class",
-            "string" : "Wall"
+            "string" : "Dimension"
           }
         ],
+        "fixedRotation" : true,
         "fixture" : 
         [
           
@@ -291,7 +340,7 @@
             "density" : 1,
             "friction" : 0.2,
             "id" : 7,
-            "name" : "fixture1",
+            "name" : "d2",
             "shapes" : 
             [
               
@@ -301,109 +350,15 @@
             ],
             "vertices" : 
             {
-              "x" : [ -10, 10, 10, -10 ],
-              "y" : [ 0.0, 0.0, 0.5, 0.5 ]
+              "x" : [ -5, -5, 30.0, 30.0, 17.0, 17.0, 13.0, 13.0, 4, 4, 0.0, 0.0 ],
+              "y" : [ 10, -5, -5, 0.0, 0.0, 4, 4, 0.0, 0.0, 4, 4, 10 ]
             }
           }
         ],
         "id" : 7,
         "linearVelocity" : 0,
-        "name" : "topWall",
-        "position" : 
-        {
-          "x" : 10,
-          "y" : 20.0
-        },
-        "type" : "static"
-      },
-      
-      {
-        "angle" : 0,
-        "angularVelocity" : 0,
-        "awake" : true,
-        "customProperties" : 
-        [
-          
-          {
-            "name" : "Class",
-            "string" : "Wall"
-          }
-        ],
-        "fixture" : 
-        [
-          
-          {
-            "density" : 1,
-            "friction" : 0.2,
-            "id" : 8,
-            "name" : "fixture2",
-            "shapes" : 
-            [
-              
-              {
-                "type" : "polygon"
-              }
-            ],
-            "vertices" : 
-            {
-              "x" : [ -10, 10, 10, -10 ],
-              "y" : [ -0.5, -0.5, 0.0, 0.0 ]
-            }
-          }
-        ],
-        "id" : 8,
-        "linearVelocity" : 0,
-        "name" : "bottomWall",
-        "position" : 
-        {
-          "x" : 10,
-          "y" : 0
-        },
-        "type" : "static"
-      },
-      
-      {
-        "angle" : 0,
-        "angularVelocity" : 0,
-        "awake" : true,
-        "customProperties" : 
-        [
-          
-          {
-            "name" : "Class",
-            "string" : "Wall"
-          }
-        ],
-        "fixture" : 
-        [
-          
-          {
-            "density" : 1,
-            "friction" : 0.2,
-            "id" : 9,
-            "name" : "fixture3",
-            "shapes" : 
-            [
-              
-              {
-                "type" : "polygon"
-              }
-            ],
-            "vertices" : 
-            {
-              "x" : [ -0.5, 0.0, 0.0, -0.5 ],
-              "y" : [ -10, -10, 10, 10 ]
-            }
-          }
-        ],
-        "id" : 9,
-        "linearVelocity" : 0,
-        "name" : "leftWall",
-        "position" : 
-        {
-          "x" : 0,
-          "y" : 10
-        },
+        "name" : "d3",
+        "position" : 0,
         "type" : "static"
       }
     ],

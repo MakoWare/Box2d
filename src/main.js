@@ -9,7 +9,7 @@ var config = {
   camera: {
     fps: true,
     extras: {
-      axes: false,
+      axes: true,
       grid: false
     },
     ptm: 20
@@ -17,9 +17,9 @@ var config = {
   world: {
     gravity: {
       x: 0,
-      y: 0
+      y: -1
     },
-    drawDebug: false
+    drawDebug: true
   },
   input: {
     logAllKeys:false,
