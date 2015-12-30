@@ -36,6 +36,7 @@ class BaseApp {
     this._animate = this._animate.bind(this);
 
     App.input = this.input = new InputController(this.canvas);
+    App.camera = this.camera;
     App.canvas = this.canvas;
     App.context = this.context;
     App.config = this.config;
@@ -55,7 +56,7 @@ class BaseApp {
   _draw(ctx, delta) {
 
     //black background
-    ctx.fillStyle = 'rgb(0,0,0)';
+    ctx.fillStyle = 'black';
     ctx.fillRect( 0, 0, this.canvas.el.width, this.canvas.el.height );
 
     ctx.save();

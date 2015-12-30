@@ -21,7 +21,7 @@ let gamepadMaps = {
   'Wireless Controller (STANDARD GAMEPAD Vendor: 054c Product: 05c4)':ps4Mapping // ps4 controller
 };
 
-let gamepadsAxisDeadZone = 0.045;
+let gamepadsAxisDeadZone = 0.08;
 let gamepadsConfig = {};
 // let gamepadTypeMaps = [{id:'054c',type:'ps4'}];
 

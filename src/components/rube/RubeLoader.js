@@ -57,6 +57,7 @@ class RubeLoader {
     }
 
     var body = world.CreateBody(bd);
+    body.fixtures = [];
 
 
     var md = new Box2D.b2MassData();
@@ -148,9 +149,16 @@ class RubeLoader {
       if ( fixtureJso.name )
         fixture.name = fixtureJso.name;
 
-      body.shapeType = 'circle';
-      body.radius = radius;
-      body.center = center;
+      // body.shapeType = 'circle';
+      // body.radius = radius;
+      // body.center = center;
+      var data = {
+        type:'circle',
+        radius:radius,
+        center:center,
+        json:fixtureJso
+      }
+      body.fixtures.push(data);
     }
     else if (fixtureJso.hasOwnProperty('polygon')) {
 
@@ -170,8 +178,14 @@ class RubeLoader {
       if ( fixture && fixtureJso.name )
         fixture.name = fixtureJso.name;
 
-      body.shapeType = 'polygon';
-      body.verts = verts;
+      // body.shapeType = 'polygon';
+      // body.verts = verts;
+      var data = {
+        type:'polygon',
+        verts:verts,
+        json:fixtureJso
+      }
+      body.fixtures.push(data);
     }
     else if (fixtureJso.hasOwnProperty('chain')) {
 
@@ -187,8 +201,14 @@ class RubeLoader {
       if ( fixtureJso.name )
         fixture.name = fixtureJso.name;
 
-      body.shapeType = 'chain';
-      body.verts = verts;
+      // body.shapeType = 'chain';
+      // body.verts = verts;
+      var data = {
+        type:'chain',
+        verts:verts,
+        json:fixtureJso
+      }
+      body.fixtures.push(data);
     }
     else {
       console.log("Could not find shape type for fixture");

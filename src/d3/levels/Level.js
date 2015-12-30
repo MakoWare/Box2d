@@ -4,6 +4,7 @@ import Wall from 'src/d3/wall/Wall';
 import EntityManager from 'src/components/engine/EntityManager';
 import Dimension from 'src/d3/dimensions/Dimension';
 import App from 'src/components/app/app';
+import GroundEntity from 'src/d3/dimensions/GroundEntity';
 
 class Level extends BaseLevel {
   constructor(scene, world) {
@@ -14,47 +15,68 @@ class Level extends BaseLevel {
     this.entityManager = new EntityManager();
 
 
-    var dim0 = new Dimension('red',0);
-    var dim1 = new Dimension('green',1);
-    var dim2 = new Dimension('blue',2);
+    // var dim0 = new Dimension('red',1);
+    // var dim1 = new Dimension('green',2);
+    // var dim2 = new Dimension('blue',3);
 
-    this.dimensions = [dim0,dim1,dim2];
+    this.dimensions = [];
 
-    this.entityManager.registerEntity(dim0);
-    this.entityManager.registerEntity(dim1);
-    this.entityManager.registerEntity(dim2);
+    // this.entityManager.registerEntity(dim0);
+    // this.entityManager.registerEntity(dim1);
+    // this.entityManager.registerEntity(dim2);
 
-    this.currentDimension = dim1;
-    dim1.activate();
+    // this.currentDimension = dim1;
+    // dim1.activate();
 
+    var colors = ['red','green','blue'];
     this.scene.objects = this.scene.objects || {};
     this.scene.bodies.forEach( (body)=>{
 
       switch (body.props.Class.value) {
         case 'Dimension':
-          // var obj = new Player(body, null, null, this.world);
-          // this.scene.objects[body.name] = obj;
-          // this.entityManager.registerEntity(obj);
-          
+          var dimIndex = body.props.Dimension.value-1;
+          var dim = new Dimension();
+          var obj = new GroundEntity(body,colors[dimIndex]);
+          dim.addEntity(obj);
+
+          if(body.IsActive()){
+            dim.activate();
+            this.currentDimension = dim;
+            this.activeIndex = dimIndex;
+          }
+          this.dimensions[dimIndex] = dim;
           break;
-        // case 'Wall':
-        //   var obj = new Wall(body);
-        //   this.scene.objects[body.name] = obj;
-        //   this.entityManager.registerEntity(obj);
-        //   break;
+        case 'Player':
+          var obj = new Player(body, null, null, this.world);
+          this.scene.objects[body.name] = obj;
+          this.player = obj;
+          // App.camera.setChaseEntity(obj);
+          // this.entityManager.registerEntity(obj);
+          break;
         default:
 
       }
     });
 
+    console.log(this.dimensions);
 
-    this.inputListener = App.input.newEventListener({
+    this.resetDimension(this.activeIndex);
 
-    },true);
+    this.inputListener = App.input.newEventListener({},true);
 
     this.inputListener.rightStick = (x,y,evt)=>{
       this.onRightStick(x,y,evt);
     };
+
+    this.inputListener.r2 = (down,evt)=>{
+      this.onRight2(down,evt);
+    };
+    this.inputListener.l2 = (down,evt)=>{
+      this.onLeft2(down,evt);
+    };
+
+
+    this.upperInputBounds = 0.9;
 
   }
 
@@ -65,6 +87,8 @@ class Level extends BaseLevel {
     this.dimensions[0].draw(ctx,delta);
     this.dimensions[1].draw(ctx,delta);
     this.dimensions[2].draw(ctx,delta);
+
+    this.player.draw(ctx,delta);
 
     ctx.restore();
   }
@@ -89,7 +113,7 @@ class Level extends BaseLevel {
           dim.setOpacity(op);
           this.currentDimension.setOpacity(opInv);
         } else {
-          console.log('pop down');
+          // console.log('pop down');
           this.popDownDimension();
           this.preventPop = true;
         }
@@ -101,18 +125,88 @@ class Level extends BaseLevel {
           dim.setOpacity(op);
           this.currentDimension.setOpacity(opInv);
         } else {
-          console.log('pop up');
+          // console.log('pop up');
           this.popUpDimension();
           this.preventPop = true;
         }
 
       } else if(evt.axis.zeroed){
+        // console.log('zeroed');
         this.dimensions[2].setOpacity(0);
-        this.dimensions[1].setOpacity(0);
+        this.dimensions[0].setOpacity(0);
         this.currentDimension.setOpacity(1);
         this.preventPop = false;
       }
     }
+  }
+
+  onLeft2(down,evt){
+    // if(yVal<ub){
+    //   dim = this.peekDownDimension();
+    //   // console.log(op);
+    //   dim.setOpacity(op);
+    //   this.currentDimension.setOpacity(opInv);
+    // } else {
+    //   // console.log('pop down');
+    //   this.popDownDimension();
+    //   this.preventPop = true;
+    // }
+
+    var ub = this.upperInputBounds;
+    var val = evt.button.value;
+
+    var op = (Math.abs(val))/(ub);
+    var opInv = 1-op;
+
+    if(val && !this.preventPop){
+      if(val<ub){
+        var dim = this.peekDownDimension();
+        // console.log(op);
+        dim.setOpacity(op);
+        this.currentDimension.setOpacity(opInv);
+      } else {
+        // console.log('pop up');
+        this.popDownDimension();
+        this.preventPop = true;
+      }
+    }
+
+    if(!down){
+      this.dimensions[2].setOpacity(0);
+      this.dimensions[0].setOpacity(0);
+      this.currentDimension.setOpacity(1);
+      this.preventPop = false;
+    }
+  }
+
+  onRight2(down,evt){
+    // console.log(evt.button.value);
+    var ub = this.upperInputBounds;
+    var val = evt.button.value;
+
+    var op = (Math.abs(val))/(ub);
+    var opInv = 1-op;
+
+    if(val && !this.preventPop){
+      if(val<ub){
+        var dim = this.peekUpDimension();
+        // console.log(val);
+        dim.setOpacity(op);
+        this.currentDimension.setOpacity(opInv);
+      } else {
+        // console.log('pop up');
+        this.popUpDimension();
+        this.preventPop = true;
+      }
+    }
+
+    if(!down){
+      this.dimensions[2].setOpacity(0);
+      this.dimensions[0].setOpacity(0);
+      this.currentDimension.setOpacity(1);
+      this.preventPop = false;
+    }
+
   }
 
   peekUpDimension(){
@@ -135,11 +229,17 @@ class Level extends BaseLevel {
     this.resetDimension();
   }
 
-  resetDimension(){
+  resetDimension(toDim){
+    if(toDim !== undefined && toDim !== null){
+      var dim = this.dimensions.splice(toDim,1)[0];
+      this.dimensions.splice(1,0,dim);
+    }
+
     this.currentDimension.deactivate();
     this.currentDimension = this.dimensions[1];
     this.currentDimension.activate();
   }
+
 }
 
 export default Level;

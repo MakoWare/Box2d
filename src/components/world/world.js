@@ -23,6 +23,13 @@ class World {
     }
   }
 
+  step(delta,a,b){
+    delta = (delta!==undefined && delta!==null) ? delta : 0;
+    a = (a!==undefined && a!==null) ? a : 3;
+    b = (b!==undefined && b!==null) ? b : 2;
+    this.world.Step(delta, a, b);
+  }
+
 }
 
 export default World;

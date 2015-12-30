@@ -1,27 +1,36 @@
 import BaseEntity from 'src/components/engine/BaseEntity';
 
 class Dimension extends BaseEntity {
-  constructor(color) {
+  constructor() {
     super();
-    this.color = color || 'red';
 
     this.opacity = 0;
+
   }
 
   draw(ctx){
     ctx.save();
     ctx.globalAlpha = this.opacity;
-    ctx.fillStyle = this.color;
-    ctx.fillRect(0,0,20,20);
+    super.draw(ctx);
     ctx.restore();
   }
 
   activate(){
     this.opacity = 1;
+    this.entities.forEach((ent)=>{
+      if(ent.activate && typeof ent.activate === 'function'){
+        ent.activate();
+      }
+    });
   }
 
   deactivate(){
     this.opacity = 0;
+    this.entities.forEach((ent)=>{
+      if(ent.deactivate && typeof ent.deactivate === 'function'){
+        ent.deactivate();
+      }
+    });
   }
 
   setOpacity(op){

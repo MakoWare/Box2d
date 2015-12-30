@@ -20,6 +20,8 @@ class LoadingScreen extends Screen {
 
     this.world = new World();
 
+    camera.setViewCenterWorld(new Box2D.b2Vec2(10,10),true);
+
     // load some assets
     AssetManager.loadResource('level_1','src/rubeScenes/level_1_ball_v2.json', 'rube', this.world);
     AssetManager.setOnAssetsLoadedCallback(this.onAssetsLoaded.bind(this));

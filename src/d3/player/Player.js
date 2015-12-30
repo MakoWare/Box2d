@@ -72,17 +72,16 @@ class Player extends StatefulPolygonEntity {
     this.contactListener.PreSolve = function() {};
     this.contactListener.PostSolve = function() {};
 
-    this.world.SetContactListener(this.contactListener);
+    // this.world.SetContactListener(this.contactListener);
   }
 
   onBeginContact(contactPtr){
-    console.log("player.onBeginContact");
+    // console.log("player.onBeginContact");
     var contactObject = this.involvedInContact(contactPtr);
     if(contactObject){
-      var contact = Box2D.wrapPointer(contactPtr, Box2D.b2Contact);
       switch(contactObject.constructor.name) {
-        case "Wall":
-          this.color = "E6FFFF";
+        case "GroundEntity":
+          console.log(contactObject);
           break;
       }
     } else {
@@ -91,7 +90,7 @@ class Player extends StatefulPolygonEntity {
   }
 
   onEndContact(contactPtr){
-    console.log("player.onEndContact()");
+    // console.log("player.onEndContact()");
     var contactObject = this.involvedInContact(contactPtr);
     if(contactObject){
       var contact = Box2D.wrapPointer(contactPtr, Box2D.b2Contact);
@@ -158,14 +157,19 @@ class Player extends StatefulPolygonEntity {
   draw(ctx, delta){
     super.draw();
 
-    /* ctx.save();
+    ctx.save();
 
-       var pos = this.body.GetPosition();
-       ctx.fillStyle = "#" + this.color;
-       ctx.translate(-0.5,-0.5); // x-w/2, y-h/2
-       ctx.fillRect(pos.get_x(),pos.get_y(),1,1);
+    var pos = this.body.GetPosition();
+    var fix = this.body.fixtures[0];
+    var center = fix.center;
+    var radius = fix.radius;
 
-       ctx.restore(); */
+    ctx.fillStyle = 'white';
+    ctx.translate(-center.get_x(),-center.get_y()); // x-w/2, y-h/2
+    ctx.beginPath();
+    ctx.arc(pos.get_x(),pos.get_y(),radius,0,2*Math.PI);
+    ctx.fill();
+    ctx.restore();
   }
 }
 
