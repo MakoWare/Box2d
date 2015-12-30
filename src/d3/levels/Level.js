@@ -15,9 +15,9 @@ class Level extends BaseLevel {
     this.entityManager = new EntityManager();
 
 
-    var dim0 = new Dimension('red',1);
-    var dim1 = new Dimension('green',2);
-    var dim2 = new Dimension('blue',3);
+    var dim0 = new Dimension(0);
+    var dim1 = new Dimension(1);
+    var dim2 = new Dimension(2);
 
     this.dimensions = [dim0,dim1,dim2];
 
@@ -39,14 +39,14 @@ class Level extends BaseLevel {
           var obj = new GroundEntity(body,colors[dimIndex]);
           dim.addEntity(obj);
 
-
+          obj.deactivate();
           // this.dimensions[dimIndex] = dim;
           break;
         case 'Player':
           var obj = new Player(body, null, null, this.world);
           this.scene.objects[body.name] = obj;
           this.player = obj;
-          // App.camera.setChaseEntity(obj);
+          App.camera.setChaseEntity(obj);
           break;
         default:
 
@@ -217,21 +217,26 @@ class Level extends BaseLevel {
   }
 
   popUpDimension(){
-    var firstDim = this.dimensions.shift();
-    this.dimensions[2] = firstDim;
+    this.dimensions.wrapLeft();
     this.resetDimension();
   }
 
   popDownDimension(){
-    var lastDim = this.dimensions.pop();
-    this.dimensions.unshift(lastDim);
+    this.dimensions.wrapRight();
     this.resetDimension();
   }
 
   resetDimension(toDim){
     if(toDim !== undefined && toDim !== null){
-      var dim = this.dimensions.splice(toDim,1)[0];
-      this.dimensions.splice(1,0,dim);
+      for(var i=0; i<20;i++){
+        var a = this.dimensions;
+        if(a[1].id==toDim){
+          console.log('set: ',a[0].id,a[1].id,a[2].id);
+          break;
+        }
+        a.wrapRight();
+
+      }
     }
 
     if(this.currentDimension){
@@ -242,5 +247,15 @@ class Level extends BaseLevel {
   }
 
 }
+
+Array.prototype.wrapRight = function(){
+  this.unshift(this.pop());
+  return this;
+};
+
+Array.prototype.wrapLeft = function(){
+  this.push(this.shift());
+  return this;
+};
 
 export default Level;

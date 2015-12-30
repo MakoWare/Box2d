@@ -31,7 +31,7 @@ class GameScreen extends Screen {
   draw(ctx, delta){
     ctx.save();
 
-    // this.world.Step(delta, 3, 2);
+    this.world.Step(1/60, 3, 2);
     this.camera.update(ctx,delta);
     // this.world.drawDebug();
 

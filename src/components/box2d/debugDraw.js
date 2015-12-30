@@ -92,32 +92,54 @@ class DebugDraw {
       this.context.restore();
   }
 
+  // solid polygon: rgba(127, 127, 76, 0.498039215686275)
+  // solid polygon: rgba(127, 127, 76, 0.498039215686275)
+  // solid circle: rgba(229, 178, 178, 0.498039215686275)
+
+  saveContext(type){
+    var ctx = this.context;
+    this.obj = this.obj || {};
+
+    if(!this.obj.hasOwnProperty(ctx.fillStyle)){
+      var arr = this.obj[ctx.fillStyle] = this.obj[ctx.fillStyle] || [];
+      arr.push(type);
+
+      // console.log(this.obj);
+    }
+
+  }
+
   getCanvasDebugDraw() {
       var debugDraw = new Box2D.JSDraw();
 
       debugDraw.DrawSegment = function(vert1, vert2, color) {
           this.setColorFromDebugDrawCallback(color);
+          this.saveContext('draw segment');
           this.drawSegment(vert1, vert2);
       }.bind(this);
 
       debugDraw.DrawPolygon = function(vertices, vertexCount, color) {
           this.setColorFromDebugDrawCallback(color);
+          this.saveContext('draw polygon');
           this.drawPolygon(vertices, vertexCount, false);
       }.bind(this);
 
       debugDraw.DrawSolidPolygon = function(vertices, vertexCount, color) {
           this.setColorFromDebugDrawCallback(color);
+          this.saveContext('draw solid polygon');
           this.drawPolygon(vertices, vertexCount, true);
       }.bind(this);
 
       debugDraw.DrawCircle = function(center, radius, color) {
           this.setColorFromDebugDrawCallback(color);
+          this.saveContext('draw circle');
           var dummyAxis = Box2D.b2Vec2(0,0);
           this.drawCircle(center, radius, dummyAxis, false);
       }.bind(this);
 
       debugDraw.DrawSolidCircle = function(center, radius, axis, color) {
           this.setColorFromDebugDrawCallback(color);
+          this.saveContext('draw solid circle');
           this.drawCircle(center, radius, axis, true);
       }.bind(this);
 

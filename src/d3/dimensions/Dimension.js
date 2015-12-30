@@ -1,9 +1,9 @@
 import BaseEntity from 'src/components/engine/BaseEntity';
 
 class Dimension extends BaseEntity {
-  constructor() {
+  constructor(id) {
     super();
-
+    this.id = id;
     this.opacity = 0;
 
   }
