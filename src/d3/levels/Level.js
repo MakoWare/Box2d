@@ -15,11 +15,11 @@ class Level extends BaseLevel {
     this.entityManager = new EntityManager();
 
 
-    // var dim0 = new Dimension('red',1);
-    // var dim1 = new Dimension('green',2);
-    // var dim2 = new Dimension('blue',3);
+    var dim0 = new Dimension('red',1);
+    var dim1 = new Dimension('green',2);
+    var dim2 = new Dimension('blue',3);
 
-    this.dimensions = [];
+    this.dimensions = [dim0,dim1,dim2];
 
     // this.entityManager.registerEntity(dim0);
     // this.entityManager.registerEntity(dim1);
@@ -35,7 +35,7 @@ class Level extends BaseLevel {
       switch (body.props.Class.value) {
         case 'Dimension':
           var dimIndex = body.props.Dimension.value-1;
-          var dim = new Dimension();
+          var dim = this.dimensions[dimIndex];
           var obj = new GroundEntity(body,colors[dimIndex]);
           dim.addEntity(obj);
 
@@ -50,8 +50,7 @@ class Level extends BaseLevel {
           var obj = new Player(body, null, null, this.world);
           this.scene.objects[body.name] = obj;
           this.player = obj;
-          // App.camera.setChaseEntity(obj);
-          // this.entityManager.registerEntity(obj);
+          App.camera.setChaseEntity(obj);
           break;
         default:
 
