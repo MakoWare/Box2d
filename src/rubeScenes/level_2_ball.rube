@@ -111,7 +111,7 @@
           
           {
             "name" : "Class",
-            "string" : "Dimension"
+            "string" : "Gound"
           }
         ],
         "fixture" : 
@@ -238,7 +238,7 @@
           
           {
             "name" : "Class",
-            "string" : "Dimension"
+            "string" : "Ground"
           }
         ],
         "fixedRotation" : true,
@@ -317,7 +317,7 @@
           
           {
             "name" : "Class",
-            "string" : "Dimension"
+            "string" : "Ground"
           }
         ],
         "fixture" : 
@@ -368,7 +368,7 @@
           
           {
             "name" : "Class",
-            "string" : "Dimension"
+            "string" : "Ground"
           }
         ],
         "fixture" : 
@@ -442,7 +442,7 @@
           
           {
             "name" : "Class",
-            "string" : "Dimension"
+            "string" : "Ground"
           }
         ],
         "fixture" : 
@@ -529,7 +529,7 @@
           
           {
             "name" : "Class",
-            "string" : "Dimension"
+            "string" : "Ground"
           }
         ],
         "fixture" : 
