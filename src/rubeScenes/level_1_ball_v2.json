@@ -612,7 +612,7 @@
 				
 				{
 					"density" : 1,
-					"friction" : 0.2,
+					"friction" : 1,
 					"name" : "fixture1",
 					"polygon" : 
 					{
@@ -638,7 +638,7 @@
 				
 				{
 					"density" : 1,
-					"friction" : 0.2,
+					"friction" : 1,
 					"name" : "fixture1",
 					"polygon" : 
 					{
@@ -664,7 +664,7 @@
 				
 				{
 					"density" : 1,
-					"friction" : 0.2,
+					"friction" : 1,
 					"name" : "fixture1",
 					"polygon" : 
 					{
@@ -690,7 +690,7 @@
 				
 				{
 					"density" : 1,
-					"friction" : 0.2,
+					"friction" : 1,
 					"name" : "fixture1",
 					"polygon" : 
 					{
@@ -714,6 +714,7 @@
 		
 		{
 			"angle" : 0,
+			"angularDamping" : 10,
 			"angularVelocity" : 0,
 			"awake" : true,
 			"customProperties" : 
@@ -738,14 +739,14 @@
 						"center" : 0,
 						"radius" : 0.5
 					},
-					"density" : 1,
-					"friction" : 0.2,
+					"density" : 10,
+					"friction" : 1,
 					"name" : "fixture0"
 				}
 			],
 			"linearVelocity" : 0,
-			"massData-I" : 0.09817477315664291,
-			"massData-mass" : 0.7853981852531433,
+			"massData-I" : 0.9817477464675903,
+			"massData-mass" : 7.853981971740723,
 			"name" : "Player",
 			"position" : 
 			{

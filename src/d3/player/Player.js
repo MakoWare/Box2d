@@ -113,7 +113,8 @@ class Player extends StatefulPolygonEntity {
       var vel = this.body.GetLinearVelocity();
       var velChange = desiredVel - vel.get_x();
       var impulse = this.body.GetMass() * velChange;
-      this.body.ApplyLinearImpulse(new Box2D.b2Vec2(impulse, 0), this.body.GetWorldCenter());
+      //this.body.ApplyLinearImpulse(new Box2D.b2Vec2(impulse, 0), this.body.GetWorldCenter());
+      this.body.ApplyTorque(-200);
     }
   }
 
@@ -127,7 +128,8 @@ class Player extends StatefulPolygonEntity {
       var vel = this.body.GetLinearVelocity();
       var velChange = desiredVel - vel.get_x();
       var impulse = this.body.GetMass() * velChange;
-      this.body.ApplyLinearImpulse(new Box2D.b2Vec2(impulse, 0), this.body.GetWorldCenter());
+      //this.body.ApplyLinearImpulse(new Box2D.b2Vec2(impulse, 0), this.body.GetWorldCenter());
+      this.body.ApplyTorque(200);
     }
   }
 
