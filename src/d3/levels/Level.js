@@ -33,33 +33,33 @@ class Level extends BaseLevel {
     this.scene.bodies.forEach( (body)=>{
 
       switch (body.props.Class.value) {
-        case 'Dimension':
+        case 'Ground':
           var dimIndex = body.props.Dimension.value-1;
           var dim = this.dimensions[dimIndex];
           var obj = new GroundEntity(body,colors[dimIndex]);
           dim.addEntity(obj);
 
-          if(body.IsActive()){
-            dim.activate();
-            this.currentDimension = dim;
-            this.activeIndex = dimIndex;
-          }
-          this.dimensions[dimIndex] = dim;
+
+          // this.dimensions[dimIndex] = dim;
           break;
         case 'Player':
           var obj = new Player(body, null, null, this.world);
           this.scene.objects[body.name] = obj;
           this.player = obj;
-          App.camera.setChaseEntity(obj);
+          // App.camera.setChaseEntity(obj);
           break;
         default:
 
       }
     });
 
+    // dim0.activate();
+    // this.currentDimension = dim0;
+    // this.activeIndex = dimIndex;
+
     console.log(this.dimensions);
 
-    this.resetDimension(this.activeIndex);
+    this.resetDimension(0);
 
     this.inputListener = App.input.newEventListener({},true);
 
@@ -234,7 +234,9 @@ class Level extends BaseLevel {
       this.dimensions.splice(1,0,dim);
     }
 
-    this.currentDimension.deactivate();
+    if(this.currentDimension){
+      this.currentDimension.deactivate();
+    }
     this.currentDimension = this.dimensions[1];
     this.currentDimension.activate();
   }
