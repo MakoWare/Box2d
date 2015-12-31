@@ -74,9 +74,8 @@ class InputController {
       var key = cfg[evt.keyCode];
       if(key){
         if(l[key].call(l,true,evt) === false){
-          continue;
+          return;
         }
-        return;
       }
     }
     if(this.config.logUnmappedKeys){
@@ -96,10 +95,10 @@ class InputController {
         var cfg = l.keyConfig;
         var key = cfg[evt.keyCode];
         if(key){
-          if(l[key].call(l,false,evt) === false){
-            continue;
+          var b = l[key].call(l,false,evt);
+          if(b === false){
+            return;
           }
-          break;
         }
       }
     }
@@ -310,15 +309,14 @@ class InputController {
       if(!l){ continue;}
       var func = l[evt.keyIdentifier];
       if(!func){ continue;}
-      if(func.call(l,true,evt) === false){
-        continue;
-      } else {
+      var b = func.call(l,true,evt);
+      if(b === false){
         return;
       }
     }
-    if(this.config.logUnmappedKeys){
-      console.log(evt.keyCode,evt.keyIdentifier,evt.button.value, listeners.length===0?"No listeners":"");
-    }
+    // if(this.config.logUnmappedKeys){
+    //   console.log(evt.keyCode,evt.keyIdentifier,evt.button.value, listeners.length===0?"No listeners":"");
+    // }
   }
 
   onGamepadUp(evt){
@@ -329,8 +327,6 @@ class InputController {
       var func = l[evt.keyIdentifier];
       if(!func){ continue;}
       if(func.call(l,false,evt) === false){
-        continue;
-      } else {
         return;
       }
     }

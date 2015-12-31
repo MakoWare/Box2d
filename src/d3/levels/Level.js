@@ -28,7 +28,7 @@ class Level extends BaseLevel {
     // this.currentDimension = dim1;
     // dim1.activate();
 
-    var colors = ['red','green','blue'];
+    var colors = ['#ffee4e','#f34b86','#4bacd8'];
     this.scene.objects = this.scene.objects || {};
     this.scene.bodies.forEach( (body)=>{
 
@@ -59,7 +59,7 @@ class Level extends BaseLevel {
 
     console.log(this.dimensions);
 
-    this.resetDimension(0);
+    this.resetDimension(1);
 
     this.inputListener = App.input.newEventListener({},true);
 

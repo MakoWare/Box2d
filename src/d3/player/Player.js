@@ -31,14 +31,14 @@ class Player extends StatefulPolygonEntity {
       this.moveRight(down);
     }
 
-    this.inputListener.up = (down)=>{
-      this.moveUp(down);
-    }
-    this.inputListener.down = (down)=>{
-      this.moveDown(down);
-    }
+    // this.inputListener.up = (down)=>{
+    //   this.moveUp(down);
+    // }
+    // this.inputListener.down = (down)=>{
+    //   this.moveDown(down);
+    // }
     this.inputListener.cross = (down)=>{
-      this.revertState(down);
+      this.jump(down);
     }
     this.inputListener.leftStick = (xVal,yVal,event)=>{
       if(xVal>0.3){
@@ -144,6 +144,14 @@ class Player extends StatefulPolygonEntity {
       var impulse = this.body.GetMass() * this.maxVY;
       this.body.ApplyLinearImpulse(new Box2D.b2Vec2(0, -impulse), this.body.GetWorldCenter());
     }
+  }
+
+  jump(keyDown){
+    // if(keyDown && !this.jumping){
+    //   this.jumping = true;
+    // } else if(!keyDown){
+    //   this.jumping = false;
+    // }
   }
 
   revertState(keyDown){
