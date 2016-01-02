@@ -65,6 +65,7 @@ class Player extends StatefulPolygonEntity {
 
   initContactListeners(){
     this.contactListener = new Box2D.JSContactListener();
+    this.contactCount = {};
 
     //If the Contact involved the Player (check if entityA or entityB)
     this.contactListener.BeginContact = this.onBeginContact.bind(this);
@@ -72,16 +73,17 @@ class Player extends StatefulPolygonEntity {
     this.contactListener.PreSolve = function() {};
     this.contactListener.PostSolve = function() {};
 
-    // this.world.SetContactListener(this.contactListener);
+    this.world.SetContactListener(this.contactListener);
   }
 
   onBeginContact(contactPtr){
-    // console.log("player.onBeginContact");
+    console.log("player.onBeginContact");
     var contactObject = this.involvedInContact(contactPtr);
     if(contactObject){
-      switch(contactObject.constructor.name) {
+      switch(contactObject.entityData.constructor.name) {
         case "GroundEntity":
-          console.log(contactObject);
+          // console.log(contactObject);
+          this.setGrounded(true,contactObject);
           break;
       }
     } else {
@@ -90,13 +92,12 @@ class Player extends StatefulPolygonEntity {
   }
 
   onEndContact(contactPtr){
-    // console.log("player.onEndContact()");
+    console.log("player.onEndContact()");
     var contactObject = this.involvedInContact(contactPtr);
     if(contactObject){
-      var contact = Box2D.wrapPointer(contactPtr, Box2D.b2Contact);
-      switch(contactObject.constructor.name) {
-        case "Wall":
-          this.color = "6FC3DF";
+      switch(contactObject.entityData.constructor.name) {
+        case "GroundEntity":
+          this.setGrounded(false,contactObject);
           break;
       }
     }
@@ -147,11 +148,29 @@ class Player extends StatefulPolygonEntity {
   }
 
   jump(keyDown){
-    // if(keyDown && !this.jumping){
-    //   this.jumping = true;
-    // } else if(!keyDown){
-    //   this.jumping = false;
-    // }
+    if(keyDown && !this.jumping && this.grounded){
+      this.jumping = true;
+      this.grounded = false;
+      this.body.ApplyLinearImpulse(new Box2D.b2Vec2(0,60),this.body.GetWorldCenter());
+    } else if(!keyDown) {
+      this.jumping = false;
+      this.body.SetGravityScale(1.7);
+    }
+  }
+
+  setGrounded(set,obj){
+    var b = this.contactCount[obj.e] += set?1:-1;
+
+
+
+    if(set){
+      this.grounded = true;
+      this.body.SetGravityScale(1.0);
+    } else if(b==0) {
+      console.log('not grounded');
+      this.grounded = false;
+    }
+
   }
 
   revertState(keyDown){
@@ -173,12 +192,26 @@ class Player extends StatefulPolygonEntity {
     var radius = fix.radius;
 
     ctx.fillStyle = 'white';
-    ctx.translate(-center.get_x(),-center.get_y()); // x-w/2, y-h/2
+
+    this.applyRotation(ctx);
+
+    // draw main circle
     ctx.beginPath();
     ctx.arc(pos.get_x(),pos.get_y(),radius,0,2*Math.PI);
     ctx.fill();
+
+    // draw a radius line to show rotation
+    ctx.beginPath();
+    ctx.moveTo(pos.get_x(),pos.get_y());
+    ctx.lineTo(pos.get_x()+radius,pos.get_y());
+    ctx.strokeStyle = 'red';
+    ctx.stroke();
+
+
+
     ctx.restore();
   }
+
 }
 
 export default Player;

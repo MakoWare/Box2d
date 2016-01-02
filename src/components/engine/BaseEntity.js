@@ -41,12 +41,12 @@ class BaseEntity {
 
   involvedInContact(contactPtr){
     var contact = Box2D.wrapPointer(contactPtr, Box2D.b2Contact);
-    var entityA = contact.GetFixtureA().GetBody().entityData;
-    var entityB = contact.GetFixtureB().GetBody().entityData;
-    if(entityA == this){
-      return entityB;
-    } else if(entityB == this){
-      return entityA;
+    var bodyA = contact.GetFixtureA().GetBody();
+    var bodyB = contact.GetFixtureB().GetBody();
+    if(bodyA == this.body){
+      return bodyB;
+    } else if(bodyB == this.body){
+      return bodyA;
     } else {
       return false;
     }
@@ -56,6 +56,15 @@ class BaseEntity {
     ctx.save();
     this.drawEntites(ctx,delta);
     ctx.restore();
+  }
+
+  applyRotation(ctx,delta,pos){
+    if(this.body){
+      pos = pos || this.body.GetPosition();
+      ctx.translate(pos.get_x(),pos.get_y()); // center
+      ctx.rotate(this.body.GetAngle()); // rotate about center
+      ctx.translate(-pos.get_x(),-pos.get_y()); // translate back, keeping rotation
+    }
   }
 
   drawEntites(ctx, delta){
