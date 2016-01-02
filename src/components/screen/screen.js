@@ -11,7 +11,8 @@ class Screen {
     this.camera.update(ctx,delta);
   }
 
-  finish(){
+  finish(data){
+    this._finalData = data;
     this._isFinished = true;
   }
 }

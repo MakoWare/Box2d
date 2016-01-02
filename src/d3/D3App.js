@@ -2,6 +2,7 @@ import BaseApp from 'src/components/app/BaseApp';
 import LoadingScreen from 'src/d3/LoadingScreen';
 import DebugDraw from 'src/components/box2d/debugDraw';
 import GameScreen from 'src/d3/screens/GameScreen';
+import App from 'src/components/app/app';
 
 class D3App extends BaseApp {
   constructor() {
@@ -15,17 +16,31 @@ class D3App extends BaseApp {
 
     this.screenListener = this.screenManager.newListener(true);
 
-    this.screenListener.onScreenFinished = (screen, manager)=>{
+    this.screenListener.onScreenFinished = (screen, manager, data)=>{
       if(screen === this.loadingScreen){
         console.log('loading screen is done');
-        var game = new GameScreen(this.camera, screen.world);
-        manager.addScreen(game, true);
+        this.doneLoading = true;
+        this.gameScreen = new GameScreen(this.camera, screen.world);
+        this.screenManager.addScreen(this.gameScreen, true);
+      } else if(screen === this.gameScreen && this.doneLoading){
+        if(data.reset){
+          this.startLoading();
+        } else {
+          console.log('idk what you want to do here');
+        }
       }
     };
 
-    this.loadingScreen = new LoadingScreen(this.camera,{});
 
-    this.screenManager.addScreen(this.loadingScreen);
+
+
+    this.startLoading();
+  }
+
+  startLoading(reset){
+    this.doneLoading = false;
+    this.loadingScreen = new LoadingScreen(this.camera,{});
+    this.screenManager.addScreen(this.loadingScreen,reset);
   }
 }
 

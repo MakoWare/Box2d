@@ -26,6 +26,16 @@ class GameScreen extends Screen {
     this.camera.setViewCenterWorld(new Box2D.b2Vec2(15,0),true);
 
     this.level = new Level(scene, this.world);
+
+    this.inputListener = App.input.newEventListener({},true);
+
+    this.inputListener.home = (down,evt)=>{
+      if(!down){
+        this.finish({reset:true});
+        console.log('reset');
+      }
+
+    };
   }
 
   draw(ctx, delta){

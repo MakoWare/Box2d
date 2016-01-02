@@ -16,7 +16,7 @@ class ScreenManager {
 
       if(_listener){
         if(screen._isFinished){
-          _listener.onScreenFinished(screen, this);
+          _listener.onScreenFinished(screen, this, screen._finalData);
         }
       }
     }
