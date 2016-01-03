@@ -674,7 +674,7 @@
 						"radius" : 0.5
 					},
 					"density" : 1.273239493370056,
-					"friction" : 100.0,
+					"friction" : 1000.0,
 					"name" : "fixture0"
 				}
 			],

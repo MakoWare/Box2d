@@ -128,7 +128,7 @@
           
           {
             "density" : 1.273239493370056,
-            "friction" : 100.0,
+            "friction" : 1000.0,
             "id" : 1,
             "name" : "fixture0",
             "shapes" : 
