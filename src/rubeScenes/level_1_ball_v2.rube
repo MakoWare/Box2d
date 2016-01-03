@@ -47,24 +47,6 @@
       [
         
         {
-          "entry" : "Player"
-        },
-        
-        {
-          "entry" : "Ground"
-        }
-      ],
-      "displayName" : "Class",
-      "name" : "Class",
-      "type" : "string"
-    },
-    
-    {
-      "class" : "body",
-      "comboboxEntries" : 
-      [
-        
-        {
           "entry" : "1"
         },
         
@@ -79,6 +61,24 @@
       "displayName" : "Dimension",
       "name" : "Dimension",
       "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "comboboxEntries" : 
+      [
+        
+        {
+          "entry" : "Player"
+        },
+        
+        {
+          "entry" : "Ground"
+        }
+      ],
+      "displayName" : "Class",
+      "name" : "Class",
+      "type" : "string"
     }
   ],
   "metaworld" : 
@@ -107,7 +107,7 @@
       
       {
         "angle" : 0,
-        "angularDamping" : 10,
+        "angularDamping" : 1,
         "angularVelocity" : 0,
         "awake" : true,
         "customProperties" : 
@@ -127,8 +127,8 @@
         [
           
           {
-            "density" : 10,
-            "friction" : 1,
+            "density" : 1.273239493370056,
+            "friction" : 100.0,
             "id" : 1,
             "name" : "fixture0",
             "shapes" : 
@@ -148,13 +148,13 @@
         ],
         "id" : 1,
         "linearVelocity" : 0,
-        "massData-I" : 0.9817477464675903,
-        "massData-mass" : 7.853981971740723,
+        "massData-I" : 0.1250,
+        "massData-mass" : 1,
         "name" : "Player",
         "position" : 
         {
-          "x" : 0.9598140716552734,
-          "y" : 0.9130563735961914
+          "x" : 1,
+          "y" : 1
         },
         "type" : "dynamic"
       },
@@ -195,27 +195,17 @@
             {
               "x" : 
               [
-                -3.087453842163086,
-                11.91254615783691,
-                21.91254615783691,
-                26.91254615783691,
-                21.91254615783691,
-                11.91254615783691,
                 1.912546157836914,
-                1.912546157836914,
-                -3.087453842163086
+                21.91254615783691,
+                21.91254615783691,
+                1.912546157836914
               ],
               "y" : 
               [
-                -14.93741416931152,
-                -14.93741416931152,
-                -14.93741416931152,
-                -7.937414169311523,
-                -9.937414169311523,
-                -9.937414169311523,
+                -5.937414169311523,
+                -5.937414169311523,
                 -4.937414169311523,
-                15.06258583068848,
-                15.06258583068848
+                -4.937414169311523
               ]
             }
           }

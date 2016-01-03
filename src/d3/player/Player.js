@@ -8,7 +8,7 @@ class Player extends StatefulPolygonEntity {
     super(body, image, options);
     this.world = world;
     this.maxVX = 10;
-    this.maxVY = 50;
+    this.maxVY = 10;
     this.color = "ecf0f1";
 
     this.initContactListeners();
@@ -114,7 +114,7 @@ class Player extends StatefulPolygonEntity {
       var velChange = desiredVel - vel.get_x();
       var impulse = this.body.GetMass() * velChange;
       //this.body.ApplyLinearImpulse(new Box2D.b2Vec2(impulse, 0), this.body.GetWorldCenter());
-      this.body.ApplyTorque(-200);
+      this.body.ApplyTorque(-10);
     }
   }
 
@@ -129,7 +129,7 @@ class Player extends StatefulPolygonEntity {
       var velChange = desiredVel - vel.get_x();
       var impulse = this.body.GetMass() * velChange;
       //this.body.ApplyLinearImpulse(new Box2D.b2Vec2(impulse, 0), this.body.GetWorldCenter());
-      this.body.ApplyTorque(200);
+      this.body.ApplyTorque(10);
     }
   }
 
@@ -151,7 +151,7 @@ class Player extends StatefulPolygonEntity {
     if(keyDown && !this.jumping && this.grounded){
       this.jumping = true;
       this.grounded = false;
-      this.body.ApplyLinearImpulse(new Box2D.b2Vec2(0,60),this.body.GetWorldCenter());
+      this.body.ApplyLinearImpulse(new Box2D.b2Vec2(0,10),this.body.GetWorldCenter());
     } else if(!keyDown) {
       this.jumping = false;
       this.body.SetGravityScale(1.7);
