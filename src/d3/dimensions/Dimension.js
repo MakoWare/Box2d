@@ -10,8 +10,8 @@ class Dimension extends BaseEntity {
 
   draw(ctx){
     ctx.save();
-    ctx.globalAlpha = this.opacity;
-    super.draw(ctx);
+    //ctx.globalAlpha = this.opacity;
+    super.draw(ctx, null, this.opacity);
     ctx.restore();
   }
 

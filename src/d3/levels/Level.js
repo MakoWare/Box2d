@@ -28,7 +28,7 @@ class Level extends BaseLevel {
     // this.currentDimension = dim1;
     // dim1.activate();
 
-    var colors = ['#ffee4e','#f34b86','#4bacd8'];
+    var colors = ['#2196f3','#ff9800','#4caf50'];
     this.scene.objects = this.scene.objects || {};
     this.scene.bodies.forEach( (body)=>{
 

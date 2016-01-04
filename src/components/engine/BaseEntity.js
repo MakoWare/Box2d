@@ -54,7 +54,7 @@ class BaseEntity {
 
   draw(ctx, delta){
     ctx.save();
-    this.drawEntites(ctx,delta);
+    this.drawEntites.apply(this, arguments);
     ctx.restore();
   }
 
@@ -68,8 +68,9 @@ class BaseEntity {
   }
 
   drawEntites(ctx, delta){
+    var args = arguments;
     this.entities.forEach((ent)=>{
-      ent.draw(ctx, delta);
+      ent.draw.apply(ent, args);
     });
   }
 
