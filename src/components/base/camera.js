@@ -11,6 +11,10 @@ var singleWorldPoint = {
   x:0,
   y:0
 };
+var singlePixelPoint = {
+  x:0,
+  y:0
+};
 var offset = {
   x:0,
   y:0
@@ -47,11 +51,16 @@ class Camera {
   update(ctx, delta){
     this.setTransform(ctx);
     if(this.chaseEntity){
-      futurePos = this.chaseEntity.getPosition();
-      // var vel = this.chaseEntity.GetLinearVelocity();
-      // futurePos.set_x( pos.get_x() + 0.15 * vel.get_x() );
-      // futurePos.set_y( pos.get_y() + 0.15 * vel.get_y() );
-      this.setViewCenterWorld( futurePos );
+      if(this.chaseMethod){
+        this.chaseMethod(this.chaseEntity,this);
+      } else {
+        futurePos = this.chaseEntity.getPosition();
+        // var vel = this.chaseEntity.GetLinearVelocity();
+        // futurePos.set_x( pos.get_x() + 0.15 * vel.get_x() );
+        // futurePos.set_y( pos.get_y() + 0.15 * vel.get_y() );
+        this.setViewCenterWorld( futurePos );
+      }
+
     }
 
     if(this.config.fps){
@@ -111,8 +120,13 @@ class Camera {
     this.canvas.$fps.html(Math.ceil(event.data));
   }
 
-  setChaseEntity(ent){
+  setChaseEntity(ent,chaseMethod){
     this.chaseEntity = ent;
+    this.chaseMethod = chaseMethod;
+  }
+
+  setChaseMethod(chaseMethod){
+    this.chaseMethod = chaseMethod;
   }
 
   getWorldPointFromPixelPoint(pixelPoint) {
@@ -129,13 +143,36 @@ class Camera {
     return (y - (this.canvas.height() - offset.y)) / PTM;
   }
 
-  setViewCenterWorld(b2vecpos, instantaneous) {
-    var currentViewCenterWorld = this.getWorldPointFromPixelPoint( viewCenterPixel );
-    var toMoveX = b2vecpos.get_x() - currentViewCenterWorld.x;
-    var toMoveY = b2vecpos.get_y() - currentViewCenterWorld.y;
-    var fraction = instantaneous ? 1 : 0.25;
-    offset.x -= Util.myRound(fraction * toMoveX * PTM, 0);
-    offset.y += Util.myRound(fraction * toMoveY * PTM, 0);
+  getPixelPointFromWorldPoint(worldPoint){
+    singlePixelPoint.x = this._getPixelPointFromWorldPoint_x(worldPoint.x);
+    singlePixelPoint.y = this._getPixelPointFromWorldPoint_y(worldPoint.y);
+    return singlePixelPoint;
+  }
+
+  _getPixelPointFromWorldPoint_x(x){
+    return (x*PTM)+offset.x;
+  }
+
+  _getPixelPointFromWorldPoint_y(y){
+    return (y*PTM) + (this.canvas.height() - offset.y);
+  }
+
+  setViewCenterWorld(b2vecpos, instantaneous, fraction) {
+    var currentViewCenterWorld = this.getViewCenterWorld();
+    var toMove = {};
+    toMove.x = b2vecpos.get_x() - currentViewCenterWorld.x;
+    toMove.y = b2vecpos.get_y() - currentViewCenterWorld.y;
+    this.moveCenterBy(toMove, instantaneous, fraction);
+  }
+
+  getViewCenterWorld(){
+    return this.getWorldPointFromPixelPoint( viewCenterPixel );
+  }
+
+  moveCenterBy(toMove,instantaneous, fraction){
+    fraction = fraction || instantaneous ? 1 : 0.25;
+    offset.x -= Util.myRound(fraction * toMove.x * PTM, 0);
+    offset.y += Util.myRound(fraction * toMove.y * PTM, 0);
   }
 
   updateEnvironmentVariables(){

@@ -46,7 +46,7 @@ class Level extends BaseLevel {
           var obj = new Player(body, null, null, this.world);
           this.scene.objects[body.name] = obj;
           this.player = obj;
-          App.camera.setChaseEntity(obj);
+          App.camera.setChaseEntity(obj,this.chaseEntityMethod);
           break;
         default:
 
@@ -244,6 +244,29 @@ class Level extends BaseLevel {
     }
     this.currentDimension = this.dimensions[1];
     this.currentDimension.activate();
+  }
+
+  chaseEntityMethod(chaseEntity, camera){
+    var pos = chaseEntity.getPosition();
+    var bounds = camera.getViewportBounds();
+
+    var percent = .2;
+
+    var leftBound = camera._getWorldPointFromPixelPoint_x(camera.canvas.width()*percent);
+    var rightBound = camera._getWorldPointFromPixelPoint_x(camera.canvas.width()*(1-percent));
+    var center = camera.getViewCenterWorld();
+    var diff = {
+      x:0,
+      y:0
+    };
+
+    if(pos.get_x()<leftBound){
+      diff.x = pos.get_x()-leftBound;
+      camera.moveCenterBy(diff);
+    } else if(pos.get_x()>center.x) {
+      diff.x = pos.get_x()-center.x;
+      camera.moveCenterBy(diff);
+    }
   }
 
 }
