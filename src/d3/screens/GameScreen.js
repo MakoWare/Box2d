@@ -27,7 +27,9 @@ class GameScreen extends Screen {
 
     this.level = new Level(scene, this.world);
 
-    this.inputListener = App.input.newEventListener({},true);
+    this.inputListener = App.input.newEventListener({
+      '27':'home'
+    },true);
 
     this.inputListener.home = (down,evt)=>{
       if(!down){
