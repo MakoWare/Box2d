@@ -12,7 +12,7 @@ var config = {
       axes: true,
       grid: false
     },
-    ptm: 20
+    ptm: 25
   },
   world: {
     gravity: {

@@ -9,8 +9,11 @@ class Player extends StatefulPolygonEntity {
     this.world = world;
     this.maxVX = 10;
     this.maxVY = 10;
+    this.gravityScale = 2;
+    this.jumpGravityScale = 3;
     this.color = "ecf0f1";
 
+    this.body.SetGravityScale(this.gravityScale);
     this.initContactListeners();
     this.initMoveListeners();
   }
@@ -151,10 +154,10 @@ class Player extends StatefulPolygonEntity {
     if(keyDown && !this.jumping && this.grounded){
       this.jumping = true;
       this.grounded = false;
-      this.body.ApplyLinearImpulse(new Box2D.b2Vec2(0,10),this.body.GetWorldCenter());
+      this.body.ApplyLinearImpulse(new Box2D.b2Vec2(0,13),this.body.GetWorldCenter());
     } else if(!keyDown) {
       this.jumping = false;
-      this.body.SetGravityScale(1.7);
+      this.body.SetGravityScale(this.jumpGravityScale);
     }
   }
 
@@ -165,7 +168,7 @@ class Player extends StatefulPolygonEntity {
 
     if(set){
       this.grounded = true;
-      this.body.SetGravityScale(1.0);
+      this.body.SetGravityScale(this.gravityScale);
     } else if(b==0) {
       console.log('not grounded');
       this.grounded = false;

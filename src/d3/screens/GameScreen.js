@@ -22,7 +22,7 @@ class GameScreen extends Screen {
     var scene = AssetManager.getData('level_1');
     console.log(scene);
 
-    this.camera.setPTM(34);
+    //this.camera.setPTM(34);
     this.camera.setViewCenterWorld(new Box2D.b2Vec2(15,0),true);
 
     this.level = new Level(scene, this.world);

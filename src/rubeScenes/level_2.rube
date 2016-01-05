@@ -267,7 +267,7 @@
         "position" : 
         {
           "x" : 10,
-          "y" : 5
+          "y" : 4
         },
         "type" : "static"
       },
@@ -317,7 +317,7 @@
         "position" : 
         {
           "x" : 0,
-          "y" : 10
+          "y" : 7
         },
         "type" : "static"
       },
@@ -367,7 +367,7 @@
         "position" : 
         {
           "x" : 20.0,
-          "y" : 10
+          "y" : 8
         },
         "type" : "static"
       }

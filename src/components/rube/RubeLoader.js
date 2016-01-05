@@ -50,7 +50,7 @@ class RubeLoader {
     else
       bd.set_position(new Box2D.b2Vec2(0,0));
 
-    if (bodyJso.hasOwnProperty('gravityScale') && !isNaN(this.parseFloat(bodyJso.gravityScale)) && isFinite(bodyJso.gravityScale)) {
+    if (bodyJso.hasOwnProperty('gravityScale') && !isNaN(parseFloat(bodyJso.gravityScale)) && isFinite(bodyJso.gravityScale)) {
       bd.set_gravityScale(bodyJso.gravityScale);
     } else {
       bd.set_gravityScale(1);
