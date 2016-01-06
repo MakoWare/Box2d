@@ -11,6 +11,9 @@ class GroundEntity extends PolygonEntity {
     var pos = this.body.GetPosition();
 
     ctx.save();
+
+    this.applyRotation(ctx);
+
     ctx.translate(pos.get_x(),pos.get_y());
     ctx.fillStyle = Util.convertHex(this.color, opacity);
     this.drawFixtures(ctx, delta,()=>{
