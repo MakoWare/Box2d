@@ -557,8 +557,8 @@
         "name" : "d0",
         "position" : 
         {
-          "x" : -8.301506042480469,
-          "y" : -24.76825523376465
+          "x" : 26.0,
+          "y" : 7
         },
         "type" : "static"
       },
@@ -1956,8 +1956,8 @@
         "name" : "d2",
         "position" : 
         {
-          "x" : 35.82853317260742,
-          "y" : -11.92833137512207
+          "x" : -10,
+          "y" : 8
         },
         "type" : "static"
       },
@@ -2732,6 +2732,57 @@
         {
           "x" : 22.0,
           "y" : -1
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 1,
+            "name" : "Dimension"
+          },
+          
+          {
+            "name" : "Class",
+            "string" : "Ground"
+          }
+        ],
+        "fixedRotation" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 100.0,
+            "id" : 34,
+            "name" : "d0",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0, 20.0, 20.0, 0.0 ],
+              "y" : [ -1, -1, 0.0, 0.0 ]
+            }
+          }
+        ],
+        "id" : 34,
+        "linearVelocity" : 0,
+        "name" : "d1",
+        "position" : 
+        {
+          "x" : 0,
+          "y" : 11.0
         },
         "type" : "static"
       }
