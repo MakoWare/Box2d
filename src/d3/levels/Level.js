@@ -46,7 +46,8 @@ class Level extends BaseLevel {
           var obj = new Player(body, null, null, this.world);
           this.scene.objects[body.name] = obj;
           this.player = obj;
-          App.camera.setChaseEntity(obj,this.chaseEntityMethod);
+          //App.camera.setChaseEntity(obj,this.chaseEntityMethod);
+          App.camera.setChaseEntity(obj);
           break;
         default:
 
