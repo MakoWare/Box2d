@@ -59,7 +59,6 @@ class RubeLoader {
     var body = world.CreateBody(bd);
     body.fixtures = [];
 
-
     var md = new Box2D.b2MassData();
     md.set_mass(bodyJso['massData-mass'] || 0);
     if ( bodyJso.hasOwnProperty('massData-center') && bodyJso['massData-center'] instanceof Object )

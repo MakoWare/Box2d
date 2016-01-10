@@ -12,7 +12,7 @@ class Bullet extends PolygonEntity {
     this.color = "#ecf0f1";
 
     this.body.SetGravityScale(this.gravityScale);
-    this.initContactListeners();
+    //this.initContactListeners();
   }
 
   initContactListeners(){

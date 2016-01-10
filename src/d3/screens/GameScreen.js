@@ -36,7 +36,6 @@ class GameScreen extends Screen {
         this.finish({reset:true});
         console.log('reset');
       }
-
     };
   }
 
@@ -45,7 +44,7 @@ class GameScreen extends Screen {
 
     this.world.Step(1/60, 3, 2);
     this.camera.update(ctx,delta);
-    // this.world.drawDebug();
+    this.world.drawDebug();
 
     // draw the level
     this.level.draw(ctx, delta);

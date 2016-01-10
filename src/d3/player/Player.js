@@ -2,6 +2,7 @@ import StatefulPolygonEntity from 'src/components/engine/StatefulPolygonEntity';
 import App from 'src/components/app/app';
 import Box2D from 'src/components/box2d/box2d';
 import PlayerCollisions from './PlayerCollisions';
+import MainBlaster from 'src/d3/blaster/MainBlaster';
 
 class Player extends StatefulPolygonEntity {
   constructor(body, image, options, world){
@@ -13,6 +14,11 @@ class Player extends StatefulPolygonEntity {
     this.jumpGravityScale = 4;
     this.color = "#ecf0f1";
 
+    this.blasters = [];
+    this.blasters.push(new MainBlaster(null, null, null, world));
+    this.currentBlaster = this.blasters[0];
+
+    console.log(this.currentBlaster);
     this.body.SetGravityScale(this.gravityScale);
     this.initContactListeners();
     this.initMoveListeners();
@@ -87,11 +93,13 @@ class Player extends StatefulPolygonEntity {
     console.log("player.onBeginContact");
     var contactObject = this.involvedInContact(contactPtr);
     if(contactObject){
-      switch(contactObject.entityData.constructor.name) {
-        case "GroundEntity":
-          // console.log(contactObject);
-          this.setGrounded(true,contactObject);
-          break;
+      if(contactObject.entityData){
+        switch(contactObject.entityData.constructor.name) {
+          case "GroundEntity":
+            // console.log(contactObject);
+            this.setGrounded(true,contactObject);
+            break;
+        }
       }
     } else {
       return;
@@ -102,10 +110,12 @@ class Player extends StatefulPolygonEntity {
     console.log("player.onEndContact()");
     var contactObject = this.involvedInContact(contactPtr);
     if(contactObject){
-      switch(contactObject.entityData.constructor.name) {
-        case "GroundEntity":
-          this.setGrounded(false,contactObject);
-          break;
+      if(contactObject.entityData){
+        switch(contactObject.entityData.constructor.name) {
+          case "GroundEntity":
+            this.setGrounded(false,contactObject);
+            break;
+        }
       }
     }
   }
@@ -164,9 +174,7 @@ class Player extends StatefulPolygonEntity {
   }
 
   shoot(keyDown){
-    var bullet = new Bullet;
-    console.log("pop pop nigga");
-
+    this.currentBlaster.fire();
   }
 
   setGrounded(set,obj){
