@@ -30,6 +30,10 @@ class World {
     this.world.Step(delta, a, b);
   }
 
+  destroy(){
+    Box2D.destroy(this.world);
+  }
+
 }
 
 export default World;

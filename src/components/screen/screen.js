@@ -7,13 +7,25 @@ class Screen {
     this.options = options || {};
   }
 
+  _draw(ctx, delta){
+    if(!this._isFinished){
+      this.draw.apply(this,arguments);
+    }
+  }
+
   draw(ctx, delta){
     this.camera.update(ctx,delta);
   }
 
   finish(data){
-    this._finalData = data;
-    this._isFinished = true;
+    if(!this._isFinished){
+      this.onDestroy();
+      this._finalData = data;
+      this._isFinished = true;
+    }
+  }
+
+  onDestroy(){
   }
 }
 

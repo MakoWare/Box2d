@@ -11,7 +11,7 @@ class ScreenManager {
 
     if(stack.length > 0){
       let screen = stack[stack.length-1];
-      screen.draw(ctx,delta);
+      screen._draw.apply(screen,arguments);
 
 
       if(_listener){
@@ -28,7 +28,13 @@ class ScreenManager {
     // } else {
     //   stack.push(screen);
     // }
-    stack.splice( (replace ? stack.length : (stack.length > 0 ? stack.length-1 : stack.length) ) , 1, screen);
+
+    if(replace){
+      stack.splice(stack.length-1,1,screen);
+    } else {
+      stack.push(screen);
+    }
+    console.log('add screen:',stack.length,replace);
   }
 
   getStack(){

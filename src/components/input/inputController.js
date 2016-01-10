@@ -49,6 +49,14 @@ class InputController {
     return l;
   }
 
+  removeEventListener(listener){
+    var ix = listeners.indexOf(listener);
+    if(ix>-1){
+      console.log('remove event listener');
+      listeners.splice(ix,1);
+    }
+  }
+
   //  -- keyboard
   initKeys() {
     this.canvas.addEventListener('keydown', function(evt) {

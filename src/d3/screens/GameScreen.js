@@ -51,6 +51,12 @@ class GameScreen extends Screen {
 
     ctx.restore();
   }
+
+  onDestroy(){
+    console.log('destroy world');
+    App.input.removeEventListener(this.inputListener);
+    this.world.destroy();
+  }
 }
 
 export default GameScreen;

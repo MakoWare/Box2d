@@ -10,9 +10,9 @@ class PolygonEntity extends BaseEntity {
 
     if(verts && verts.length>0){
       ctx.beginPath();
-      ctx.moveTo(verts[0].get_x(),verts[0].get_y());
+      ctx.moveTo(verts[0].x,verts[0].y);
       for(var i=1;i<verts.length;i++){
-        ctx.lineTo(verts[i].get_x(),verts[i].get_y());
+        ctx.lineTo(verts[i].x,verts[i].y);
       }
     }
 

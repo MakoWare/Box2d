@@ -9,8 +9,6 @@ class RubeAsset extends Asset {
       console.warn('RubeAsset has no world.', this);
     }
 
-    this.rubeLoader = new RubeLoader();
-
     this._loadJSON();
   }
 
@@ -36,7 +34,7 @@ class RubeAsset extends Asset {
       if (this.xobj.readyState == 4 && this.xobj.status == "200") {
         // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
         var sceneJson = JSON.parse(this.xobj.responseText);
-        this.data = this.rubeLoader.loadSceneIntoWorld(sceneJson, this.world);
+        this.data = RubeLoader.loadSceneIntoWorld(sceneJson, this.world);
         if(this.data._success){
           resolve(this);
         } else {

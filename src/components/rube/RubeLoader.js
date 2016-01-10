@@ -25,7 +25,6 @@ class RubeLoader {
     else
       bd.set_type(Box2D.b2_staticBody);
 
-    console.log(bodyJso);
     if(bodyJso.active === false){
       bd.set_active(false);
     }
@@ -162,8 +161,10 @@ class RubeLoader {
     else if (fixtureJso.hasOwnProperty('polygon')) {
 
       var verts = [];
+      var _verts = [];
       for (var v = 0; v < fixtureJso.polygon.vertices.x.length; v++) {
         verts.push( new Box2D.b2Vec2( fixtureJso.polygon.vertices.x[v], fixtureJso.polygon.vertices.y[v] ) );
+        _verts.push({x:fixtureJso.polygon.vertices.x[v], y:fixtureJso.polygon.vertices.y[v]});
       }
 
 
@@ -181,7 +182,7 @@ class RubeLoader {
       // body.verts = verts;
       var data = {
         type:'polygon',
-        verts:verts,
+        verts:_verts,
         json:fixtureJso
       }
       body.fixtures.push(data);
@@ -189,9 +190,11 @@ class RubeLoader {
     else if (fixtureJso.hasOwnProperty('chain')) {
 
       var verts = [];
-      for (var v = 0; v < fixtureJso.chain.vertices.x.length; v++)
+      var _verts = [];
+      for (var v = 0; v < fixtureJso.chain.vertices.x.length; v++){
         verts.push(new Box2D.b2Vec2(fixtureJso.chain.vertices.x[v], fixtureJso.chain.vertices.y[v]));
-
+        _verts.push({x:fixtureJso.chain.vertices.x[v], y:fixtureJso.chain.vertices.y[v]});
+      }
 
       shape = this.createChainShape(verts);
       fd.set_shape(shape);
@@ -204,7 +207,7 @@ class RubeLoader {
       // body.verts = verts;
       var data = {
         type:'chain',
-        verts:verts,
+        verts:_verts,
         json:fixtureJso
       }
       body.fixtures.push(data);
@@ -559,4 +562,4 @@ class RubeLoader {
   }
 }
 
-export default RubeLoader;
+export default new RubeLoader();
