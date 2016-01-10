@@ -7,11 +7,11 @@ class Player extends StatefulPolygonEntity {
   constructor(body, image, options, world){
     super(body, image, options);
     this.world = world;
-    this.maxVX = 10;
+    this.maxVX = 20;
     this.maxVY = 10;
-    this.gravityScale = 2;
-    this.jumpGravityScale = 3;
-    this.color = "ecf0f1";
+    this.gravityScale = 3;
+    this.jumpGravityScale = 4;
+    this.color = "#ecf0f1";
 
     this.body.SetGravityScale(this.gravityScale);
     this.initContactListeners();
@@ -24,7 +24,8 @@ class Player extends StatefulPolygonEntity {
       '37':'left',
       '38':'up',
       '40':'down',
-      '32':'cross'
+      '32':'cross',
+      '69': 'square'
     }, true);
 
     this.inputListener.left = (down)=>{
@@ -43,6 +44,11 @@ class Player extends StatefulPolygonEntity {
     this.inputListener.cross = (down)=>{
       this.jump(down);
     }
+
+    this.inputListener.square = (down)=>{
+      this.shoot(down);
+    }
+
     this.inputListener.leftStick = (xVal,yVal,event)=>{
       if(xVal>0.3){
         this.moveRight(true);
@@ -61,8 +67,6 @@ class Player extends StatefulPolygonEntity {
         this.moveDown(false);
         this.moveUp(false);
       }
-
-
     }
   }
 
@@ -116,8 +120,7 @@ class Player extends StatefulPolygonEntity {
       var vel = this.body.GetLinearVelocity();
       var velChange = desiredVel - vel.get_x();
       var impulse = this.body.GetMass() * velChange;
-      //this.body.ApplyLinearImpulse(new Box2D.b2Vec2(impulse, 0), this.body.GetWorldCenter());
-      this.body.ApplyTorque(-15);
+      this.body.ApplyLinearImpulse(new Box2D.b2Vec2(impulse, 0), this.body.GetWorldCenter());
     }
   }
 
@@ -131,8 +134,7 @@ class Player extends StatefulPolygonEntity {
       var vel = this.body.GetLinearVelocity();
       var velChange = desiredVel - vel.get_x();
       var impulse = this.body.GetMass() * velChange;
-      //this.body.ApplyLinearImpulse(new Box2D.b2Vec2(impulse, 0), this.body.GetWorldCenter());
-      this.body.ApplyTorque(15);
+      this.body.ApplyLinearImpulse(new Box2D.b2Vec2(impulse, 0), this.body.GetWorldCenter());
     }
   }
 
@@ -154,11 +156,17 @@ class Player extends StatefulPolygonEntity {
     if(keyDown && !this.jumping && this.grounded){
       this.jumping = true;
       this.grounded = false;
-      this.body.ApplyLinearImpulse(new Box2D.b2Vec2(0,13),this.body.GetWorldCenter());
+      this.body.ApplyLinearImpulse(new Box2D.b2Vec2(0,30),this.body.GetWorldCenter());
     } else if(!keyDown) {
       this.jumping = false;
       this.body.SetGravityScale(this.jumpGravityScale);
     }
+  }
+
+  shoot(keyDown){
+    var bullet = new Bullet;
+    console.log("pop pop nigga");
+
   }
 
   setGrounded(set,obj){
@@ -185,33 +193,23 @@ class Player extends StatefulPolygonEntity {
   }
 
   draw(ctx, delta){
-    super.draw();
+    var pos = this.body.GetPosition();
 
     ctx.save();
 
-    var pos = this.body.GetPosition();
-    var fix = this.body.fixtures[0];
-    var center = fix.center;
-    var radius = fix.radius;
-
-    ctx.fillStyle = 'white';
-
     this.applyRotation(ctx);
 
-    // draw main circle
-    ctx.beginPath();
-    ctx.arc(pos.get_x(),pos.get_y(),radius,0,2*Math.PI);
-    ctx.fill();
-
-    // draw a radius line to show rotation
-    ctx.beginPath();
-    ctx.moveTo(pos.get_x(),pos.get_y());
-    ctx.lineTo(pos.get_x()+radius,pos.get_y());
-    ctx.strokeStyle = 'red';
-    ctx.stroke();
-
-
-
+    ctx.translate(pos.get_x(),pos.get_y());
+    ctx.fillStyle = this.color;
+    this.drawFixtures(ctx, delta,()=>{
+      ctx.fill();
+      ctx.strokeStyle = this.color;
+      ctx.lineWidth = 0.04;
+      ctx.lineJoin = 'bevel';
+      ctx.lineCap = 'round';
+      ctx.closePath();
+      ctx.stroke();
+    });
     ctx.restore();
   }
 
