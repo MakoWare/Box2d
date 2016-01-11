@@ -15,7 +15,7 @@ class Player extends StatefulPolygonEntity {
     this.color = "#ecf0f1";
 
     this.blasters = [];
-    this.blasters.push(new MainBlaster(null, null, null, world));
+    this.blasters.push(new MainBlaster(null, null, null, world, this.body));
     this.currentBlaster = this.blasters[0];
 
     console.log(this.currentBlaster);
@@ -90,7 +90,6 @@ class Player extends StatefulPolygonEntity {
   }
 
   onBeginContact(contactPtr){
-    console.log("player.onBeginContact");
     var contactObject = this.involvedInContact(contactPtr);
     if(contactObject){
       if(contactObject.entityData){
@@ -107,7 +106,6 @@ class Player extends StatefulPolygonEntity {
   }
 
   onEndContact(contactPtr){
-    console.log("player.onEndContact()");
     var contactObject = this.involvedInContact(contactPtr);
     if(contactObject){
       if(contactObject.entityData){
@@ -120,7 +118,7 @@ class Player extends StatefulPolygonEntity {
     }
   }
 
-  moveRight(keyDown){
+  moveRight(keyDown
     if(keyDown){
       var desiredVel = this.maxVX;
     } else {
