@@ -1,6 +1,7 @@
 import Screen from 'src/components/screen/screen';
 import AssetManager from 'src/components/base/assetManager';
 import World from 'src/components/world/world';
+import App from 'src/components/app/app';
 
 class LoadingScreen extends Screen {
   constructor(camera, options) {
@@ -20,7 +21,7 @@ class LoadingScreen extends Screen {
 
     this.world = new World();
 
-    camera.setViewCenterWorld(new Box2D.b2Vec2(10,10),true);
+    camera.setViewCenterWorld(new App.b2d.b2Vec2(10,10),true);
 
     // load some assets
     AssetManager.loadResource('level_1','src/rubeScenes/level_1.json', 'rube', this.world);

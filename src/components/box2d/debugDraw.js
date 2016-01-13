@@ -112,40 +112,41 @@ class DebugDraw {
   getCanvasDebugDraw() {
       var debugDraw = new Box2D.JSDraw();
 
+      var self = this;
       debugDraw.DrawSegment = function(vert1, vert2, color) {
-          this.setColorFromDebugDrawCallback(color);
-          this.saveContext('draw segment');
-          this.drawSegment(vert1, vert2);
-      }.bind(this);
+          self.setColorFromDebugDrawCallback(color);
+          self.saveContext('draw segment');
+          self.drawSegment(vert1, vert2);
+      };
 
       debugDraw.DrawPolygon = function(vertices, vertexCount, color) {
-          this.setColorFromDebugDrawCallback(color);
-          this.saveContext('draw polygon');
-          this.drawPolygon(vertices, vertexCount, false);
-      }.bind(this);
+          self.setColorFromDebugDrawCallback(color);
+          self.saveContext('draw polygon');
+          self.drawPolygon(vertices, vertexCount, false);
+      };
 
       debugDraw.DrawSolidPolygon = function(vertices, vertexCount, color) {
-          this.setColorFromDebugDrawCallback(color);
-          this.saveContext('draw solid polygon');
-          this.drawPolygon(vertices, vertexCount, true);
-      }.bind(this);
+          self.setColorFromDebugDrawCallback(color);
+          self.saveContext('draw solid polygon');
+          self.drawPolygon(vertices, vertexCount, true);
+      };
 
       debugDraw.DrawCircle = function(center, radius, color) {
-          this.setColorFromDebugDrawCallback(color);
-          this.saveContext('draw circle');
+          self.setColorFromDebugDrawCallback(color);
+          self.saveContext('draw circle');
           var dummyAxis = Box2D.b2Vec2(0,0);
-          this.drawCircle(center, radius, dummyAxis, false);
-      }.bind(this);
+          self.drawCircle(center, radius, dummyAxis, false);
+      };
 
       debugDraw.DrawSolidCircle = function(center, radius, axis, color) {
-          this.setColorFromDebugDrawCallback(color);
-          this.saveContext('draw solid circle');
-          this.drawCircle(center, radius, axis, true);
-      }.bind(this);
+          self.setColorFromDebugDrawCallback(color);
+          self.saveContext('draw solid circle');
+          self.drawCircle(center, radius, axis, true);
+      };
 
       debugDraw.DrawTransform = function(transform) {
-          this.drawTransform(transform);
-      }.bind(this);
+          self.drawTransform(transform);
+      };
 
       return debugDraw;
   }

@@ -6,6 +6,12 @@ import Dimension from 'src/d3/dimensions/Dimension';
 import App from 'src/components/app/app';
 import GroundEntity from 'src/d3/dimensions/GroundEntity';
 
+
+const NONE = 0;
+const RIGHT = 1;
+const LEFT = 2;
+
+
 class Level extends BaseLevel {
   constructor(scene, world) {
     super();
@@ -21,15 +27,12 @@ class Level extends BaseLevel {
 
     this.dimensions = [dim0,dim1,dim2];
 
-    // this.entityManager.registerEntity(dim0);
-    // this.entityManager.registerEntity(dim1);
-    // this.entityManager.registerEntity(dim2);
-
-    // this.currentDimension = dim1;
-    // dim1.activate();
+    this.entityManager.registerEntity(dim0);
+    this.entityManager.registerEntity(dim1);
+    this.entityManager.registerEntity(dim2);
 
     var colors = ['#2196f3','#ff9800','#4caf50'];
-    this.scene.objects = this.scene.objects || {};
+    // this.scene.objects = this.scene.objects || {};
     this.scene.bodies.forEach( (body)=>{
 
       switch (body.props.Class.value) {
@@ -38,14 +41,14 @@ class Level extends BaseLevel {
           var dim = this.dimensions[dimIndex];
           var obj = new GroundEntity(body,colors[dimIndex]);
           dim.addEntity(obj);
-
           obj.deactivate();
           // this.dimensions[dimIndex] = dim;
           break;
         case 'Player':
           var obj = new Player(body, null, null, this.world);
-          this.scene.objects[body.name] = obj;
           this.player = obj;
+          this.entityManager.registerEntity(this.player);
+
           //App.camera.setChaseEntity(obj,this.chaseEntityMethod);
           App.camera.setChaseEntity(obj);
           break;
@@ -54,9 +57,6 @@ class Level extends BaseLevel {
       }
     });
 
-    // dim0.activate();
-    // this.currentDimension = dim0;
-    // this.activeIndex = dimIndex;
 
     console.log(this.dimensions);
 
@@ -74,10 +74,18 @@ class Level extends BaseLevel {
     this.inputListener.l2 = (down,evt)=>{
       this.onLeft2(down,evt);
     };
+    this.inputListener.circle = (down,evt)=>{
+      this.onCircle(down,evt);
+    };
 
 
-    this.upperInputBounds = 0.9;
+    this.upperInputBounds = 0.95;
+    this.selectingDimension = NONE;
+  }
 
+  destroy(){
+    App.input.removeEventListener(this.inputListener);
+    this.entityManager.destroy();
   }
 
   draw(ctx, delta){
@@ -85,8 +93,8 @@ class Level extends BaseLevel {
 
     // this.entityManager.draw(ctx,delta);
     this.dimensions[0].draw(ctx,delta);
-    this.dimensions[1].draw(ctx,delta);
     this.dimensions[2].draw(ctx,delta);
+    this.dimensions[1].draw(ctx,delta); // draw the current dimension on top
 
     this.player.draw(ctx,delta);
 
@@ -158,12 +166,14 @@ class Level extends BaseLevel {
     var op = (Math.abs(val))/(ub);
     var opInv = 1-op;
 
-    if(val && !this.preventPop){
-      if(val<ub){
+    if(val && !this.preventPop && (this.selectingDimension === NONE || this.selectingDimension === LEFT) ){
+      if(val<=ub){
         var dim = this.peekDownDimension();
         // console.log(op);
         dim.setOpacity(op);
         this.currentDimension.setOpacity(opInv);
+        this.selectingDimension = LEFT;
+        this.selectedDimension = dim;
       } else {
         // console.log('pop up');
         this.popDownDimension();
@@ -176,6 +186,10 @@ class Level extends BaseLevel {
       this.dimensions[0].setOpacity(0);
       this.currentDimension.setOpacity(1);
       this.preventPop = false;
+      if(this.selectingDimension === LEFT){
+        this.selectingDimension = NONE;
+        this.selectedDimension = null;
+      }
     }
   }
 
@@ -187,12 +201,14 @@ class Level extends BaseLevel {
     var op = (Math.abs(val))/(ub);
     var opInv = 1-op;
 
-    if(val && !this.preventPop){
-      if(val<ub){
+    if(val && !this.preventPop && (this.selectingDimension === NONE || this.selectingDimension === RIGHT) ){
+      if(val<=ub){
         var dim = this.peekUpDimension();
         // console.log(val);
         dim.setOpacity(op);
         this.currentDimension.setOpacity(opInv);
+        this.selectingDimension = RIGHT;
+        this.selectedDimension = dim;
       } else {
         // console.log('pop up');
         this.popUpDimension();
@@ -205,7 +221,26 @@ class Level extends BaseLevel {
       this.dimensions[0].setOpacity(0);
       this.currentDimension.setOpacity(1);
       this.preventPop = false;
+      if(this.selectingDimension === RIGHT){
+        this.selectingDimension = NONE;
+        this.selectedDimension = null;
+      }
     }
+
+  }
+
+  onCircle(down, evt){
+
+    // if(this.selectedDimension){
+    //   if(down){
+    //     if(!this.preventPop){
+    //       this.popToDimension();
+    //       this.preventPop = true;
+    //     }
+    //   }
+    // } else {
+    //   // send event to player
+    // }
 
   }
 
@@ -227,6 +262,15 @@ class Level extends BaseLevel {
     this.resetDimension();
   }
 
+  popToDimension() {
+    if(this.selectingDimension === RIGHT){
+      this.popUpDimension();
+    } else if(this.selectingDimension === LEFT){
+      this.popDownDimension();
+    }
+
+  }
+
   resetDimension(toDim){
     if(toDim !== undefined && toDim !== null){
       for(var i=0; i<20;i++){
@@ -241,10 +285,12 @@ class Level extends BaseLevel {
     }
 
     if(this.currentDimension){
+      this.world.disableStep();
       this.currentDimension.deactivate();
     }
     this.currentDimension = this.dimensions[1];
     this.currentDimension.activate();
+    this.world.enableStep();
   }
 
   chaseEntityMethod(chaseEntity, camera){

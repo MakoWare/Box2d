@@ -15,6 +15,7 @@ class World {
     this.world = new Box2D.b2World(b2Vec2);
     Util.using(this,this.world);
     this.config = Util.readConfig('world');
+    this.enableStep();
   }
 
   drawDebug(override){
@@ -27,7 +28,17 @@ class World {
     delta = (delta!==undefined && delta!==null) ? delta : 0;
     a = (a!==undefined && a!==null) ? a : 3;
     b = (b!==undefined && b!==null) ? b : 2;
-    this.world.Step(delta, a, b);
+    if(this.stepWorld){
+      this.world.Step(delta, a, b);
+    }
+  }
+
+  enableStep(){
+    this.stepWorld = true;
+  }
+
+  disableStep(){
+    this.stepWorld = false;
   }
 
   destroy(){

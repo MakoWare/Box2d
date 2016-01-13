@@ -4,15 +4,19 @@ import Box2D from 'src/components/box2d/box2d';
 import PlayerCollisions from './PlayerCollisions';
 import MainBlaster from 'src/d3/blaster/MainBlaster';
 
+const RIGHT = 10;
+const LEFT  = 11;
+
 class Player extends StatefulPolygonEntity {
   constructor(body, image, options, world){
     super(body, image, options);
     this.world = world;
-    this.maxVX = 20;
+    this.maxVX = 15;
     this.maxVY = 10;
     this.gravityScale = 3;
     this.jumpGravityScale = 4;
     this.color = "#ecf0f1";
+    this.looking = RIGHT;
 
     this.blasters = [];
     this.blasters.push(new MainBlaster(null, null, null, world, this.body));
@@ -22,6 +26,14 @@ class Player extends StatefulPolygonEntity {
     this.body.SetGravityScale(this.gravityScale);
     this.initContactListeners();
     this.initMoveListeners();
+  }
+
+  destroy(){
+    super.destroy();
+    this.world.SetContactListener(null);
+    this.world = null;
+    App.input.removeEventListener(this.inputListener);
+    this.contactListener = null;
   }
 
   initMoveListeners(){
@@ -92,13 +104,12 @@ class Player extends StatefulPolygonEntity {
   onBeginContact(contactPtr){
     var contactObject = this.involvedInContact(contactPtr);
     if(contactObject){
-      if(contactObject.entityData){
-        switch(contactObject.entityData.constructor.name) {
-          case "GroundEntity":
-            // console.log(contactObject);
-            this.setGrounded(true,contactObject);
-            break;
-        }
+      // console.log("player.onBeginContact");
+      switch(contactObject.entityData.constructor.name) {
+        case "GroundEntity":
+          // console.log(contactObject);
+          this.setGrounded(true,contactObject);
+          break;
       }
     } else {
       return;
@@ -108,42 +119,49 @@ class Player extends StatefulPolygonEntity {
   onEndContact(contactPtr){
     var contactObject = this.involvedInContact(contactPtr);
     if(contactObject){
-      if(contactObject.entityData){
-        switch(contactObject.entityData.constructor.name) {
-          case "GroundEntity":
-            this.setGrounded(false,contactObject);
-            break;
-        }
+      // console.log("player.onEndContact()");
+      switch(contactObject.entityData.constructor.name) {
+        case "GroundEntity":
+          this.setGrounded(false,contactObject);
+          break;
       }
     }
   }
 
   moveRight(keyDown){
+    var desiredVel;
     if(keyDown){
-      var desiredVel = this.maxVX;
+      desiredVel = this.maxVX;
     } else {
-      var desiredVel = 0;
+      desiredVel = 0;
     }
     if(!this.reverse){
       var vel = this.body.GetLinearVelocity();
       var velChange = desiredVel - vel.get_x();
       var impulse = this.body.GetMass() * velChange;
       this.body.ApplyLinearImpulse(new Box2D.b2Vec2(impulse, 0), this.body.GetWorldCenter());
+      this.looking = RIGHT;
     }
+
+    return true;
   }
 
   moveLeft(keyDown){
+    var desiredVel;
     if(keyDown){
-      var desiredVel = -this.maxVX;
+      desiredVel = -this.maxVX;
     } else {
-      var desiredVel = 0;
+      desiredVel = 0;
     }
     if(!this.reverse){
       var vel = this.body.GetLinearVelocity();
       var velChange = desiredVel - vel.get_x();
       var impulse = this.body.GetMass() * velChange;
       this.body.ApplyLinearImpulse(new Box2D.b2Vec2(impulse, 0), this.body.GetWorldCenter());
+      this.looking = LEFT;
     }
+
+    return true;
   }
 
   moveUp(keyDown){
@@ -216,6 +234,36 @@ class Player extends StatefulPolygonEntity {
       ctx.closePath();
       ctx.stroke();
     });
+
+    // draw gun
+    ctx.strokeStyle = 'red';
+    ctx.fillStyle   = 'red';
+    ctx.beginPath();
+    switch (this.looking) {
+      case RIGHT:
+        ctx.translate(-0.1,0);
+        ctx.moveTo(0.2,0.8);
+        ctx.lineTo(1.2,0.8);
+        ctx.lineTo(1.2,0.6);
+        ctx.lineTo(0.5,0.6);
+        ctx.lineTo(0.5,0.2);
+        ctx.lineTo(0.2,0.2);
+        break;
+      case LEFT:
+        ctx.moveTo(-0.2,0.8);
+        ctx.lineTo(-1.2,0.8);
+        ctx.lineTo(-1.2,0.6);
+        ctx.lineTo(-0.5,0.6);
+        ctx.lineTo(-0.5,0.2);
+        ctx.lineTo(-0.2,0.2);
+        break;
+      default:
+        break;
+    }
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
+
     ctx.restore();
   }
 

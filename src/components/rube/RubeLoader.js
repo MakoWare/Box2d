@@ -398,7 +398,7 @@ class RubeLoader {
   //load the scene into an already existing world variable
   loadSceneIntoWorld(worldJso, world) {
     var success = true;
-    this.scene = new RubeScene(worldJso, world);
+    var scene = new RubeScene(worldJso, world);
 
     var loadedBodies = [];
     if ( worldJso.hasOwnProperty('body') ) {
@@ -412,7 +412,7 @@ class RubeLoader {
         }
       }
     }
-    this.scene.bodies = loadedBodies;
+    scene.bodies = loadedBodies;
 
     var loadedJoints = [];
     if ( worldJso.hasOwnProperty('joint') ) {
@@ -425,11 +425,11 @@ class RubeLoader {
         //    success = false;
       }
     }
-    this.scene.joints = loadedJoints;
-    this.scene._success = success;
+    scene.joints = loadedJoints;
+    scene._success = success;
 
 
-    return this.scene;
+    return scene;
   }
 
   //create a world variable and return it if loading succeeds

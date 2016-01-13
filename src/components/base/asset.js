@@ -23,6 +23,10 @@ class Asset {
       resolve(this);
     };
   }
+
+  destroy(){
+    
+  }
 }
 
 export default Asset;

@@ -3,6 +3,9 @@ class BaseLevel {
 
   }
 
+  destroy(){
+  }
+
 }
 
 export default BaseLevel;

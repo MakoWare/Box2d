@@ -55,6 +55,7 @@ class AssetManager {
       if(!this.finalPromise){
         this.finalPromise = Promise.all(this.promiseQueue).then(()=>{
           this.assetsLoaded.apply(this, arguments);
+          this.promiseQueue = []; // reset promise queue to free objects;
         });
       }
     } else {
@@ -90,6 +91,11 @@ class AssetManager {
       default:
         return null;
     }
+  }
+
+  destroyAsset(asset){
+    delete this.assets[asset.name];
+    asset.destroy();
   }
 }
 

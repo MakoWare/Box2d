@@ -5,18 +5,20 @@ import Util from 'src/components/util/util';
 import ScreenManager from 'src/components/screen/screenManager';
 import App from 'src/components/app/app';
 import InputController from 'src/components/input/inputController';
+import Box2D from 'src/components/box2d/box2d';
 
 
 class BaseApp {
   constructor() {
     this.canvas = new Canvas();
     this.context = this.canvas.getContext();
-    this.world = new World();
+    // this.world = new World();
     this.camera = new Camera(this.canvas);
     this.running = false;
     this.lastTime = Date.now();
     this.config = Util.getConfig();
     this.screenManager = new ScreenManager();
+    this.backgroundColor = 'black';
 
     window._requestAnimFrame = (function(){
       return  window.requestAnimationFrame       ||
@@ -40,13 +42,14 @@ class BaseApp {
     App.canvas = this.canvas;
     App.context = this.context;
     App.config = this.config;
+    App.b2d = Box2D;
   }
 
   setDebugDraw(debugDraw){
     this.debugDraw = debugDraw;
-    if(this.debugDraw){
-      this.world.SetDebugDraw(this.debugDraw);
-    }
+    // if(this.debugDraw){
+    //   this.world.SetDebugDraw(this.debugDraw);
+    // }
   }
 
   draw(){
@@ -56,7 +59,7 @@ class BaseApp {
   _draw(ctx, delta) {
 
     //black background
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = this.backgroundColor;
     ctx.fillRect( 0, 0, this.canvas.el.width, this.canvas.el.height );
 
     ctx.save();
@@ -86,9 +89,9 @@ class BaseApp {
   }
 
   drawDebug(override){
-    if(this.debugDraw && (this.config.world.drawDebug || override)){
-      this.world.DrawDebugData();
-    }
+    // if(this.debugDraw && (this.config.world.drawDebug || override)){
+    //   this.world.DrawDebugData();
+    // }
   }
 
   // drawAxes(ctx, override){

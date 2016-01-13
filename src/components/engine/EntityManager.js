@@ -45,6 +45,12 @@ class EntityManager {
     });
   }
 
+  destroy(){
+    for(var i=0;i<this.entities.length;i++){
+      this.entities[i].destroy();
+    }
+  }
+
 }
 
 export default EntityManager;

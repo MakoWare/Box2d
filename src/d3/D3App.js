@@ -14,7 +14,7 @@ class D3App extends BaseApp {
 
     this.resetCount = 0;
 
-    this.camera.setViewCenterWorld(new Box2D.b2Vec2(0,0), true);
+    this.camera.setViewCenterWorld(new App.b2d.b2Vec2(0,0), true);
 
     this.screenListener = this.screenManager.newListener(true);
 

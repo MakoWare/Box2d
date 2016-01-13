@@ -43,6 +43,15 @@ class RubeAsset extends Asset {
       }
     };
   }
+
+  destroy(){
+    this.world = null;
+    this.promise = null;
+    this.xobj = null;
+    this.data.destroy();
+    this.data = null;
+    this.options = null;
+  }
 }
 
 export default RubeAsset;

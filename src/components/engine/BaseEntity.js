@@ -84,6 +84,16 @@ class BaseEntity {
       this.entities.splice(ix,1);
     }
   }
+
+  destroy(){
+    if(this.body){
+      this.body.entityData = null;
+
+    }
+    for(var i=0;i<this.entities.length;i++){
+      this.entities[i].destroy();
+    }
+  }
 }
 
 export default BaseEntity;

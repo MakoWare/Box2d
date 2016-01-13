@@ -74,6 +74,9 @@ class InputController {
     // console.log(evt);
     var l;
 
+    if(this.config.logAllKeys){
+      console.log(evt.keyCode);
+    }
     for(var i=listeners.length-1; i>=0; i--){
       l = listeners[i];
       if(!l){ continue;}
@@ -81,17 +84,18 @@ class InputController {
       var cfg = l.keyConfig;
       var key = cfg[evt.keyCode];
       if(key){
-        if(l[key].call(l,true,evt) === false){
+        var b = l[key].call(l,true,evt)
+        if(b === true){
           return;
         }
       }
+      // else {
+      //   if(this.config.logUnmappedKeys){
+      //     console.log(evt.keyCode);
+      //   }
+      // }
     }
-    if(this.config.logUnmappedKeys){
-      console.log(evt.keyCode);
-    }
-    if(this.config.logAllKeys){
-      console.log(evt.keyCode);
-    }
+
   }
 
   onKeyUp(canvas, evt) {
@@ -104,7 +108,7 @@ class InputController {
         var key = cfg[evt.keyCode];
         if(key){
           var b = l[key].call(l,false,evt);
-          if(b === false){
+          if(b === true){
             return;
           }
         }
@@ -205,6 +209,7 @@ class InputController {
 
   getGamepads(){
     var gps = navigator.getGamepads() || [];
+    var gp;
     for(var i=0;i<gps.length;i++){
       gp = this.gamepads[i];
       if(gp){
@@ -318,7 +323,7 @@ class InputController {
       var func = l[evt.keyIdentifier];
       if(!func){ continue;}
       var b = func.call(l,true,evt);
-      if(b === false){
+      if(b === true){
         return;
       }
     }
@@ -334,7 +339,7 @@ class InputController {
       if(!l){ continue;}
       var func = l[evt.keyIdentifier];
       if(!func){ continue;}
-      if(func.call(l,false,evt) === false){
+      if(func.call(l,false,evt) === true){
         return;
       }
     }
@@ -392,66 +397,83 @@ class InputEventListener {
   }
 
   start(){
+    return null;
   }
 
   select(){
+    return null;
   }
 
   home(){  // ps/xb button
+    return null;
   }
 
   left(){
+    return null;
   }
 
   right(){
+    return null;
   }
 
   up(){
+    return null;
   }
 
   down(){
+    return null;
   }
 
   l1(){
+    return null;
   }
 
   l2(){
+    return null;
   }
 
   l3(){
+    return null;
   }
 
   r1(){
+    return null;
   }
 
   r2(){
+    return null;
   }
 
   r3(){
+    return null;
   }
 
   triangle(){
+    return null;
   }
 
   square(){
+    return null;
   }
 
   circle(){
+    return null;
   }
 
   cross(){
+    return null;
   }
 
   extra(){
-
+    return null;
   }
 
   leftStick(x,y,event){
-
+    return null;
   }
 
   rightStick(x,y,event){
-
+    return null;
   }
 }
 

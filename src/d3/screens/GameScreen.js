@@ -19,7 +19,8 @@ class GameScreen extends Screen {
 
     // var level1 = new Level1();
 
-    var scene = AssetManager.getData('level_1');
+    this.levelAsset = AssetManager.getAsset('level_1');
+    var scene = this.levelAsset.data;
     console.log(scene);
 
     //this.camera.setPTM(34);
@@ -42,7 +43,7 @@ class GameScreen extends Screen {
   draw(ctx, delta){
     ctx.save();
 
-    this.world.Step(1/60, 3, 2);
+    this.world.step(1/60, 3, 2);
     this.camera.update(ctx,delta);
     this.world.drawDebug();
 
@@ -55,6 +56,8 @@ class GameScreen extends Screen {
   onDestroy(){
     console.log('destroy world');
     App.input.removeEventListener(this.inputListener);
+    AssetManager.destroyAsset(this.levelAsset);
+    this.level.destroy();
     this.world.destroy();
   }
 }
