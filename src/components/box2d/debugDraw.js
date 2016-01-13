@@ -162,6 +162,9 @@ class DebugDraw {
   //   }
   // }
 
+  destroy(){
+    this.debugDraw = null;
+  }
 }
 
 DebugDraw.e_shapeBit = 0x0001;
