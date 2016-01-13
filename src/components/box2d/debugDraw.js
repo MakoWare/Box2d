@@ -69,8 +69,8 @@ class DebugDraw {
 
       if (fill) {
           //render axis marker
-          var vert2V = copyVec2(centerV);
-          vert2V.op_add( scaledVec2(axisV, radius) );
+          var vert2V = Util.copyVec2(centerV);
+          vert2V.op_add( Util.scaledVec2(axisV, radius) );
           this.context.beginPath();
           this.context.moveTo(centerV.get_x(),centerV.get_y());
           this.context.lineTo(vert2V.get_x(),vert2V.get_y());
