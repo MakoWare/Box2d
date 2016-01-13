@@ -118,7 +118,7 @@ class Player extends StatefulPolygonEntity {
     }
   }
 
-  moveRight(keyDown
+  moveRight(keyDown){
     if(keyDown){
       var desiredVel = this.maxVX;
     } else {
