@@ -6,7 +6,7 @@
 	[
 		
 		{
-			"angle" : 1.570796370506287,
+			"angle" : 0,
 			"angularVelocity" : 0,
 			"awake" : true,
 			"customProperties" : 
@@ -33,7 +33,7 @@
 					{
 						"vertices" : 
 						{
-							"x" : [ 9.5, 9.5, -0.5, -0.5 ],
+							"x" : [ 29.50, 29.50, -0.5, -0.5 ],
 							"y" : [ -0.5, 0.5, 0.5, -0.5 ]
 						}
 					}
@@ -43,140 +43,8 @@
 			"name" : "d1",
 			"position" : 
 			{
-				"x" : 3.6,
-				"y" : 11.50
-			},
-			"type" : 0
-		},
-		
-		{
-			"angle" : 1.570796370506287,
-			"angularVelocity" : 0,
-			"awake" : true,
-			"customProperties" : 
-			[
-				
-				{
-					"int" : 1,
-					"name" : "Dimension"
-				},
-				
-				{
-					"name" : "Class",
-					"string" : "Ground"
-				}
-			],
-			"fixture" : 
-			[
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : [ 9.5, 9.5, -0.5, -0.5 ],
-							"y" : [ -0.5, 0.5, 0.5, -0.5 ]
-						}
-					}
-				}
-			],
-			"linearVelocity" : 0,
-			"name" : "d1",
-			"position" : 
-			{
-				"x" : 0.5,
-				"y" : 9.5
-			},
-			"type" : 0
-		},
-		
-		{
-			"angle" : 0,
-			"angularVelocity" : 0,
-			"awake" : true,
-			"customProperties" : 
-			[
-				
-				{
-					"int" : 0,
-					"name" : "Dimension"
-				},
-				
-				{
-					"name" : "Class",
-					"string" : "Ground"
-				}
-			],
-			"fixture" : 
-			[
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : [ 9.5, 9.5, -0.5, -0.5 ],
-							"y" : [ -0.5, 0.5, 0.5, -0.5 ]
-						}
-					}
-				}
-			],
-			"linearVelocity" : 0,
-			"name" : "d0",
-			"position" : 
-			{
-				"x" : 5.5,
-				"y" : 6.5
-			},
-			"type" : 0
-		},
-		
-		{
-			"angle" : 0,
-			"angularVelocity" : 0,
-			"awake" : true,
-			"customProperties" : 
-			[
-				
-				{
-					"int" : 2,
-					"name" : "Dimension"
-				},
-				
-				{
-					"name" : "Class",
-					"string" : "Ground"
-				}
-			],
-			"fixture" : 
-			[
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : [ 9.5, 9.5, -0.5, -0.5 ],
-							"y" : [ -0.5, 0.5, 0.5, -0.5 ]
-						}
-					}
-				}
-			],
-			"linearVelocity" : 0,
-			"name" : "d2",
-			"position" : 
-			{
-				"x" : 20.50,
-				"y" : 4.5
+				"x" : 40.50000381469727,
+				"y" : -0.5
 			},
 			"type" : 0
 		},
@@ -209,51 +77,7 @@
 					{
 						"vertices" : 
 						{
-							"x" : [ 9.5, 9.5, -0.5, -0.5 ],
-							"y" : [ -0.5, 0.5, 0.5, -0.5 ]
-						}
-					}
-				}
-			],
-			"linearVelocity" : 0,
-			"name" : "d1",
-			"position" : 
-			{
-				"x" : 15.50,
-				"y" : 1.5
-			},
-			"type" : 0
-		},
-		
-		{
-			"angle" : 0,
-			"angularVelocity" : 0,
-			"awake" : true,
-			"customProperties" : 
-			[
-				
-				{
-					"int" : 1,
-					"name" : "Dimension"
-				},
-				
-				{
-					"name" : "Class",
-					"string" : "Ground"
-				}
-			],
-			"fixture" : 
-			[
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : [ 9.5, 9.5, -0.5, -0.5 ],
+							"x" : [ 29.50, 29.50, -0.5, -0.5 ],
 							"y" : [ -0.5, 0.5, 0.5, -0.5 ]
 						}
 					}

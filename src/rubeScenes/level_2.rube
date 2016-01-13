@@ -47,28 +47,6 @@
       [
         
         {
-          "entry" : "1"
-        },
-        
-        {
-          "entry" : "2"
-        },
-        
-        {
-          "entry" : "3"
-        }
-      ],
-      "displayName" : "Dimension",
-      "name" : "Dimension",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "comboboxEntries" : 
-      [
-        
-        {
           "entry" : "Player"
         },
         
@@ -79,6 +57,28 @@
       "displayName" : "Class",
       "name" : "Class",
       "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "comboboxEntries" : 
+      [
+        
+        {
+          "entry" : "0"
+        },
+        
+        {
+          "entry" : "1"
+        },
+        
+        {
+          "entry" : "2"
+        }
+      ],
+      "displayName" : "Dimension",
+      "name" : "Dimension",
+      "type" : "int"
     }
   ],
   "metaworld" : 
@@ -107,7 +107,6 @@
       
       {
         "angle" : 0,
-        "angularDamping" : 1,
         "angularVelocity" : 0,
         "awake" : true,
         "customProperties" : 
@@ -123,39 +122,43 @@
             "string" : "Player"
           }
         ],
+        "fixedRotation" : true,
         "fixture" : 
         [
           
           {
-            "density" : 1.273239493370056,
-            "friction" : 1000.0,
+            "density" : 1,
+            "friction" : 0.2,
             "id" : 1,
             "name" : "fixture0",
             "shapes" : 
             [
               
               {
-                "radius" : 0.5,
-                "type" : "circle"
+                "type" : "polygon"
               }
             ],
             "vertices" : 
             {
-              "x" : [ 0.0 ],
-              "y" : [ 0.0 ]
+              "x" : [ -0.5, 0.5, 0.5, -0.5 ],
+              "y" : [ -0.5, -0.5, 1.5, 1.5 ]
             }
           }
         ],
-        "gravityScale" : 3,
         "id" : 1,
         "linearVelocity" : 0,
-        "massData-I" : 0.1250,
-        "massData-mass" : 1,
+        "massData-I" : 0.5,
+        "massData-center" : 
+        {
+          "x" : 0,
+          "y" : 0.5
+        },
+        "massData-mass" : 2,
         "name" : "Player",
         "position" : 
         {
-          "x" : 1,
-          "y" : 1
+          "x" : 1.5,
+          "y" : 1.5
         },
         "type" : "dynamic"
       },
@@ -182,7 +185,7 @@
           
           {
             "density" : 1,
-            "friction" : 1,
+            "friction" : 0.2,
             "id" : 2,
             "name" : "fixture1",
             "shapes" : 
@@ -194,20 +197,8 @@
             ],
             "vertices" : 
             {
-              "x" : 
-              [
-                1.912546157836914,
-                21.91254615783691,
-                21.91254615783691,
-                1.912546157836914
-              ],
-              "y" : 
-              [
-                -5.937414169311523,
-                -5.937414169311523,
-                -4.937414169311523,
-                -4.937414169311523
-              ]
+              "x" : [ -0.5, 9.5, 9.5, -0.5 ],
+              "y" : [ -0.5, -0.5, 0.5, 0.5 ]
             }
           }
         ],
@@ -216,8 +207,58 @@
         "name" : "d1",
         "position" : 
         {
-          "x" : -1.912546157836914,
-          "y" : 4.937414169311523
+          "x" : 0.5,
+          "y" : -0.5
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 1,
+            "name" : "Dimension"
+          },
+          
+          {
+            "name" : "Class",
+            "string" : "Ground"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 3,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -0.5, 9.5, 9.5, -0.5 ],
+              "y" : [ -0.5, -0.5, 0.5, 0.5 ]
+            }
+          }
+        ],
+        "id" : 3,
+        "linearVelocity" : 0,
+        "name" : "d1",
+        "position" : 
+        {
+          "x" : 15.50,
+          "y" : 1.5
         },
         "type" : "static"
       },
@@ -246,7 +287,7 @@
             "density" : 1,
             "friction" : 0.2,
             "id" : 4,
-            "name" : "fixture2",
+            "name" : "fixture1",
             "shapes" : 
             [
               
@@ -256,8 +297,8 @@
             ],
             "vertices" : 
             {
-              "x" : [ 0.0, 10, 10, 0.0 ],
-              "y" : [ -1, -1, 0.0, 0.0 ]
+              "x" : [ -0.5, 9.5, 9.5, -0.5 ],
+              "y" : [ -0.5, -0.5, 0.5, 0.5 ]
             }
           }
         ],
@@ -266,8 +307,8 @@
         "name" : "d2",
         "position" : 
         {
-          "x" : 10,
-          "y" : 4
+          "x" : 20.50,
+          "y" : 4.5
         },
         "type" : "static"
       },
@@ -295,8 +336,8 @@
           {
             "density" : 1,
             "friction" : 0.2,
-            "id" : 6,
-            "name" : "fixture2",
+            "id" : 5,
+            "name" : "fixture1",
             "shapes" : 
             [
               
@@ -306,24 +347,74 @@
             ],
             "vertices" : 
             {
-              "x" : [ 0.0, 10, 10, 0.0 ],
-              "y" : [ -1, -1, 0.0, 0.0 ]
+              "x" : [ -0.5, 9.5, 9.5, -0.5 ],
+              "y" : [ -0.5, -0.5, 0.5, 0.5 ]
             }
           }
         ],
-        "id" : 6,
+        "id" : 5,
         "linearVelocity" : 0,
         "name" : "d0",
         "position" : 
         {
-          "x" : 0,
-          "y" : 7
+          "x" : 5.5,
+          "y" : 6.5
         },
         "type" : "static"
       },
       
       {
-        "angle" : 0,
+        "angle" : 1.570796370506287,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 1,
+            "name" : "Dimension"
+          },
+          
+          {
+            "name" : "Class",
+            "string" : "Ground"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 6,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -0.5, 9.5, 9.5, -0.5 ],
+              "y" : [ -0.5, -0.5, 0.5, 0.5 ]
+            }
+          }
+        ],
+        "id" : 6,
+        "linearVelocity" : 0,
+        "name" : "d1",
+        "position" : 
+        {
+          "x" : 0.5,
+          "y" : 9.5
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 1.570796370506287,
         "angularVelocity" : 0,
         "awake" : true,
         "customProperties" : 
@@ -346,7 +437,7 @@
             "density" : 1,
             "friction" : 0.2,
             "id" : 7,
-            "name" : "fixture2",
+            "name" : "fixture1",
             "shapes" : 
             [
               
@@ -356,8 +447,8 @@
             ],
             "vertices" : 
             {
-              "x" : [ 0.0, 10, 10, 0.0 ],
-              "y" : [ -1, -1, 0.0, 0.0 ]
+              "x" : [ -0.5, 9.5, 9.5, -0.5 ],
+              "y" : [ -0.5, -0.5, 0.5, 0.5 ]
             }
           }
         ],
@@ -366,8 +457,8 @@
         "name" : "d1",
         "position" : 
         {
-          "x" : 20.0,
-          "y" : 8
+          "x" : 3.6,
+          "y" : 11.50
         },
         "type" : "static"
       }
