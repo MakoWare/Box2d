@@ -19,10 +19,9 @@ class Player extends StatefulPolygonEntity {
     this.looking = RIGHT;
 
     this.blasters = [];
-    this.blasters.push(new MainBlaster(null, null, null, world, this.body));
+    this.blasters.push(new MainBlaster(world, this.body));
     this.currentBlaster = this.blasters[0];
 
-    console.log(this.currentBlaster);
     this.body.SetGravityScale(this.gravityScale);
     this.initContactListeners();
     this.initMoveListeners();

@@ -1,8 +1,7 @@
 import Box2D from 'src/components/box2d/box2d';
 
 class EntityManager {
-  constructor(scene){
-    this.scene = scene;
+  constructor(){
     this.entities = [];
     this.entityUID = 0;
   }
@@ -37,8 +36,9 @@ class EntityManager {
     for(var i=0;i<this.entities.length;i++){
       this.entities[i].destroy();
     }
+    this.entities = [];
   }
 
 }
 
-export default EntityManager;
+export default new EntityManager();

@@ -18,7 +18,8 @@ class Level extends BaseLevel {
 
     this.world = world;
     this.scene = scene;
-    this.eM = new EntityManager(this.scene);
+    this.eM = EntityManager;
+    this.eM.scene = this.scene;
 
     var dim0 = new Dimension(this.scene, 0);
     var dim1 = new Dimension(this.scene, 1);

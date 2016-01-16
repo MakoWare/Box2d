@@ -8,7 +8,7 @@ class Bullet extends PolygonEntity {
     this.world = world;
     this.gravityScale = 0;
     this.color = "#ffeb3b";
-
+    this.allDim = true;
     this.initContactListeners();
   }
 
@@ -30,11 +30,9 @@ class Bullet extends PolygonEntity {
   }
 
   draw(ctx, delta){
-    
   }
 
   destroy(){
-    console.log(this.body);
     this.world.DestroyBody(this.body);
   }
 }

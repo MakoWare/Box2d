@@ -1,22 +1,13 @@
 import BaseEntity from 'src/components/engine/BaseEntity';
 
-class Dimension extends BaseEntity {
+class Dimension  {
   constructor(scene, id) {
-    super();
     this.id = id;
     this.opacity = 0;
-    this.scene = scene; 
-  }
-
-  draw(ctx){
-    ctx.save();
-    //ctx.globalAlpha = this.opacity;
-    super.draw(ctx, null, this.opacity);
-    ctx.restore();
+    this.scene = scene;
   }
 
   activate(){
-    console.log("activate dim: ", this.id);
     this.opacity = 1;
   }
 
