@@ -9,12 +9,37 @@ class BaseEntity {
     this.setImage(image);
     this.options = options;
 
+    if(options && options.scene){
+      this.scene = options.scene;
+    }
 
-    this.entities = [];
     if(this.body){
       this.body.entityData = this;
     }
+  }
 
+  activate(){
+    this.active = true;
+    if(this.body){
+      this.body.SetActive(true);
+    }
+  }
+
+  deactivate(){
+    this.active = false;
+    if(this.body){
+      this.body.SetActive(false);
+    }
+  }
+
+
+  draw(ctx, delta){
+    /* ctx.save();
+       ctx.restore(); */
+  }
+
+  calculateOpacity(){
+    return this.dimension.opacity;
   }
 
   setImage(image){
@@ -52,12 +77,6 @@ class BaseEntity {
     }
   }
 
-  draw(ctx, delta){
-    ctx.save();
-    this.drawEntites.apply(this, arguments);
-    ctx.restore();
-  }
-
   applyRotation(ctx,delta,pos){
     if(this.body){
       pos = pos || this.body.GetPosition();
@@ -66,32 +85,9 @@ class BaseEntity {
       ctx.translate(-pos.get_x(),-pos.get_y()); // translate back, keeping rotation
     }
   }
-
-  drawEntites(ctx, delta){
-    var args = arguments;
-    this.entities.forEach((ent)=>{
-      ent.draw.apply(ent, args);
-    });
-  }
-
-  addEntity(ent){
-    this.entities.push(ent);
-  }
-
-  removeEntity(ent){
-    var ix = this.entities.indexOf(ent);
-    if(ix > 0){
-      this.entities.splice(ix,1);
-    }
-  }
-
   destroy(){
     if(this.body){
       this.body.entityData = null;
-
-    }
-    for(var i=0;i<this.entities.length;i++){
-      this.entities[i].destroy();
     }
   }
 }

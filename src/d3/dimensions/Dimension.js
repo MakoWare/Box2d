@@ -1,11 +1,11 @@
 import BaseEntity from 'src/components/engine/BaseEntity';
 
 class Dimension extends BaseEntity {
-  constructor(id) {
+  constructor(scene, id) {
     super();
     this.id = id;
     this.opacity = 0;
-
+    this.scene = scene; 
   }
 
   draw(ctx){
@@ -16,21 +16,12 @@ class Dimension extends BaseEntity {
   }
 
   activate(){
+    console.log("activate dim: ", this.id);
     this.opacity = 1;
-    this.entities.forEach((ent)=>{
-      if(ent.activate && typeof ent.activate === 'function'){
-        ent.activate();
-      }
-    });
   }
 
   deactivate(){
     this.opacity = 0;
-    this.entities.forEach((ent)=>{
-      if(ent.deactivate && typeof ent.deactivate === 'function'){
-        ent.deactivate();
-      }
-    });
   }
 
   setOpacity(op){

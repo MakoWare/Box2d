@@ -18,18 +18,14 @@ class Level extends BaseLevel {
 
     this.world = world;
     this.scene = scene;
-    this.entityManager = new EntityManager();
+    this.eM = new EntityManager(this.scene);
 
-
-    var dim0 = new Dimension(0);
-    var dim1 = new Dimension(1);
-    var dim2 = new Dimension(2);
+    var dim0 = new Dimension(this.scene, 0);
+    var dim1 = new Dimension(this.scene, 1);
+    var dim2 = new Dimension(this.scene, 2);
 
     this.dimensions = [dim0,dim1,dim2];
-
-    this.entityManager.registerEntity(dim0);
-    this.entityManager.registerEntity(dim1);
-    this.entityManager.registerEntity(dim2);
+    this.scene.dimensions = this.dimensions;
 
     var colors = ['#2196f3','#ff9800','#4caf50'];
     // this.scene.objects = this.scene.objects || {};
@@ -38,16 +34,17 @@ class Level extends BaseLevel {
       switch (body.props.Class.value) {
         case 'Ground':
           var dimIndex = body.props.Dimension.value;
-          var dim = this.dimensions[dimIndex];
-          var obj = new GroundEntity(body,colors[dimIndex]);
-          dim.addEntity(obj);
+          var obj = new GroundEntity(body,colors[dimIndex], this.scene);
+          this.eM.addEntity(obj);
           obj.deactivate();
+          obj.dimension = this.scene.dimensions[dimIndex];
           // this.dimensions[dimIndex] = dim;
           break;
         case 'Player':
           var obj = new Player(body, null, null, this.world);
           this.player = obj;
-          this.entityManager.registerEntity(this.player);
+          this.player.allDim = true;
+          this.eM.addEntity(this.player);
 
           //App.camera.setChaseEntity(obj,this.chaseEntityMethod);
           App.camera.setChaseEntity(obj);
@@ -56,9 +53,6 @@ class Level extends BaseLevel {
 
       }
     });
-
-
-    console.log(this.dimensions);
 
     this.resetDimension(1);
 
@@ -85,19 +79,17 @@ class Level extends BaseLevel {
 
   destroy(){
     App.input.removeEventListener(this.inputListener);
-    this.entityManager.destroy();
+    this.eM.destroy();
   }
 
   draw(ctx, delta){
     ctx.save();
 
-    // this.entityManager.draw(ctx,delta);
-    this.dimensions[0].draw(ctx,delta);
-    this.dimensions[2].draw(ctx,delta);
-    this.dimensions[1].draw(ctx,delta); // draw the current dimension on top
-
-    this.player.draw(ctx,delta);
-
+    this.eM.step(ctx, delta);
+    /* this.dimensions[0].draw(ctx,delta);
+       this.dimensions[2].draw(ctx,delta);
+       this.dimensions[1].draw(ctx,delta); // draw the current dimension on top
+       this.player.draw(ctx,delta);*/
     ctx.restore();
   }
 
@@ -290,6 +282,7 @@ class Level extends BaseLevel {
     }
     this.currentDimension = this.dimensions[1];
     this.currentDimension.activate();
+    this.scene.currentDimension = this.currentDimension;
     this.world.enableStep();
   }
 

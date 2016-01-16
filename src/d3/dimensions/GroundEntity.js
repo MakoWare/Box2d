@@ -2,8 +2,11 @@ import PolygonEntity from 'src/components/engine/PolygonEntity';
 import Util from 'src/components/util/util';
 
 class GroundEntity extends PolygonEntity {
-  constructor(body, color) {
-    super(body);
+  constructor(body, color, scene) {
+    var options = {
+      scene: scene
+    };
+    super(body, null, options);
     this.color = color;
   }
 
@@ -15,7 +18,7 @@ class GroundEntity extends PolygonEntity {
     this.applyRotation(ctx);
 
     ctx.translate(pos.get_x(),pos.get_y());
-    ctx.fillStyle = Util.convertHex(this.color, opacity);
+    ctx.fillStyle = Util.convertHex(this.color, this.calculateOpacity());
     this.drawFixtures(ctx, delta,()=>{
       ctx.fill();
       ctx.strokeStyle = this.color;

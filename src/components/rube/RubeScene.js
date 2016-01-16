@@ -1,5 +1,3 @@
-
-
 class RubeScene {
   constructor(sceneJson, world) {
     this._json = sceneJson;

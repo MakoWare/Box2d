@@ -17,8 +17,6 @@ class GameScreen extends Screen {
     this.world.SetDebugDraw(this.debugDraw);
     this.debugDraw.SetFlags(DebugDraw.e_shapeBit);
 
-    // var level1 = new Level1();
-
     this.levelAsset = AssetManager.getAsset('level_1');
     var scene = this.levelAsset.data;
     console.log(scene);
@@ -45,7 +43,7 @@ class GameScreen extends Screen {
 
     this.world.step(1/60, 3, 2);
     this.camera.update(ctx,delta);
-    this.world.drawDebug();
+    //this.world.drawDebug();
 
     // draw the level
     this.level.draw(ctx, delta);
