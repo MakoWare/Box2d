@@ -1,8 +1,8 @@
 import StatefulPolygonEntity from 'src/components/engine/StatefulPolygonEntity';
 import App from 'src/components/app/app';
 import Box2D from 'src/components/box2d/box2d';
-import PlayerCollisions from './PlayerCollisions';
 import MainBlaster from 'src/d3/blaster/MainBlaster';
+import EntityManager from 'src/components/engine/EntityManager';
 
 const RIGHT = 10;
 const LEFT  = 11;
@@ -17,14 +17,12 @@ class Player extends StatefulPolygonEntity {
     this.jumpGravityScale = 4;
     this.color = "#ecf0f1";
     this.looking = RIGHT;
-
     this.blasters = [];
-    this.blasters.push(new MainBlaster(world, this.body));
-    this.currentBlaster = this.blasters[0];
-
+    this.allDim = true;
     this.body.SetGravityScale(this.gravityScale);
     this.initContactListeners();
     this.initMoveListeners();
+    this.getBlasters();
   }
 
   destroy(){
@@ -248,36 +246,14 @@ class Player extends StatefulPolygonEntity {
       ctx.stroke();
     });
 
-    // draw gun
-    ctx.strokeStyle = 'red';
-    ctx.fillStyle   = 'red';
-    ctx.beginPath();
-    switch (this.looking) {
-      case RIGHT:
-        ctx.translate(-0.1,0);
-        ctx.moveTo(0.2,0.8);
-        ctx.lineTo(1.2,0.8);
-        ctx.lineTo(1.2,0.6);
-        ctx.lineTo(0.5,0.6);
-        ctx.lineTo(0.5,0.2);
-        ctx.lineTo(0.2,0.2);
-        break;
-      case LEFT:
-        ctx.moveTo(-0.2,0.8);
-        ctx.lineTo(-1.2,0.8);
-        ctx.lineTo(-1.2,0.6);
-        ctx.lineTo(-0.5,0.6);
-        ctx.lineTo(-0.5,0.2);
-        ctx.lineTo(-0.2,0.2);
-        break;
-      default:
-        break;
-    }
-    ctx.closePath();
-    ctx.stroke();
-    ctx.fill();
-
     ctx.restore();
+  }
+
+  getBlasters(){
+    var mainBlaster = new MainBlaster(this.world, this);
+    EntityManager.addEntity(mainBlaster);
+    this.blasters.push(mainBlaster);
+    this.currentBlaster = this.blasters[0];
   }
 
 }

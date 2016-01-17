@@ -12,10 +12,16 @@ class EntityManager {
   }
 
   step(ctx, delta){
-    this.entities.forEach((entity)=> {
+    for(var i = 0; i < this.entities.length; i++){
+      var entity = this.entities[i];
       this.activateEntity(entity);
       this.drawEntity(entity, ctx, delta);
-    });
+
+      if(entity.needsDestroy){
+        entity.destroy();
+        this.entities.splice(i, 1);
+      }
+    }
   }
 
   activateEntity(entity){

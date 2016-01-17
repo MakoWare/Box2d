@@ -1,6 +1,7 @@
 import BaseLevel from 'src/d3/levels/BaseLevel';
 import Player from 'src/d3/player/Player';
 import Wall from 'src/d3/wall/Wall';
+import Door from 'src/d3/door/Door';
 import EntityManager from 'src/components/engine/EntityManager';
 import Dimension from 'src/d3/dimensions/Dimension';
 import App from 'src/components/app/app';
@@ -37,18 +38,22 @@ class Level extends BaseLevel {
           var dimIndex = body.props.Dimension.value;
           var obj = new GroundEntity(body,colors[dimIndex], this.scene);
           this.eM.addEntity(obj);
-          obj.deactivate();
           obj.dimension = this.scene.dimensions[dimIndex];
           // this.dimensions[dimIndex] = dim;
           break;
         case 'Player':
           var obj = new Player(body, null, null, this.world);
           this.player = obj;
-          this.player.allDim = true;
           this.eM.addEntity(this.player);
 
           //App.camera.setChaseEntity(obj,this.chaseEntityMethod);
           App.camera.setChaseEntity(obj);
+          break;
+        case 'Door':
+          var dimIndex = body.props.Dimension.value;
+          var obj = new Door(body,colors[dimIndex], this.scene);
+          this.eM.addEntity(obj);
+          obj.dimension = this.scene.dimensions[dimIndex];
           break;
         default:
 

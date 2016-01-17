@@ -33,10 +33,15 @@ class Bullet extends PolygonEntity {
   }
 
   draw(ctx, delta){
+
+
   }
 
   destroy(){
+    super.destroy();
     this.world.DestroyBody(this.body);
+    this.world = null;
+    this.contactListener = null;
   }
 }
 
