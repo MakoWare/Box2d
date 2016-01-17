@@ -13,8 +13,8 @@ class Player extends StatefulPolygonEntity {
     this.world = world;
     this.maxVX = 15;
     this.maxVY = 10;
-    this.gravityScale = 3;
-    this.jumpGravityScale = 4;
+    this.gravityScale = 4;
+    this.jumpGravityScale = 5;
     this.color = "#ecf0f1";
     this.looking = RIGHT;
     this.blasters = [];

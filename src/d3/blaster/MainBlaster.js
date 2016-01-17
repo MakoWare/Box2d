@@ -74,17 +74,14 @@ class MainBlaster extends Blaster {
       var center;
 
       if(this.player.looking === RIGHT){
-        bd.set_linearVelocity(new Box2D.b2Vec2(30, 0));
-        center =  new Box2D.b2Vec2(playerPos.get_x() + .5 , playerPos.get_y() + .5);
+        bd.set_linearVelocity(new Box2D.b2Vec2(50, 0));
+        center =  new Box2D.b2Vec2(playerPos.get_x() + .7 , playerPos.get_y() + .6);
       } else {
-        bd.set_linearVelocity(new Box2D.b2Vec2(-30, 0));
-        center =  new Box2D.b2Vec2(playerPos.get_x() - .5 , playerPos.get_y() + .5);
+        bd.set_linearVelocity(new Box2D.b2Vec2(-50, 0));
+        center =  new Box2D.b2Vec2(playerPos.get_x() - .7 , playerPos.get_y() + .6);
       }
 
       bd.set_bullet(true);
-
-      //shoot from the hip
-
       bd.set_position(center);
 
       var body = this.world.CreateBody(bd);

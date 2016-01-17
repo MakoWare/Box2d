@@ -29,11 +29,11 @@ class MainBlasterBullet extends Bullet {
     ctx.fill();
 
     // draw a radius line to show rotation
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(radius, 0);
-    ctx.strokeStyle = 'red';
-    ctx.stroke();
+    /* ctx.beginPath();
+       ctx.moveTo(0, 0);
+       ctx.lineTo(radius, 0);
+       ctx.strokeStyle = 'red';
+       ctx.stroke(); */
 
     ctx.restore();
   }

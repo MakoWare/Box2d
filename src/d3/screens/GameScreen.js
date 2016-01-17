@@ -19,6 +19,8 @@ class GameScreen extends Screen {
 
     this.levelAsset = AssetManager.getAsset('level_1');
     var scene = this.levelAsset.data;
+    this.backgroundAsset = AssetManager.getImage('background1');
+    console.log(this.backgroundAsset);
 
     //this.camera.setPTM(34);
     this.camera.setViewCenterWorld(new Box2D.b2Vec2(15,0),true);
@@ -38,16 +40,22 @@ class GameScreen extends Screen {
   }
 
   draw(ctx, delta){
-    ctx.save();
+    if(this.world.switchLevel){
+      this.finish({reset:true});
+    } else {
 
-    this.world.step(1/60, 3, 2);
-    this.camera.update(ctx,delta);
-    this.world.drawDebug();
+      ctx.drawImage(this.backgroundAsset, -1200, -1000);
+      ctx.save();
 
-    // draw the level
-    this.level.draw(ctx, delta);
+      this.world.step(1/60, 3, 2);
+      this.camera.update(ctx,delta);
+      //this.world.drawDebug();
 
-    ctx.restore();
+      // draw the level
+      this.level.draw(ctx, delta);
+
+      ctx.restore();
+    }
   }
 
   onDestroy(){

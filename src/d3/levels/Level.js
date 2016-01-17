@@ -51,7 +51,7 @@ class Level extends BaseLevel {
           break;
         case 'Door':
           var dimIndex = body.props.Dimension.value;
-          var obj = new Door(body,colors[dimIndex], this.scene);
+          var obj = new Door(body,colors[dimIndex], this.scene, this.world);
           this.eM.addEntity(obj);
           obj.dimension = this.scene.dimensions[dimIndex];
           break;

@@ -25,6 +25,7 @@ class LoadingScreen extends Screen {
 
     // load some assets
     AssetManager.loadResource('level_1','src/rubeScenes/level_1.json', 'rube', this.world);
+    AssetManager.loadResource('background1','src/images/background1.png');
     AssetManager.setOnAssetsLoadedCallback(this.onAssetsLoaded.bind(this));
   }
 

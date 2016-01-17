@@ -2,18 +2,26 @@ import PolygonEntity from 'src/components/engine/PolygonEntity';
 import Util from 'src/components/util/util';
 
 class Door extends PolygonEntity {
-  constructor(body, color, scene) {
+  constructor(body, color, scene, world) {
     var options = {
       scene: scene
     };
     super(body, null, options);
     this.color = "#ffffff";
-
+    this.world = world;
     this.initContactListeners();
   }
 
   initContactListeners(){
-    //Add listener for Player contact 
+    this.contactListener = this.world.newBodyContactListener(this.body, this.onContact.bind(this));
+    this.world.registerBodyContactListener(this.contactListener);
+  }
+
+  onContact(begin, contactObject){
+    if(contactObject && contactObject.entityData.constructor.name === "Player"){
+      this.needsDestroy = true;
+      this.world.switchLevel = "level_1";
+    }
   }
 
   draw(ctx, delta, opacity){
@@ -34,7 +42,6 @@ class Door extends PolygonEntity {
       ctx.closePath();
       ctx.stroke();
     });
-    // ctx.fill();
     ctx.restore();
   }
 
