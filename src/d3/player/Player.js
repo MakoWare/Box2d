@@ -88,26 +88,19 @@ class Player extends StatefulPolygonEntity {
   }
 
   initContactListeners(){
-    this.contactListener = new Box2D.JSContactListener();
     this.contactCount = {};
 
-    //If the Contact involved the Player (check if entityA or entityB)
-    this.contactListener.BeginContact = this.onBeginContact.bind(this);
-    this.contactListener.EndContact = this.onEndContact.bind(this);
-    this.contactListener.PreSolve = function() {};
-    this.contactListener.PostSolve = function() {};
-
-    this.world.SetContactListener(this.contactListener);
+    this.contactListener = this.world.newBodyContactListener(this.body, this.onContact.bind(this));
+    this.world.registerBodyContactListener(this.contactListener);
   }
 
-  onBeginContact(contactPtr){
-    var contactObject = this.involvedInContact(contactPtr);
-    if(contactObject){
+  onContact(begin, contactObject){
+    // console.log('on contact');
+    if(contactObject && contactObject.entityData){
       // console.log("player.onBeginContact");
       switch(contactObject.entityData.constructor.name) {
         case "GroundEntity":
-          // console.log(contactObject);
-          this.setGrounded(true,contactObject);
+          this.setGrounded(begin,contactObject);
           break;
       }
     } else {
@@ -115,17 +108,33 @@ class Player extends StatefulPolygonEntity {
     }
   }
 
-  onEndContact(contactPtr){
-    var contactObject = this.involvedInContact(contactPtr);
-    if(contactObject){
-      // console.log("player.onEndContact()");
-      switch(contactObject.entityData.constructor.name) {
-        case "GroundEntity":
-          this.setGrounded(false,contactObject);
-          break;
-      }
-    }
-  }
+  // onBeginContact(contactPtr){
+  //   var contactObject = this.involvedInContact(contactPtr);
+  //   if(contactObject && contactObject.entityData){
+  //     // console.log("player.onBeginContact");
+  //     switch(contactObject.entityData.constructor.name) {
+  //       case "GroundEntity":
+  //         console.log('begin contact (ground)');
+  //         this.setGrounded(true,contactObject);
+  //         break;
+  //     }
+  //   } else {
+  //     return;
+  //   }
+  // }
+  //
+  // onEndContact(contactPtr){
+  //   var contactObject = this.involvedInContact(contactPtr);
+  //   if(contactObject && contactObject.entityData){
+  //     // console.log("player.onEndContact()");
+  //     switch(contactObject.entityData.constructor.name) {
+  //       case "GroundEntity":
+  //         console.log('begin contact (UN-ground)');
+  //         this.setGrounded(false,contactObject);
+  //         break;
+  //     }
+  //   }
+  // }
 
   moveRight(keyDown){
     var desiredVel;
@@ -193,6 +202,10 @@ class Player extends StatefulPolygonEntity {
   }
 
   setGrounded(set,obj){
+    var c = this.contactCount[obj.e];
+    if(c === undefined || c === null){
+      this.contactCount[obj.e] = 0;
+    }
     var b = this.contactCount[obj.e] += set?1:-1;
 
 
@@ -200,9 +213,10 @@ class Player extends StatefulPolygonEntity {
     if(set){
       this.grounded = true;
       this.body.SetGravityScale(this.gravityScale);
-    } else if(b==0) {
-      console.log('not grounded');
-      this.grounded = false;
+    } else {
+      if(b==0) {
+        this.grounded = false;
+      }
     }
 
   }

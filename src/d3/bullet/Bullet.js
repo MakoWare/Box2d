@@ -13,19 +13,22 @@ class Bullet extends PolygonEntity {
   }
 
   initContactListeners(){
-    this.contactListener = new Box2D.JSContactListener();
-    this.contactCount = {};
+    // this.contactListener = new Box2D.JSContactListener();
+    // this.contactCount = {};
+    //
+    // //If the Contact involved the Player (check if entityA or entityB)
+    // this.contactListener.BeginContact = this.onBeginContact.bind(this);
+    // this.contactListener.EndContact = function() {};
+    // this.contactListener.PreSolve = function() {};
+    // this.contactListener.PostSolve = function() {};
+    //
+    // this.world.SetContactListener(this.contactListener);
 
-    //If the Contact involved the Player (check if entityA or entityB)
-    this.contactListener.BeginContact = this.onBeginContact.bind(this);
-    this.contactListener.EndContact = function() {};
-    this.contactListener.PreSolve = function() {};
-    this.contactListener.PostSolve = function() {};
-
-    this.world.SetContactListener(this.contactListener);
+    this.contactListener = this.world.newBodyContactListener(this.body, this.onContact.bind(this));
+    this.world.registerBodyContactListener(this.contactListener);
   }
 
-  onBeginContact(contactPtr){
+  onContact(begin, contactPtr){
     //this.destroy();
   }
 

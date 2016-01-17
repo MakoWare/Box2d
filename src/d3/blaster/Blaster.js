@@ -15,10 +15,10 @@ class Blaster extends PolygonEntity {
   }
 
   fire(){
-    console.log("Blaster.fire()");
+    // console.log("Blaster.fire()");
 
-    
-    
+
+
   }
 }
 

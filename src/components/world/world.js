@@ -16,11 +16,102 @@ class World {
     Util.using(this,this.world);
     this.config = Util.readConfig('world');
     this.enableStep();
+
+    // contact stuff
+    this._contactListeners = [];
+    this._contactListener = new Box2D.JSContactListener();
+
+    //If the Contact involved the Player (check if entityA or entityB)
+    this._contactListener.BeginContact = this.onContact(true).bind(this);
+    this._contactListener.EndContact = this.onContact(false).bind(this);
+    this._contactListener.PreSolve = function() {};
+    this._contactListener.PostSolve = function() {};
+
+    this.world.SetContactListener(this._contactListener);
   }
 
   drawDebug(override){
     if(this.config.drawDebug || override){
       this.world.DrawDebugData();
+    }
+  }
+
+  onContact(begin){
+    return function(contactPtr){
+      var listener;
+      for(var i=0;i<this._contactListeners.length;i++){
+        listener = this._contactListeners[i];
+        var contactObject = this.bodyInvolvedInContact(listener.body, contactPtr);
+
+        if(contactObject){
+
+          if(listener.className) {
+            if( contactObject.entityData.constructor.name === listener.className){
+              listener.callback(begin, contactObject);
+            }
+          } else {
+            listener.callback(begin, contactObject);
+          }
+
+        } else {
+          continue;
+        }
+      }
+    }
+  }
+
+  // onBeginContact(contactPtr){
+  //   var listener;
+  //   for(var i=0;i<this._contactListeners.length;i++){
+  //     listener = this._contactListeners[i];
+  //
+  //     var contactObject = this.bodyInvolvedInContact(listener.body, contactPtr);
+  //
+  //     if(contactObject){
+  //       // console.log("player.onBeginContact");
+  //
+  //       if(listener.className) {
+  //         if( contactObject.entityData.constructor.name === listener.className){
+  //           listener.callback(true, contactObject);
+  //         }
+  //       } else {
+  //         listener.callback(true, contactObject);
+  //       }
+  //
+  //     } else {
+  //       continue;
+  //     }
+  //   }
+  // }
+  //
+  // onEndContact(contactPtr){
+  //
+  // }
+
+  registerBodyContactListener(l){
+    this._contactListeners.push(l);
+  }
+
+  newBodyContactListener(body, className, callback, addAlso){
+    var cl = new ContactListener(body, className, callback);
+
+    if(addAlso){
+      this.registerBodyContactListener(cl);
+    }
+
+    return cl;
+  }
+
+  bodyInvolvedInContact(body, contactPtr){
+    var contact = Box2D.wrapPointer(contactPtr, Box2D.b2Contact);
+    var bodyA = contact.GetFixtureA().GetBody();
+    var bodyB = contact.GetFixtureB().GetBody();
+    if(bodyA == body){
+      return bodyB;
+    } else if(bodyB == body){
+      return bodyA;
+    } else {
+      return false;
     }
   }
 
@@ -45,6 +136,19 @@ class World {
     Box2D.destroy(this.world);
   }
 
+}
+
+class ContactListener {
+  constructor(body,className,callback) {
+    if(typeof className === 'function' ){
+      callback = className;
+      className = false;
+    }
+
+    this.body = body;
+    this.className = className;
+    this.callback = callback;
+  }
 }
 
 export default World;
