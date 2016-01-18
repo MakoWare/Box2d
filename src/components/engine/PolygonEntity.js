@@ -34,6 +34,19 @@ class PolygonEntity extends BaseEntity {
       }
     }
   }
+
+  drawPolygon(ctx, polys, color){
+    polys.forEach(function(poly) {
+      ctx.fillStyle = ctx.strokeStyle = poly[0];
+      ctx.lineWidth = .05;
+      ctx.beginPath();
+      ctx.moveTo.apply(ctx, poly[1][0]);
+      ctx.lineTo.apply(ctx, poly[1][1]);
+      ctx.lineTo.apply(ctx, poly[1][2]);
+      ctx.fill();
+      ctx.stroke();
+    });
+  }
 }
 
 export default PolygonEntity;
