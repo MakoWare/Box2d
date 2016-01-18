@@ -21,7 +21,6 @@ class GameScreen extends Screen {
     this.scene = this.levelAsset.data;
 
     this.backgroundAsset = AssetManager.getImage('background1');
-    console.log(this.backgroundAsset);
 
     //this.camera.setPTM(34);
     this.camera.setViewCenterWorld(new Box2D.b2Vec2(15,0),true);

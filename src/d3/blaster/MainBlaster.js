@@ -14,7 +14,6 @@ class MainBlaster extends Blaster {
     this.world = world;
     this.player = player;
     this.allDim = true;
-    console.log(EntityManager);
   }
 
   draw(ctx, delta){

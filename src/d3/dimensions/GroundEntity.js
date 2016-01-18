@@ -28,7 +28,6 @@ class GroundEntity extends PolygonEntity {
       ctx.closePath();
       ctx.stroke();
     });
-    // ctx.fill();
     ctx.restore();
   }
 

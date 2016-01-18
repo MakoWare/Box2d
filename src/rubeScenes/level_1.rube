@@ -668,6 +668,26 @@
         "type" : "static"
       }
     ],
+    "metaimage" : 
+    [
+      
+      {
+        "aspectScale" : 1,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : -0.5,
+          "y" : 0.5
+        },
+        "file" : "../images/ground1.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 2,
+        "name" : "image0",
+        "opacity" : 1,
+        "scale" : 1
+      }
+    ],
     "positionIterations" : 3,
     "stepsPerSecond" : 60.0,
     "subStepping" : false,
