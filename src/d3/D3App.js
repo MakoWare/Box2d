@@ -18,6 +18,10 @@ class D3App extends BaseApp {
 
     this.screenListener = this.screenManager.newListener(true);
 
+
+    // TODO: implement some sort of level management (screen);
+    this.currentLevel = 1;
+
     this.screenListener.onScreenFinished = (screen, manager, data)=>{
       if(screen === this.loadingScreen){
         console.log('loading screen is done:',this.resetCount++);
@@ -27,8 +31,10 @@ class D3App extends BaseApp {
       } else if(screen === this.gameScreen && this.doneLoading){
         if(data.reset){
           this.startLoading(true);
-        } else {
-          console.log('idk what you want to do here');
+        } else if(data.done) {
+          this.currentLevel = data.nextLevel;
+          // console.log('idk what you want to do here: ', this.currentLevel);
+          this.startLoading(true, {level:this.currentLevel});
         }
       }
     };
@@ -36,12 +42,12 @@ class D3App extends BaseApp {
 
 
 
-    this.startLoading();
+    this.startLoading(false, {level:this.currentLevel});
   }
 
-  startLoading(reset){
+  startLoading(reset, options){
     this.doneLoading = false;
-    this.loadingScreen = new LoadingScreen(this.camera,{});
+    this.loadingScreen = new LoadingScreen(this.camera,options);
     this.screenManager.addScreen(this.loadingScreen,reset);
   }
 }

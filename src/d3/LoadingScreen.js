@@ -24,7 +24,7 @@ class LoadingScreen extends Screen {
     camera.setViewCenterWorld(new App.b2d.b2Vec2(10,10),true);
 
     // load some assets
-    AssetManager.loadResource('level_1','src/rubeScenes/level_1.json', 'rube', this.world);
+    AssetManager.loadResource('level','src/rubeScenes/level_'+options.level+'.json', 'rube', this.world);
     AssetManager.loadResource('background1','src/images/background1.png');
     AssetManager.setOnAssetsLoadedCallback(this.onAssetsLoaded.bind(this));
   }

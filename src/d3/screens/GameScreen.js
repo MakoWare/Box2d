@@ -17,15 +17,16 @@ class GameScreen extends Screen {
     this.world.SetDebugDraw(this.debugDraw);
     this.debugDraw.SetFlags(DebugDraw.e_shapeBit);
 
-    this.levelAsset = AssetManager.getAsset('level_1');
-    var scene = this.levelAsset.data;
+    this.levelAsset = AssetManager.getAsset('level');
+    this.scene = this.levelAsset.data;
+
     this.backgroundAsset = AssetManager.getImage('background1');
     console.log(this.backgroundAsset);
 
     //this.camera.setPTM(34);
     this.camera.setViewCenterWorld(new Box2D.b2Vec2(15,0),true);
 
-    this.level = new Level(scene, this.world);
+    this.level = new Level(this.scene, this.world);
 
     this.inputListener = App.input.newEventListener({
       '27':'home'
@@ -40,8 +41,9 @@ class GameScreen extends Screen {
   }
 
   draw(ctx, delta){
-    if(this.world.switchLevel){
-      this.finish({reset:true});
+    if(this.scene._isFinished){
+      // TODO: better implement level switching
+      this.finish({done:true, nextLevel:1});
     } else {
 
       ctx.drawImage(this.backgroundAsset, -1200, -1000);

@@ -20,7 +20,7 @@ class Screen {
   finish(data){
     if(!this._isFinished){
       this.onDestroy();
-      this._finalData = data;
+      this._finalData = data || {};
       this._isFinished = true;
     }
   }

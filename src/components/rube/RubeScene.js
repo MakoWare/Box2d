@@ -13,6 +13,10 @@ class RubeScene {
       this[key] = null;
     }
   }
+
+  finish(){
+    this._isFinished = true;
+  }
 }
 
 export default RubeScene;
