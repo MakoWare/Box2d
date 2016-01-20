@@ -47,6 +47,31 @@ class PolygonEntity extends BaseEntity {
       ctx.stroke();
     });
   }
+
+  calculateAreaofPolygon(){
+    var fixtures = this.body.fixtures;
+    var fix;
+    var area = 0;
+    for(var i=0;i<fixtures.length;i++){
+      fix = fixtures[i];
+      area += this.calculateAreaOfFixture(fix.verts);
+    }
+
+    console.log("TOTAL AREA: " + area);
+  }
+
+  calculateAreaOfFixture(verts){
+    var areaX = 0;
+    var areaY = 0;
+    if(verts && verts.length>0){
+      for(var i=1;i<verts.length;i++){
+        areaX += verts[i-1].x * verts[i].y;
+        areaY += verts[i-1].y * verts[i].x;
+      }
+    }
+    return (areaX - areaY);
+  }
+
 }
 
 export default PolygonEntity;
