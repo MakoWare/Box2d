@@ -1,5 +1,6 @@
 import PolygonEntity from 'src/components/engine/PolygonEntity';
 import Util from 'src/components/util/util';
+import AssetManager from 'src/components/base/assetManager';
 
 class GroundEntity extends PolygonEntity {
   constructor(body, color, scene) {
@@ -11,6 +12,12 @@ class GroundEntity extends PolygonEntity {
     //this.pattern = Trianglify({cell_size: 30, variance: .8, seed: 'r4f68', width: 200, height: 200, x_colors: 'Blues'});
     //this.canvasPattern = this.pattern.canvas();
     this.generateBodyImage();
+
+    if(body.imageInfo){
+      this.image = AssetManager.getImage(body.imageInfo.name);
+      console.log(this.image);
+    }
+
   }
 
   draw(ctx, delta, opacity){

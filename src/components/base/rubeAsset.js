@@ -9,6 +9,7 @@ class RubeAsset extends Asset {
       console.warn('RubeAsset has no world.', this);
     }
 
+    this._promises = [];
     this._loadJSON();
   }
 
@@ -18,9 +19,11 @@ class RubeAsset extends Asset {
 
   _loadJSON() {
     this.promise = new Promise((resolve,reject)=>{
+      this._resolve = resolve;
+      this._reject = reject;
       this.xobj = new XMLHttpRequest();
       this.xobj.overrideMimeType("application/json");
-      this.xobj.open('GET', this.url, true); // Replace 'my_data' with the path to your file
+      this.xobj.open('GET', this.url, true);
       this.xobj.onreadystatechange = this.onload(resolve,reject);
     });
   }
@@ -32,10 +35,10 @@ class RubeAsset extends Asset {
   onload(resolve,reject){
     return () => {
       if (this.xobj.readyState == 4 && this.xobj.status == "200") {
-        // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
         var sceneJson = JSON.parse(this.xobj.responseText);
         this.data = RubeLoader.loadSceneIntoWorld(sceneJson, this.world);
         if(this.data._success){
+          console.log(this.data);
           resolve(this);
         } else {
           reject(this);
@@ -44,9 +47,28 @@ class RubeAsset extends Asset {
     };
   }
 
+  onAssetResolve(am){
+    console.log('on rube asset resolved');
+    if(this.data._json.image){
+      this.loadImages(this.data._json.image, am);
+    }
+  }
+
+  loadImages(images, am){
+    var img;
+    console.log(images);
+    for(var i=0; i<images.length; i++){
+      img = images[i];
+
+      console.log(img);
+      am.loadResource(img.name,img.file,'rubeImage',{img:img,scene:this.data});
+    }
+  }
+
   destroy(){
     this.world = null;
     this.promise = null;
+    this._promises = null;
     this.xobj = null;
     this.data.destroy();
     this.data = null;
