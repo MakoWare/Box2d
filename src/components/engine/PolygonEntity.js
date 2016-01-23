@@ -95,6 +95,32 @@ class PolygonEntity extends BaseEntity {
     return max;
   }
 
+  calculateMinXOfPolygon(b2dFixtures){
+    var min = this.calculateMaxXOfFixture(b2dFixtures[0]);
+    for(var i=1;i< b2dFixtures.length;i++){
+      var calc = this.calculateMaxXOfFixture(b2dFixtures[i]);
+      if(calc < min){
+        min = calc;
+      }
+    }
+    return min;
+  }
+
+  calculateMinXOfFixture(b2dFixture){
+    var min;
+    var verts = b2dFixture.verts;
+    if(verts && verts.length>0){
+      min = verts[0].x;
+      for(var i=1;i<verts.length;i++){
+        if(verts[i].x < min){
+          min = verts[i].x;
+        }
+      }
+    }
+    return min;
+  }
+
+
   calculateMaxYOfPolygon(b2dFixtures){
     var max = this.calculateMaxXOfFixture(b2dFixtures[0]);
     for(var i=1;i< b2dFixtures.length;i++){
@@ -119,6 +145,32 @@ class PolygonEntity extends BaseEntity {
     }
     return max;
   }
+
+  calculateMinYOfPolygon(b2dFixtures){
+    var min = this.calculateMaxXOfFixture(b2dFixtures[0]);
+    for(var i=1;i< b2dFixtures.length;i++){
+      var calc = this.calculateMaxXOfFixture(b2dFixtures[i]);
+      if(calc < max){
+        min = calc;
+      }
+    }
+    return min;
+  }
+
+  calculateMinYOfFixture(b2dFixture){
+    var min;
+    var verts = b2dFixture.verts;
+    if(verts && verts.length>0){
+      min = verts[0].y;
+      for(var i=1;i<verts.length;i++){
+        if(verts[i].x < min){
+          min = verts[i].y;
+        }
+      }
+    }
+    return min;
+  }
+
 
   generateRandomVerts(maxX, maxY, quantity){
     var verts = [];

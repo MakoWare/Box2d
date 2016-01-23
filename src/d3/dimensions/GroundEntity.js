@@ -48,9 +48,10 @@ class GroundEntity extends PolygonEntity {
   generateBodyImage(){
     this.area = this.calculateAreaOfPolygon(this.body);
     this.maxX = this.calculateMaxXOfPolygon(this.body.fixtures);
-//    this.minX = this.calculateMinXOfPolygon(this.body.fixtures);
+    this.minX = this.calculateMinXOfPolygon(this.body.fixtures);
     this.maxY = this.calculateMaxYOfPolygon(this.body.fixtures);
-//    this.minY = this.calculateMinYOfPolygon(this.body.fixtures);
+    this.minY = this.calculateMinYOfPolygon(this.body.fixtures);
+    console.log(this);
     this.ImageVerts = this.generateRandomVerts(Math.floor(this.maxX, this.maxY, this.area / 2));
   }
 
