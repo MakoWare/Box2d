@@ -50,7 +50,7 @@ class GameScreen extends Screen {
 
       this.world.step(1/60, 3, 2);
       this.camera.update(ctx,delta);
-      this.world.drawDebug();
+      // this.world.drawDebug();
 
       // draw the level
       this.level.draw(ctx, delta);

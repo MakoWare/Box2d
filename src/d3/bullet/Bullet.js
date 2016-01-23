@@ -10,6 +10,8 @@ class Bullet extends PolygonEntity {
     this.color = "#ffeb3b";
     this.allDim = true;
     this.initContactListeners();
+    this.maxDistance = 40;
+    this.initialX = this.getPosition().get_x();
   }
 
   initContactListeners(){
@@ -24,7 +26,10 @@ class Bullet extends PolygonEntity {
   }
 
   draw(ctx, delta){
-
+    var xPos = this.getPosition().get_x();
+    if(Math.abs(xPos-this.initialX)>=this.maxDistance){
+      this.needsDestroy = true;
+    }
   }
 
   destroy(){
