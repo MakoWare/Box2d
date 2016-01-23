@@ -46,7 +46,11 @@ class D3App extends BaseApp {
   }
 
   startLoading(reset, options){
+    options = options || {};
     this.doneLoading = false;
+    if(!options.level){
+      options.level = this.currentLevel;
+    }
     this.loadingScreen = new LoadingScreen(this.camera,options);
     this.screenManager.addScreen(this.loadingScreen,reset);
   }

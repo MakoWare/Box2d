@@ -30,10 +30,12 @@ class GroundEntity extends PolygonEntity {
     ctx.translate(pos.get_x(),pos.get_y());
     ctx.fillStyle = Util.convertHex(this.color, this.calculateOpacity());
     this.drawFixtures(ctx, delta,()=>{
-      ctx.shadowColor = 'black';
-      ctx.shadowBlur = 20;
-      ctx.shadowOffsetX = 10;
-      ctx.shadowOffsetY = 10;
+      if(this.active){
+        ctx.shadowColor = 'black';
+        ctx.shadowBlur = 20;
+        ctx.shadowOffsetX = 10;
+        ctx.shadowOffsetY = 10;
+      }
       ctx.fill();
       ctx.strokeStyle = this.color;
       ctx.lineWidth = 0.04;
