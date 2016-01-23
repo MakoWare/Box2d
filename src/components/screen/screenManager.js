@@ -34,7 +34,7 @@ class ScreenManager {
     } else {
       stack.push(screen);
     }
-    console.log('add screen:',stack.length,replace);
+    // console.log('add screen:',stack.length,replace);
   }
 
   getStack(){

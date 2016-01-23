@@ -38,7 +38,6 @@ class RubeAsset extends Asset {
         var sceneJson = JSON.parse(this.xobj.responseText);
         this.data = RubeLoader.loadSceneIntoWorld(sceneJson, this.world);
         if(this.data._success){
-          console.log(this.data);
           resolve(this);
         } else {
           reject(this);
@@ -48,7 +47,6 @@ class RubeAsset extends Asset {
   }
 
   onAssetResolve(am){
-    console.log('on rube asset resolved');
     if(this.data._json.image){
       this.loadImages(this.data._json.image, am);
     }
@@ -56,11 +54,8 @@ class RubeAsset extends Asset {
 
   loadImages(images, am){
     var img;
-    console.log(images);
     for(var i=0; i<images.length; i++){
       img = images[i];
-
-      console.log(img);
       am.loadResource(img.name,img.file,'rubeImage',{img:img,scene:this.data});
     }
   }

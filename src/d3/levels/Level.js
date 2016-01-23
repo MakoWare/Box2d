@@ -274,7 +274,6 @@ class Level extends BaseLevel {
       for(var i=0; i<20;i++){
         var a = this.dimensions;
         if(a[1].id==toDim){
-          console.log('set: ',a[0].id,a[1].id,a[2].id);
           break;
         }
         a.wrapRight();

@@ -63,7 +63,6 @@ class AssetManager {
 
     if(this.loadQueue.length==0){
       if(!this.finalPromise){
-        console.log(this.assets);
         this.finalPromise = Promise.all(this.promiseQueue).then(()=>{
           if(this.finalPromise){ // [tries to*] assures that this is not called prematurely if an asset is added late
             this.assetsLoaded.apply(this, arguments);
