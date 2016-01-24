@@ -11,28 +11,33 @@ class GroundEntity extends PolygonEntity {
     this.generateBodyImage();
   }
 
-  draw(ctx, delta, opacity){
+  draw(ctx, delta, opacity) {
     var pos = this.body.GetPosition();
 
 
     ctx.save();
     this.applyRotation(ctx);
 
-    ctx.translate(pos.get_x(),pos.get_y());
-    /* ctx.fillStyle = Util.convertHex(this.color, this.calculateOpacity());
-       this.drawFixtures(ctx, delta,()=>{
-       ctx.shadowColor = 'black';
-       ctx.shadowBlur = 20;
-       ctx.shadowOffsetX = 10;
-       ctx.shadowOffsetY = 10;
-       ctx.fill();
-       ctx.strokeStyle = this.color;
-       ctx.lineWidth = 0.04;
-       ctx.lineJoin = 'bevel';
-       ctx.lineCap = 'round';
-       ctx.closePath();
-       ctx.stroke();
-       }); */
+    ctx.translate(pos.get_x(), pos.get_y());
+    ctx.save();
+    ctx.fillStyle = Util.convertHex(this.color, this.calculateOpacity());
+    this.drawFixtures(ctx, delta, () => {
+      if(this.active){
+        ctx.shadowColor = 'black';
+        ctx.shadowBlur = 20;
+        ctx.shadowOffsetX = 10;
+        ctx.shadowOffsetY = 10;
+      }
+
+      ctx.fill();
+      ctx.strokeStyle = this.color;
+      ctx.lineWidth = 0.04;
+      ctx.lineJoin = 'bevel';
+      ctx.lineCap = 'round';
+      ctx.closePath();
+      ctx.stroke();
+    });
+    ctx.restore();
 
     this.imageTriangles.forEach(function(poly) {
       ctx.fillStyle = Util.convertHex(poly[0], this.calculateOpacity());
@@ -42,6 +47,9 @@ class GroundEntity extends PolygonEntity {
       ctx.moveTo.apply(ctx, poly[1][0]);
       ctx.lineTo.apply(ctx, poly[1][1]);
       ctx.lineTo.apply(ctx, poly[1][2]);
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'bevel';
+      ctx.closePath();
       ctx.fill();
       ctx.stroke();
     }.bind(this));
@@ -56,7 +64,7 @@ class GroundEntity extends PolygonEntity {
     ctx.restore();
   }
 
-  generateBodyImage(){
+  generateBodyImage() {
     this.area = this.calculateAreaOfPolygon(this.body);
     this.maxX = this.calculateMaxXOfPolygon(this.body.fixtures);
     this.minX = this.calculateMinXOfPolygon(this.body.fixtures);
@@ -75,12 +83,12 @@ class GroundEntity extends PolygonEntity {
     this.generateImageCanvas();
   }
 
-  generateImageVerts(){
+  generateImageVerts() {
     this.imageVerts = [];
-    for(var i=0;i< this.body.fixtures.length;i++){
+    for (var i = 0; i < this.body.fixtures.length; i++) {
       var verts = this.body.fixtures[i].verts;
-      if(verts && verts.length>0){
-        for(var i=0;i<verts.length;i++){
+      if (verts && verts.length > 0) {
+        for (var i = 0; i < verts.length; i++) {
           this.imageVerts.push([verts[i].x, verts[i].y]);
         }
       }
@@ -89,12 +97,14 @@ class GroundEntity extends PolygonEntity {
     this.imageVerts = this.imageVerts.concat(this.generateRandomVerts(this.minX, this.maxX, this.minY, this.maxY, 2));
   }
 
-  generateImageTriangles(){
+  generateImageTriangles() {
     var geom_indices = this.imageDelaunay;
     this.imageTriangles = []
-    var lookup_point = function(i){ return this.imageVerts[i];}.bind(this);
-    for (var i=0; i < geom_indices.length; i += 3) {
-      var vertices = [geom_indices[i], geom_indices[i+1], geom_indices[i+2]].map(lookup_point);
+    var lookup_point = function(i) {
+      return this.imageVerts[i];
+    }.bind(this);
+    for (var i = 0; i < geom_indices.length; i += 3) {
+      var vertices = [geom_indices[i], geom_indices[i + 1], geom_indices[i + 2]].map(lookup_point);
       //var centroid = _centroid(vertices);
       //var color = gradient(norm_x(centroid.x), norm_y(centroid.y)).hex();
       var color = 'rgb(' + (Math.floor(Math.random() * (255 - 0 + 1)) + 0) + "," + (Math.floor(Math.random() * (255 - 0 + 1)) + 0) + ", " + (Math.floor(Math.random() * (255 - 0 + 1)) + 0) + ")";
@@ -102,7 +112,7 @@ class GroundEntity extends PolygonEntity {
     }
   }
 
-  generateImageCanvas(){
+  generateImageCanvas() {
     var canvas = document.createElement('canvas');
     canvas.width = this.maxX - this.minX;
     canvas.height = this.maxY - this.minY;
@@ -127,12 +137,12 @@ class GroundEntity extends PolygonEntity {
     this.canvasPattern = canvas;
   }
 
-  activate(){
+  activate() {
     this.active = true;
     this.body.SetActive(true);
   }
 
-  deactivate(){
+  deactivate() {
     this.active = false;
     this.body.SetActive(false);
   }

@@ -60,7 +60,7 @@ class BaseApp {
 
     //black background
     ctx.fillStyle = this.backgroundColor;
-    ctx.fillRect( 0, 0, this.canvas.el.width, this.canvas.el.height );
+    ctx.clearRect( 0, 0, this.canvas.el.width, this.canvas.el.height );
 
     ctx.save();
 
