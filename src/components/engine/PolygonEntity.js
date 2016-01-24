@@ -56,6 +56,8 @@ class PolygonEntity extends BaseEntity {
       fix = fixtures[i];
       area += this.calculateAreaOfFixture(fix.verts);
     }
+
+    return area;
   }
 
   calculateAreaOfFixture(verts){
@@ -96,9 +98,9 @@ class PolygonEntity extends BaseEntity {
   }
 
   calculateMinXOfPolygon(b2dFixtures){
-    var min = this.calculateMaxXOfFixture(b2dFixtures[0]);
+    var min = this.calculateMinXOfFixture(b2dFixtures[0]);
     for(var i=1;i< b2dFixtures.length;i++){
-      var calc = this.calculateMaxXOfFixture(b2dFixtures[i]);
+      var calc = this.calculateMinXOfFixture(b2dFixtures[i]);
       if(calc < min){
         min = calc;
       }
@@ -122,9 +124,9 @@ class PolygonEntity extends BaseEntity {
 
 
   calculateMaxYOfPolygon(b2dFixtures){
-    var max = this.calculateMaxXOfFixture(b2dFixtures[0]);
+    var max = this.calculateMaxYOfFixture(b2dFixtures[0]);
     for(var i=1;i< b2dFixtures.length;i++){
-      var calc = this.calculateMaxXOfFixture(b2dFixtures[i]);
+      var calc = this.calculateMaxYOfFixture(b2dFixtures[i]);
       if(calc > max){
         max = calc;
       }
@@ -138,7 +140,7 @@ class PolygonEntity extends BaseEntity {
     if(verts && verts.length>0){
       max = verts[0].y;
       for(var i=1;i<verts.length;i++){
-        if(verts[i].x > max){
+        if(verts[i].y > max){
           max = verts[i].y;
         }
       }
@@ -147,9 +149,9 @@ class PolygonEntity extends BaseEntity {
   }
 
   calculateMinYOfPolygon(b2dFixtures){
-    var min = this.calculateMaxXOfFixture(b2dFixtures[0]);
+    var min = this.calculateMinYOfFixture(b2dFixtures[0]);
     for(var i=1;i< b2dFixtures.length;i++){
-      var calc = this.calculateMaxXOfFixture(b2dFixtures[i]);
+      var calc = this.calculateMinYOfFixture(b2dFixtures[i]);
       if(calc < max){
         min = calc;
       }
@@ -163,7 +165,7 @@ class PolygonEntity extends BaseEntity {
     if(verts && verts.length>0){
       min = verts[0].y;
       for(var i=1;i<verts.length;i++){
-        if(verts[i].x < min){
+        if(verts[i].y < min){
           min = verts[i].y;
         }
       }
@@ -172,11 +174,15 @@ class PolygonEntity extends BaseEntity {
   }
 
 
-  generateRandomVerts(maxX, maxY, quantity){
+  generateRandomVerts(minX, maxX, minY, maxY, quantity){
     var verts = [];
     for(var i = 0; i < quantity; i++){
-   //   var x =  Math.floor(Math.random() * (max - min)) + min;
+      var x =  Math.random() * (maxX - minX) + minX;
+      var y =  Math.random() * (maxY - minY) + minY;
+      var vert = [x, y];
+      verts.push(vert);
     }
+    return verts;
   }
 
 }
