@@ -14,7 +14,7 @@ class Player extends StatefulPolygonEntity {
     this.maxVX = 15;
     this.maxVY = 10;
     this.gravityScale = 4;
-    this.jumpGravityScale = 5;
+    this.jumpGravityScale = 6;
     this.color = "#ecf0f1";
     this.looking = RIGHT;
     this.blasters = [];
@@ -191,7 +191,10 @@ class Player extends StatefulPolygonEntity {
       this.body.ApplyLinearImpulse(new Box2D.b2Vec2(0,30),this.body.GetWorldCenter());
     } else if(!keyDown) {
       this.jumping = false;
-      this.body.SetGravityScale(this.jumpGravityScale);
+      if(!this.grounded){
+        this.body.SetGravityScale(this.jumpGravityScale);  
+      }
+
     }
   }
 
@@ -210,6 +213,7 @@ class Player extends StatefulPolygonEntity {
 
     if(set){
       this.grounded = true;
+      // this.jumping = false;
       this.body.SetGravityScale(this.gravityScale);
     } else {
       if(b==0) {
