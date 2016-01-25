@@ -54,13 +54,6 @@ class GroundEntity extends PolygonEntity {
       ctx.stroke();
     }.bind(this));
 
-
-    /* ctx.save();
-       ctx.translate(pos.get_x(),pos.get_y());
-       ctx.drawImage(this.canvasPattern, 0, 0, this.canvasPattern.width, this.canvasPattern.height);
-       ctx.restore();
-     */
-
     ctx.restore();
   }
 
@@ -80,7 +73,6 @@ class GroundEntity extends PolygonEntity {
     //Generate Triangles from Delaunay indices
     this.generateImageTriangles();
 
-    this.generateImageCanvas();
   }
 
   generateImageVerts() {
@@ -107,34 +99,9 @@ class GroundEntity extends PolygonEntity {
       var vertices = [geom_indices[i], geom_indices[i + 1], geom_indices[i + 2]].map(lookup_point);
       //var centroid = _centroid(vertices);
       //var color = gradient(norm_x(centroid.x), norm_y(centroid.y)).hex();
-      var color = 'rgb(' + (Math.floor(Math.random() * (255 - 0 + 1)) + 0) + "," + (Math.floor(Math.random() * (255 - 0 + 1)) + 0) + ", " + (Math.floor(Math.random() * (255 - 0 + 1)) + 0) + ")";
+      var triangleColor = Util.generateGradient(this.color.substr(1), "ffffff", (1 / (geom_indices.length / i)));
       this.imageTriangles.push([this.color, vertices]);
     }
-  }
-
-  generateImageCanvas() {
-    var canvas = document.createElement('canvas');
-    canvas.width = this.maxX - this.minX;
-    canvas.height = this.maxY - this.minY;
-    var ctx = canvas.getContext('2d');
-
-    console.log(this.imageTriangles);
-    //ctx.scale(32, 32);
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, canvas.width / 2, canvas.height);
-    ctx.fill();
-    /* this.imageTriangles.forEach(function(poly) {
-       ctx.fillStyle = poly[0];
-       ctx.strokeStyle = "black";
-       ctx.lineWidth = .1;
-       ctx.beginPath();
-       ctx.moveTo.apply(ctx, poly[1][0]);
-       ctx.lineTo.apply(ctx, poly[1][1]);
-       ctx.lineTo.apply(ctx, poly[1][2]);
-       ctx.fill();
-       ctx.stroke();
-       }); */
-    this.canvasPattern = canvas;
   }
 
   activate() {
