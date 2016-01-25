@@ -47,24 +47,6 @@
       [
         
         {
-          "entry" : "Player"
-        },
-        
-        {
-          "entry" : "Ground"
-        }
-      ],
-      "displayName" : "Class",
-      "name" : "Class",
-      "type" : "string"
-    },
-    
-    {
-      "class" : "body",
-      "comboboxEntries" : 
-      [
-        
-        {
           "entry" : "0"
         },
         
@@ -79,6 +61,35 @@
       "displayName" : "Dimension",
       "name" : "Dimension",
       "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "comboboxEntries" : 
+      [
+        
+        {
+          "entry" : "Player"
+        },
+        
+        {
+          "entry" : "Ground"
+        },
+        
+        {
+          "entry" : "Door"
+        }
+      ],
+      "displayName" : "Class",
+      "name" : "Class",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "Destination",
+      "name" : "Destination",
+      "type" : "string"
     }
   ],
   "metaworld" : 
@@ -157,8 +168,8 @@
         "name" : "Player",
         "position" : 
         {
-          "x" : 1.5,
-          "y" : 1.5
+          "x" : 3,
+          "y" : 0.6
         },
         "type" : "dynamic"
       },
@@ -197,8 +208,8 @@
             ],
             "vertices" : 
             {
-              "x" : [ -0.5, 9.5, 9.5, -0.5 ],
-              "y" : [ -0.5, -0.5, 0.5, 0.5 ]
+              "x" : [ -3.6, 16.39999961853027, 19.50, -0.5 ],
+              "y" : [ -1.6, -1.6, 0.5, 0.5 ]
             }
           }
         ],
@@ -247,7 +258,7 @@
             ],
             "vertices" : 
             {
-              "x" : [ -0.5, 9.5, 9.5, -0.5 ],
+              "x" : [ -0.5, 4.5, 4.5, -6.5 ],
               "y" : [ -0.5, -0.5, 0.5, 0.5 ]
             }
           }
@@ -257,8 +268,8 @@
         "name" : "d1",
         "position" : 
         {
-          "x" : 15.50,
-          "y" : 1.5
+          "x" : 30.50000381469727,
+          "y" : -0.5
         },
         "type" : "static"
       },
@@ -297,7 +308,7 @@
             ],
             "vertices" : 
             {
-              "x" : [ -0.5, 9.5, 9.5, -0.5 ],
+              "x" : [ -0.5, 4.5, 4.5, -6.5 ],
               "y" : [ -0.5, -0.5, 0.5, 0.5 ]
             }
           }
@@ -307,8 +318,8 @@
         "name" : "d2",
         "position" : 
         {
-          "x" : 20.50,
-          "y" : 4.5
+          "x" : 41.50000381469727,
+          "y" : -2.5
         },
         "type" : "static"
       },
@@ -347,7 +358,7 @@
             ],
             "vertices" : 
             {
-              "x" : [ -0.5, 9.5, 9.5, -0.5 ],
+              "x" : [ -0.5, 4.5, 4.5, -6.5 ],
               "y" : [ -0.5, -0.5, 0.5, 0.5 ]
             }
           }
@@ -357,14 +368,14 @@
         "name" : "d0",
         "position" : 
         {
-          "x" : 5.5,
-          "y" : 6.5
+          "x" : 52.50000381469727,
+          "y" : -4.5
         },
         "type" : "static"
       },
       
       {
-        "angle" : 1.570796370506287,
+        "angle" : 0,
         "angularVelocity" : 0,
         "awake" : true,
         "customProperties" : 
@@ -397,8 +408,8 @@
             ],
             "vertices" : 
             {
-              "x" : [ -0.5, 9.5, 9.5, -0.5 ],
-              "y" : [ -0.5, -0.5, 0.5, 0.5 ]
+              "x" : [ -3.6, 16.39999961853027, 19.50, -0.5 ],
+              "y" : [ -1.6, -1.6, 0.5, 0.5 ]
             }
           }
         ],
@@ -407,14 +418,70 @@
         "name" : "d1",
         "position" : 
         {
-          "x" : 0.5,
-          "y" : 9.5
+          "x" : 63.60000228881836,
+          "y" : -2.4
         },
         "type" : "static"
       },
       
       {
-        "angle" : 1.570796370506287,
+        "angle" : -1.570796251296997,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 0,
+            "name" : "Dimension"
+          },
+          
+          {
+            "name" : "Class",
+            "string" : "Door"
+          },
+          
+          {
+            "name" : "Destination",
+            "string" : "level_3"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 7,
+            "name" : "fixture1",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -0.7, 1.5, 1.5, -0.7 ],
+              "y" : [ -0.5, -0.5, 0.7, 0.7 ]
+            }
+          }
+        ],
+        "id" : 7,
+        "linearVelocity" : 0,
+        "name" : "door0",
+        "position" : 
+        {
+          "x" : 80.50,
+          "y" : -0.4
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : -1.570796251296997,
         "angularVelocity" : 0,
         "awake" : true,
         "customProperties" : 
@@ -427,7 +494,12 @@
           
           {
             "name" : "Class",
-            "string" : "Ground"
+            "string" : "Door"
+          },
+          
+          {
+            "name" : "Destination",
+            "string" : "level_1"
           }
         ],
         "fixture" : 
@@ -436,8 +508,9 @@
           {
             "density" : 1,
             "friction" : 0.2,
-            "id" : 7,
+            "id" : 13,
             "name" : "fixture1",
+            "sensor" : true,
             "shapes" : 
             [
               
@@ -447,18 +520,18 @@
             ],
             "vertices" : 
             {
-              "x" : [ -0.5, 9.5, 9.5, -0.5 ],
-              "y" : [ -0.5, -0.5, 0.5, 0.5 ]
+              "x" : [ -0.7, 1.5, 1.5, -0.7 ],
+              "y" : [ -0.5, -0.5, 0.7, 0.7 ]
             }
           }
         ],
-        "id" : 7,
+        "id" : 13,
         "linearVelocity" : 0,
-        "name" : "d1",
+        "name" : "door1",
         "position" : 
         {
-          "x" : 3.6,
-          "y" : 11.50
+          "x" : 1,
+          "y" : 1.5
         },
         "type" : "static"
       }

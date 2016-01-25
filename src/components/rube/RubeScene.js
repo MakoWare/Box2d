@@ -14,7 +14,8 @@ class RubeScene {
     }
   }
 
-  finish(){
+  finish(opts){
+    this.data = opts;
     this._isFinished = true;
   }
 }

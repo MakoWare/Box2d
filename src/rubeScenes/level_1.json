@@ -20,6 +20,11 @@
 				{
 					"name" : "Class",
 					"string" : "Door"
+				},
+				
+				{
+					"name" : "Destination",
+					"string" : "level_2"
 				}
 			],
 			"fixture" : 
@@ -542,48 +547,6 @@
 		"x" : 0,
 		"y" : -10
 	},
-	"image" : 
-	[
-		
-		{
-			"aspectScale" : 1,
-			"body" : 9,
-			"center" : 
-			{
-				"x" : -0.5,
-				"y" : 0.5
-			},
-			"corners" : 
-			{
-				"x" : 
-				[
-					-1.388888835906982,
-					0.3888888955116272,
-					0.3888888955116272,
-					-1.388888835906982
-				],
-				"y" : [ 0.0, 0.0, 1, 1 ]
-			},
-			"file" : "../images/ground/ground1.png",
-			"filter" : 1,
-			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
-			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
-			"glVertexPointer" : 
-			[
-				-1.388888835906982,
-				0.0,
-				0.3888888955116272,
-				0.0,
-				0.3888888955116272,
-				1,
-				-1.388888835906982,
-				1
-			],
-			"name" : "image0",
-			"opacity" : 1,
-			"scale" : 1
-		}
-	],
 	"positionIterations" : 3,
 	"stepsPerSecond" : 60.0,
 	"subStepping" : false,

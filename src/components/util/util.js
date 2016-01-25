@@ -165,7 +165,6 @@ class Util {
 
 
   static generateGradient(color1, color2, ratio){
-    console.log(ratio);
     var hex = function(x) {
       x = x.toString(16);
       return (x.length == 1) ? '0' + x : x;

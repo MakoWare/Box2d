@@ -24,7 +24,7 @@ class GameScreen extends Screen {
 
     //this.camera.setPTM(34);
     this.camera.setViewCenterWorld(new Box2D.b2Vec2(15,0),true);
-
+    console.log(this.camera);
     this.level = new Level(this.scene, this.world);
 
     this.inputListener = App.input.newEventListener({
@@ -42,10 +42,11 @@ class GameScreen extends Screen {
   draw(ctx, delta){
     if(this.scene._isFinished){
       // TODO: better implement level switching
-      this.finish({done:true, nextLevel:1});
+      this.finish({done:true, nextLevel: this.scene.data.nextLevel});
     } else {
 
-      ctx.drawImage(this.backgroundAsset, -1200, -1000);
+      this.translateBackground(ctx);
+
       ctx.save();
 
       this.world.step(1/60, 3, 2);
@@ -57,6 +58,15 @@ class GameScreen extends Screen {
 
       ctx.restore();
     }
+  }
+
+  translateBackground(ctx){
+    ctx.save();
+    var x = this.camera.getViewCenterWorld().x * 5;
+    var y = this.camera.getViewCenterWorld().y * 5;
+    ctx.translate(-x, y);
+    ctx.drawImage(this.backgroundAsset, -800, -1000);
+    ctx.restore();
   }
 
   onDestroy(){

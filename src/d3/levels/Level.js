@@ -92,10 +92,6 @@ class Level extends BaseLevel {
     ctx.save();
 
     this.eM.step(ctx, delta);
-    /* this.dimensions[0].draw(ctx,delta);
-       this.dimensions[2].draw(ctx,delta);
-       this.dimensions[1].draw(ctx,delta); // draw the current dimension on top
-       this.player.draw(ctx,delta);*/
     ctx.restore();
   }
 

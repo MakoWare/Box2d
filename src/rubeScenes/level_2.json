@@ -6,6 +6,56 @@
 	[
 		
 		{
+			"angle" : -1.570796251296997,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 0,
+					"name" : "Dimension"
+				},
+				
+				{
+					"name" : "Class",
+					"string" : "Door"
+				},
+				
+				{
+					"name" : "Destination",
+					"string" : "level_3"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture1",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : [ 1.5, 1.5, -0.7, -0.7 ],
+							"y" : [ -0.5, 0.7, 0.7, -0.5 ]
+						}
+					},
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "door0",
+			"position" : 
+			{
+				"x" : 80.50,
+				"y" : -0.4
+			},
+			"type" : 0
+		},
+		
+		{
 			"angle" : 0,
 			"angularVelocity" : 0,
 			"awake" : true,
@@ -28,13 +78,13 @@
 				{
 					"density" : 1,
 					"friction" : 0.2,
-					"name" : "fixture2",
+					"name" : "fixture1",
 					"polygon" : 
 					{
 						"vertices" : 
 						{
-							"x" : [ 10, 10, 0.0, 0.0 ],
-							"y" : [ -1, 0.0, 0.0, -1 ]
+							"x" : [ 19.50, -0.5, -3.6, 16.39999961853027 ],
+							"y" : [ 0.5, 0.5, -1.6, -1.6 ]
 						}
 					}
 				}
@@ -43,8 +93,8 @@
 			"name" : "d1",
 			"position" : 
 			{
-				"x" : 20.0,
-				"y" : 8
+				"x" : 63.60000228881836,
+				"y" : -2.4
 			},
 			"type" : 0
 		},
@@ -72,13 +122,13 @@
 				{
 					"density" : 1,
 					"friction" : 0.2,
-					"name" : "fixture2",
+					"name" : "fixture1",
 					"polygon" : 
 					{
 						"vertices" : 
 						{
-							"x" : [ 10, 10, 0.0, 0.0 ],
-							"y" : [ -1, 0.0, 0.0, -1 ]
+							"x" : [ 4.5, 4.5, -6.5, -0.5 ],
+							"y" : [ -0.5, 0.5, 0.5, -0.5 ]
 						}
 					}
 				}
@@ -87,8 +137,8 @@
 			"name" : "d0",
 			"position" : 
 			{
-				"x" : 0,
-				"y" : 7
+				"x" : 52.50000381469727,
+				"y" : -4.5
 			},
 			"type" : 0
 		},
@@ -116,13 +166,13 @@
 				{
 					"density" : 1,
 					"friction" : 0.2,
-					"name" : "fixture2",
+					"name" : "fixture1",
 					"polygon" : 
 					{
 						"vertices" : 
 						{
-							"x" : [ 10, 10, 0.0, 0.0 ],
-							"y" : [ -1, 0.0, 0.0, -1 ]
+							"x" : [ 4.5, 4.5, -6.5, -0.5 ],
+							"y" : [ -0.5, 0.5, 0.5, -0.5 ]
 						}
 					}
 				}
@@ -131,8 +181,58 @@
 			"name" : "d2",
 			"position" : 
 			{
-				"x" : 10,
-				"y" : 4
+				"x" : 41.50000381469727,
+				"y" : -2.5
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : -1.570796251296997,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 1,
+					"name" : "Dimension"
+				},
+				
+				{
+					"name" : "Class",
+					"string" : "Door"
+				},
+				
+				{
+					"name" : "Destination",
+					"string" : "level_1"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture1",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : [ 1.5, 1.5, -0.7, -0.7 ],
+							"y" : [ -0.5, 0.7, 0.7, -0.5 ]
+						}
+					},
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "door1",
+			"position" : 
+			{
+				"x" : 1,
+				"y" : 1.5
 			},
 			"type" : 0
 		},
@@ -159,26 +259,14 @@
 				
 				{
 					"density" : 1,
-					"friction" : 1,
+					"friction" : 0.2,
 					"name" : "fixture1",
 					"polygon" : 
 					{
 						"vertices" : 
 						{
-							"x" : 
-							[
-								21.91254615783691,
-								21.91254615783691,
-								1.912546157836914,
-								1.912546157836914
-							],
-							"y" : 
-							[
-								-5.937414169311523,
-								-4.937414169311523,
-								-4.937414169311523,
-								-5.937414169311523
-							]
+							"x" : [ 4.5, 4.5, -6.5, -0.5 ],
+							"y" : [ -0.5, 0.5, 0.5, -0.5 ]
 						}
 					}
 				}
@@ -187,15 +275,58 @@
 			"name" : "d1",
 			"position" : 
 			{
-				"x" : -1.912546157836914,
-				"y" : 4.937414169311523
+				"x" : 30.50000381469727,
+				"y" : -0.5
 			},
 			"type" : 0
 		},
 		
 		{
 			"angle" : 0,
-			"angularDamping" : 1,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 1,
+					"name" : "Dimension"
+				},
+				
+				{
+					"name" : "Class",
+					"string" : "Ground"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture1",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : [ 19.50, -0.5, -3.6, 16.39999961853027 ],
+							"y" : [ 0.5, 0.5, -1.6, -1.6 ]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "d1",
+			"position" : 
+			{
+				"x" : 0.5,
+				"y" : -0.5
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
 			"angularVelocity" : 0,
 			"awake" : true,
 			"customProperties" : 
@@ -211,29 +342,37 @@
 					"string" : "Player"
 				}
 			],
+			"fixedRotation" : true,
 			"fixture" : 
 			[
 				
 				{
-					"circle" : 
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture0",
+					"polygon" : 
 					{
-						"center" : 0,
-						"radius" : 0.5
-					},
-					"density" : 1.273239493370056,
-					"friction" : 1000.0,
-					"name" : "fixture0"
+						"vertices" : 
+						{
+							"x" : [ 0.5, 0.5, -0.5, -0.5 ],
+							"y" : [ -0.5, 1.5, 1.5, -0.5 ]
+						}
+					}
 				}
 			],
-			"gravityScale" : 3,
 			"linearVelocity" : 0,
-			"massData-I" : 0.1250,
-			"massData-mass" : 1,
+			"massData-I" : 0.5,
+			"massData-center" : 
+			{
+				"x" : 0,
+				"y" : 0.5
+			},
+			"massData-mass" : 2,
 			"name" : "Player",
 			"position" : 
 			{
-				"x" : 1,
-				"y" : 1
+				"x" : 3,
+				"y" : 0.6
 			},
 			"type" : 2
 		}

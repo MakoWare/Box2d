@@ -47,28 +47,6 @@
       [
         
         {
-          "entry" : "0"
-        },
-        
-        {
-          "entry" : "1"
-        },
-        
-        {
-          "entry" : "2"
-        }
-      ],
-      "displayName" : "Dimension",
-      "name" : "Dimension",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "comboboxEntries" : 
-      [
-        
-        {
           "entry" : "Player"
         },
         
@@ -83,6 +61,35 @@
       "displayName" : "Class",
       "name" : "Class",
       "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "Destination",
+      "name" : "Destination",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "comboboxEntries" : 
+      [
+        
+        {
+          "entry" : "0"
+        },
+        
+        {
+          "entry" : "1"
+        },
+        
+        {
+          "entry" : "2"
+        }
+      ],
+      "displayName" : "Dimension",
+      "name" : "Dimension",
+      "type" : "int"
     }
   ],
   "metaworld" : 
@@ -632,6 +639,11 @@
           {
             "name" : "Class",
             "string" : "Door"
+          },
+          
+          {
+            "name" : "Destination",
+            "string" : "level_2"
           }
         ],
         "fixture" : 
@@ -666,26 +678,6 @@
           "y" : 1.5
         },
         "type" : "static"
-      }
-    ],
-    "metaimage" : 
-    [
-      
-      {
-        "aspectScale" : 1,
-        "body" : 2,
-        "center" : 
-        {
-          "x" : -0.5,
-          "y" : 0.5
-        },
-        "file" : "../images/ground1.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 2,
-        "name" : "image0",
-        "opacity" : 1,
-        "scale" : 1
       }
     ],
     "positionIterations" : 3,

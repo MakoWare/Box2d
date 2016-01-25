@@ -20,7 +20,7 @@ class D3App extends BaseApp {
 
 
     // TODO: implement some sort of level management (screen);
-    this.currentLevel = 1;
+    this.currentLevel = "level_1";
 
     this.screenListener.onScreenFinished = (screen, manager, data)=>{
       if(screen === this.loadingScreen){
