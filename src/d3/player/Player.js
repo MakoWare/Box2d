@@ -1,4 +1,5 @@
 import StatefulPolygonEntity from 'src/components/engine/StatefulPolygonEntity';
+import AssetManager from 'src/components/base/assetManager';
 import App from 'src/components/app/app';
 import Box2D from 'src/components/box2d/box2d';
 import MainBlaster from 'src/d3/blaster/MainBlaster';
@@ -23,6 +24,11 @@ class Player extends StatefulPolygonEntity {
     this.initContactListeners();
     this.initMoveListeners();
     this.getBlasters();
+    this.spriteSheet = AssetManager.getImage('playerSpriteSheet');
+    this.spriteSheetWidth = this.spriteSheet.width;
+    this.spriteSheetHeight = this.spriteSheet.height;
+    this.spritesPerSheetX = 6;
+    this.spritesPerSheetY = 5;
   }
 
   destroy(){
@@ -237,20 +243,30 @@ class Player extends StatefulPolygonEntity {
     ctx.save();
 
     this.applyRotation(ctx);
+    this.animate(ctx);
 
-    ctx.translate(pos.get_x(),pos.get_y());
-    ctx.fillStyle = this.color;
-    this.drawFixtures(ctx, delta,()=>{
-      ctx.fill();
-      ctx.strokeStyle = this.color;
-      ctx.lineWidth = 0.04;
-      ctx.lineJoin = 'bevel';
-      ctx.lineCap = 'round';
-      ctx.closePath();
-      ctx.stroke();
-    });
+    //    ctx.translate(pos.get_x(),pos.get_y());
+
+
+    /* ctx.fillStyle = this.color;
+       this.drawFixtures(ctx, delta,()=>{
+       ctx.fill();
+       ctx.strokeStyle = this.color;
+       ctx.lineWidth = 0.04;
+       ctx.lineJoin = 'bevel';
+       ctx.lineCap = 'round';
+       ctx.closePath();
+       ctx.stroke();
+       }); */
 
     ctx.restore();
+  }
+
+  animate(ctx){
+    var pos = this.body.GetPosition();
+    //    ctx.rotate(180*Math.PI/180);
+    ctx.scale(1, -1);
+    ctx.drawImage(this.spriteSheet, 0, 0, this.spriteSheetWidth / this.spritesPerSheetX, this.spriteSheetHeight / this.spritesPerSheetY, pos.get_x(),pos.get_y() -3, 15 / this.spritesPerSheetX, 15 / this.spritesPerSheetY);
   }
 
   getBlasters(){
