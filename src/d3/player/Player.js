@@ -24,11 +24,19 @@ class Player extends StatefulPolygonEntity {
     this.initContactListeners();
     this.initMoveListeners();
     this.getBlasters();
-    this.spriteSheet = AssetManager.getImage('playerSpriteSheet');
-    this.spriteSheetWidth = this.spriteSheet.width;
-    this.spriteSheetHeight = this.spriteSheet.height;
-    this.spritesPerSheetX = 6;
-    this.spritesPerSheetY = 5;
+    this.sprite = {};
+    this.sprite.sheet = {};
+    this.sprite.sheet.image = AssetManager.getImage('playerSpriteSheet');
+    this.sprite.sheet.width = this.sprite.sheet.image.width;
+    this.sprite.sheet.height = this.sprite.sheet.image.height;
+    this.sprite.sheet.frames = [];
+    this.sprite.sheet.framesX = 6;
+    this.sprite.sheet.framesY = 5;
+    this.sprite.sheet.frameWidth = this.sprite.sheet.width / this.sprite.sheet.framesX;
+    this.sprite.sheet.frameHeight = this.sprite.sheet.height / this.sprite.sheet.framesY;
+    this.sprite.sheet.totalFrames = this.sprite.sheet.framesX * this.sprite.sheet.framesY;
+    this.sprite.frameIndex = 0;
+    this.parseSpriteSheet();
   }
 
   destroy(){
@@ -112,38 +120,11 @@ class Player extends StatefulPolygonEntity {
     }
   }
 
-  // onBeginContact(contactPtr){
-  //   var contactObject = this.involvedInContact(contactPtr);
-  //   if(contactObject && contactObject.entityData){
-  //     // console.log("player.onBeginContact");
-  //     switch(contactObject.entityData.constructor.name) {
-  //       case "GroundEntity":
-  //         console.log('begin contact (ground)');
-  //         this.setGrounded(true,contactObject);
-  //         break;
-  //     }
-  //   } else {
-  //     return;
-  //   }
-  // }
-  //
-  // onEndContact(contactPtr){
-  //   var contactObject = this.involvedInContact(contactPtr);
-  //   if(contactObject && contactObject.entityData){
-  //     // console.log("player.onEndContact()");
-  //     switch(contactObject.entityData.constructor.name) {
-  //       case "GroundEntity":
-  //         console.log('begin contact (UN-ground)');
-  //         this.setGrounded(false,contactObject);
-  //         break;
-  //     }
-  //   }
-  // }
-
   moveRight(keyDown){
     var desiredVel;
     if(keyDown){
       desiredVel = this.maxVX;
+      this.sprite.frameIndex = (this.sprite.frameIndex + 1) % this.sprite.sheet.totalFrames;
     } else {
       desiredVel = 0;
     }
@@ -161,6 +142,7 @@ class Player extends StatefulPolygonEntity {
   moveLeft(keyDown){
     var desiredVel;
     if(keyDown){
+      this.sprite.frameIndex = (this.sprite.frameIndex + 1) % this.sprite.sheet.totalFrames;
       desiredVel = -this.maxVX;
     } else {
       desiredVel = 0;
@@ -200,7 +182,6 @@ class Player extends StatefulPolygonEntity {
       if(!this.grounded){
         this.body.SetGravityScale(this.jumpGravityScale);  
       }
-
     }
   }
 
@@ -215,8 +196,6 @@ class Player extends StatefulPolygonEntity {
     }
     var b = this.contactCount[obj.e] += set?1:-1;
 
-
-
     if(set){
       this.grounded = true;
       // this.jumping = false;
@@ -226,7 +205,6 @@ class Player extends StatefulPolygonEntity {
         this.grounded = false;
       }
     }
-
   }
 
   revertState(keyDown){
@@ -239,6 +217,7 @@ class Player extends StatefulPolygonEntity {
 
   draw(ctx, delta){
     var pos = this.body.GetPosition();
+
 
     ctx.save();
 
@@ -264,16 +243,38 @@ class Player extends StatefulPolygonEntity {
 
   animate(ctx){
     var pos = this.body.GetPosition();
-    //    ctx.rotate(180*Math.PI/180);
-    ctx.scale(1, -1);
-    ctx.drawImage(this.spriteSheet, 0, 0, this.spriteSheetWidth / this.spritesPerSheetX, this.spriteSheetHeight / this.spritesPerSheetY, pos.get_x(),pos.get_y() -3, 15 / this.spritesPerSheetX, 15 / this.spritesPerSheetY);
+    var currentFrame = this.sprite.frames[this.sprite.frameIndex];
+    if(this.looking === RIGHT){
+      ctx.scale(1, -1);
+    } else {
+      ctx.scale(-1, -1);
+    }
+
+    ctx.drawImage(this.sprite.sheet.image, currentFrame.sx, currentFrame.sy, this.sprite.sheet.frameWidth, this.sprite.sheet.frameHeight, pos.get_x(),pos.get_y() -3, 2.5,3);
+
   }
 
-  getBlasters(){
-    var mainBlaster = new MainBlaster(this.world, this);
-    EntityManager.addEntity(mainBlaster);
-    this.blasters.push(mainBlaster);
-    this.currentBlaster = this.blasters[0];
+  parseSpriteSheet(){
+    this.sprite.frames = [];
+    for(var x = 0; x < this.sprite.sheet.framesX; x++){
+      for(var y = 0; y < this.sprite.sheet.framesY; y++){
+        var frame = {};
+        frame.sx = y * this.sprite.sheet.frameWidth;
+        frame.sy = x * this.sprite.sheet.frameHeight;
+
+        this.sprite.frames.push(frame);
+      }
+    }
+
+    console.log(this.sprite.frames);
+  }
+
+
+    getBlasters(){
+      var mainBlaster = new MainBlaster(this.world, this);
+      EntityManager.addEntity(mainBlaster);
+      this.blasters.push(mainBlaster);
+      this.currentBlaster = this.blasters[0];
   }
 
 }
