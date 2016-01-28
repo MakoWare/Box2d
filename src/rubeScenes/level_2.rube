@@ -47,28 +47,6 @@
       [
         
         {
-          "entry" : "0"
-        },
-        
-        {
-          "entry" : "1"
-        },
-        
-        {
-          "entry" : "2"
-        }
-      ],
-      "displayName" : "Dimension",
-      "name" : "Dimension",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "comboboxEntries" : 
-      [
-        
-        {
           "entry" : "Player"
         },
         
@@ -89,6 +67,35 @@
       "class" : "body",
       "displayName" : "Destination",
       "name" : "Destination",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "comboboxEntries" : 
+      [
+        
+        {
+          "entry" : "0"
+        },
+        
+        {
+          "entry" : "1"
+        },
+        
+        {
+          "entry" : "2"
+        }
+      ],
+      "displayName" : "Dimension",
+      "name" : "Dimension",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "Number",
+      "name" : "Number",
       "type" : "string"
     }
   ],
@@ -191,6 +198,7 @@
             "string" : "Ground"
           }
         ],
+        "fixedRotation" : true,
         "fixture" : 
         [
           
@@ -241,6 +249,7 @@
             "string" : "Ground"
           }
         ],
+        "fixedRotation" : true,
         "fixture" : 
         [
           
@@ -291,6 +300,7 @@
             "string" : "Ground"
           }
         ],
+        "fixedRotation" : true,
         "fixture" : 
         [
           
@@ -341,6 +351,7 @@
             "string" : "Ground"
           }
         ],
+        "fixedRotation" : true,
         "fixture" : 
         [
           
@@ -382,7 +393,7 @@
         [
           
           {
-            "int" : 1,
+            "int" : 0,
             "name" : "Dimension"
           },
           
@@ -391,6 +402,7 @@
             "string" : "Ground"
           }
         ],
+        "fixedRotation" : true,
         "fixture" : 
         [
           
@@ -415,7 +427,7 @@
         ],
         "id" : 6,
         "linearVelocity" : 0,
-        "name" : "d1",
+        "name" : "d0",
         "position" : 
         {
           "x" : 63.60000228881836,
@@ -443,7 +455,12 @@
           
           {
             "name" : "Destination",
-            "string" : "level_3"
+            "string" : "3.2.1"
+          },
+          
+          {
+            "name" : "Number",
+            "string" : "2.1.0"
           }
         ],
         "fixture" : 
@@ -499,7 +516,12 @@
           
           {
             "name" : "Destination",
-            "string" : "level_1"
+            "string" : "1.1.1"
+          },
+          
+          {
+            "name" : "Number",
+            "string" : "2.1.1"
           }
         ],
         "fixture" : 

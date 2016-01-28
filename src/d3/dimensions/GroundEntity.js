@@ -85,8 +85,8 @@ class GroundEntity extends PolygonEntity {
         }
       }
     }
-    //this.imageVerts = this.imageVerts.concat(this.generateRandomVerts(this.minX, this.maxX, this.minY, this.maxY, Math.floor(this.area / 2)));
-    this.imageVerts = this.imageVerts.concat(this.generateRandomVerts(this.minX, this.maxX, this.minY, this.maxY, 2));
+    this.imageVerts = this.imageVerts.concat(this.generateRandomVerts(this.minX, this.maxX, this.minY, this.maxY, Math.floor(this.area / 2)));
+//    this.imageVerts = this.imageVerts.concat(this.generateRandomVerts(this.minX, this.maxX, this.minY, this.maxY, 2));
   }
 
   generateImageTriangles() {

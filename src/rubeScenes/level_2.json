@@ -13,6 +13,61 @@
 			[
 				
 				{
+					"int" : 1,
+					"name" : "Dimension"
+				},
+				
+				{
+					"name" : "Class",
+					"string" : "Door"
+				},
+				
+				{
+					"name" : "Destination",
+					"string" : "1.1.1"
+				},
+				
+				{
+					"name" : "Number",
+					"string" : "2.1.1"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture1",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : [ 1.5, 1.5, -0.7, -0.7 ],
+							"y" : [ -0.5, 0.7, 0.7, -0.5 ]
+						}
+					},
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "door1",
+			"position" : 
+			{
+				"x" : 1,
+				"y" : 1.5
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : -1.570796251296997,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
 					"int" : 0,
 					"name" : "Dimension"
 				},
@@ -24,7 +79,12 @@
 				
 				{
 					"name" : "Destination",
-					"string" : "level_3"
+					"string" : "3.2.1"
+				},
+				
+				{
+					"name" : "Number",
+					"string" : "2.1.0"
 				}
 			],
 			"fixture" : 
@@ -63,7 +123,7 @@
 			[
 				
 				{
-					"int" : 1,
+					"int" : 0,
 					"name" : "Dimension"
 				},
 				
@@ -72,6 +132,7 @@
 					"string" : "Ground"
 				}
 			],
+			"fixedRotation" : true,
 			"fixture" : 
 			[
 				
@@ -90,7 +151,7 @@
 				}
 			],
 			"linearVelocity" : 0,
-			"name" : "d1",
+			"name" : "d0",
 			"position" : 
 			{
 				"x" : 63.60000228881836,
@@ -116,6 +177,7 @@
 					"string" : "Ground"
 				}
 			],
+			"fixedRotation" : true,
 			"fixture" : 
 			[
 				
@@ -160,6 +222,7 @@
 					"string" : "Ground"
 				}
 			],
+			"fixedRotation" : true,
 			"fixture" : 
 			[
 				
@@ -188,56 +251,6 @@
 		},
 		
 		{
-			"angle" : -1.570796251296997,
-			"angularVelocity" : 0,
-			"awake" : true,
-			"customProperties" : 
-			[
-				
-				{
-					"int" : 1,
-					"name" : "Dimension"
-				},
-				
-				{
-					"name" : "Class",
-					"string" : "Door"
-				},
-				
-				{
-					"name" : "Destination",
-					"string" : "level_1"
-				}
-			],
-			"fixture" : 
-			[
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : [ 1.5, 1.5, -0.7, -0.7 ],
-							"y" : [ -0.5, 0.7, 0.7, -0.5 ]
-						}
-					},
-					"sensor" : true
-				}
-			],
-			"linearVelocity" : 0,
-			"name" : "door1",
-			"position" : 
-			{
-				"x" : 1,
-				"y" : 1.5
-			},
-			"type" : 0
-		},
-		
-		{
 			"angle" : 0,
 			"angularVelocity" : 0,
 			"awake" : true,
@@ -254,6 +267,7 @@
 					"string" : "Ground"
 				}
 			],
+			"fixedRotation" : true,
 			"fixture" : 
 			[
 				
@@ -298,6 +312,7 @@
 					"string" : "Ground"
 				}
 			],
+			"fixedRotation" : true,
 			"fixture" : 
 			[
 				

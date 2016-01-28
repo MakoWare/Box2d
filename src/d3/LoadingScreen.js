@@ -23,8 +23,13 @@ class LoadingScreen extends Screen {
 
     camera.setViewCenterWorld(new App.b2d.b2Vec2(10,10),true);
 
+    //Parse level from options (passed all the way from Previous Door contact listener);
+    //Just parse out and load the level for now
+    var level = "level_" + options.level.split(".")[0];
+    console.log(level);
+
     // load some assets
-    AssetManager.loadResource('level','src/rubeScenes/'+options.level+'.json', 'rube', this.world);
+    AssetManager.loadResource('level','src/rubeScenes/'+ level +'.json', 'rube', this.world);
     AssetManager.loadResource('background1','src/images/background1.png');
     AssetManager.loadResource('ground1','src/images/ground/ground1.png');
     AssetManager.loadResource('playerSpriteSheet','src/images/player.png');

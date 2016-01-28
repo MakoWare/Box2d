@@ -43,6 +43,13 @@
     
     {
       "class" : "body",
+      "displayName" : "Number",
+      "name" : "Number",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
       "comboboxEntries" : 
       [
         
@@ -60,13 +67,6 @@
       ],
       "displayName" : "Class",
       "name" : "Class",
-      "type" : "string"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "Destination",
-      "name" : "Destination",
       "type" : "string"
     },
     
@@ -90,6 +90,13 @@
       "displayName" : "Dimension",
       "name" : "Dimension",
       "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "Destination",
+      "name" : "Destination",
+      "type" : "string"
     }
   ],
   "metaworld" : 
@@ -643,7 +650,12 @@
           
           {
             "name" : "Destination",
-            "string" : "level_2"
+            "string" : "2.1.1"
+          },
+          
+          {
+            "name" : "Number",
+            "string" : "1.1.1"
           }
         ],
         "fixture" : 
