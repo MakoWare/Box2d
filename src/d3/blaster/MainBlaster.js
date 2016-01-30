@@ -16,44 +16,44 @@ class MainBlaster extends Blaster {
     this.allDim = true;
   }
 
-  draw(ctx, delta){
-    var pos = this.player.body.GetPosition();
-    ctx.save();
-    this.applyRotation(ctx);
-
-    ctx.translate(pos.get_x(),pos.get_y());
-
-    // draw gun
-    ctx.strokeStyle = 'red';
-    ctx.fillStyle   = 'red';
-    ctx.beginPath();
-    switch (this.player.looking) {
-      case RIGHT:
-        ctx.translate(-0.1,0);
-        ctx.moveTo(0.2,0.8);
-        ctx.lineTo(1.2,0.8);
-        ctx.lineTo(1.2,0.6);
-        ctx.lineTo(0.5,0.6);
-        ctx.lineTo(0.5,0.2);
-        ctx.lineTo(0.2,0.2);
-        break;
-      case LEFT:
-        ctx.moveTo(-0.2,0.8);
-        ctx.lineTo(-1.2,0.8);
-        ctx.lineTo(-1.2,0.6);
-        ctx.lineTo(-0.5,0.6);
-        ctx.lineTo(-0.5,0.2);
-        ctx.lineTo(-0.2,0.2);
-        break;
-      default:
-        break;
-    }
-    ctx.closePath();
-    ctx.stroke();
-    ctx.fill();
-
-    ctx.restore();
-  }
+  // draw(ctx, delta){
+  //   var pos = this.player.body.GetPosition();
+  //   ctx.save();
+  //   this.applyRotation(ctx);
+  //
+  //   ctx.translate(pos.get_x(),pos.get_y());
+  //
+  //   // draw gun
+  //   ctx.strokeStyle = 'red';
+  //   ctx.fillStyle   = 'red';
+  //   ctx.beginPath();
+  //   switch (this.player.looking) {
+  //     case RIGHT:
+  //       ctx.translate(-0.1,0);
+  //       ctx.moveTo(0.2,0.8);
+  //       ctx.lineTo(1.2,0.8);
+  //       ctx.lineTo(1.2,0.6);
+  //       ctx.lineTo(0.5,0.6);
+  //       ctx.lineTo(0.5,0.2);
+  //       ctx.lineTo(0.2,0.2);
+  //       break;
+  //     case LEFT:
+  //       ctx.moveTo(-0.2,0.8);
+  //       ctx.lineTo(-1.2,0.8);
+  //       ctx.lineTo(-1.2,0.6);
+  //       ctx.lineTo(-0.5,0.6);
+  //       ctx.lineTo(-0.5,0.2);
+  //       ctx.lineTo(-0.2,0.2);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   ctx.closePath();
+  //   ctx.stroke();
+  //   ctx.fill();
+  //
+  //   ctx.restore();
+  // }
 
   destroy(){
 

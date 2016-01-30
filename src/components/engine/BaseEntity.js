@@ -56,8 +56,21 @@ class BaseEntity {
     this.image = img;
   }
 
-  getPosition(){
-    return this.pos = this.body.GetPosition();
+  getPosition(easyRead){
+    var pos;
+
+    this.pos = this.body.GetPosition();
+
+    if(easyRead){
+      pos = {
+        x:this.pos.get_x(),
+        y:this.pos.get_y()
+      };
+    } else {
+      pos = this.pos;
+    }
+
+    return pos;
   }
 
   getAngle(){

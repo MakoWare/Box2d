@@ -4,6 +4,7 @@ import App from 'src/components/app/app';
 import Box2D from 'src/components/box2d/box2d';
 import MainBlaster from 'src/d3/blaster/MainBlaster';
 import EntityManager from 'src/components/engine/EntityManager';
+import BaseSprite from 'src/components/sprite/BaseSprite';
 
 const RIGHT = 10;
 const LEFT  = 11;
@@ -24,19 +25,13 @@ class Player extends StatefulPolygonEntity {
     this.initContactListeners();
     this.initMoveListeners();
     this.getBlasters();
-    this.sprite = {};
-    this.sprite.sheet = {};
-    this.sprite.sheet.image = AssetManager.getImage('playerSpriteSheet');
-    this.sprite.sheet.width = this.sprite.sheet.image.width;
-    this.sprite.sheet.height = this.sprite.sheet.image.height;
-    this.sprite.sheet.frames = [];
-    this.sprite.sheet.framesX = 6;
-    this.sprite.sheet.framesY = 5;
-    this.sprite.sheet.frameWidth = this.sprite.sheet.width / this.sprite.sheet.framesX;
-    this.sprite.sheet.frameHeight = this.sprite.sheet.height / this.sprite.sheet.framesY;
-    this.sprite.sheet.totalFrames = this.sprite.sheet.framesX * this.sprite.sheet.framesY;
-    this.sprite.frameIndex = 0;
-    this.parseSpriteSheet();
+
+    // this.sprite = {};
+    this.sprite = new BaseSprite('playerSpriteSheet', 6, 5);
+    console.log(this.sprite);
+
+
+    // this.parseSpriteSheet();
   }
 
   destroy(){
@@ -124,7 +119,7 @@ class Player extends StatefulPolygonEntity {
     var desiredVel;
     if(keyDown){
       desiredVel = this.maxVX;
-      this.sprite.frameIndex = (this.sprite.frameIndex + 1) % this.sprite.sheet.totalFrames;
+      this.sprite.nextFrame();
     } else {
       desiredVel = 0;
     }
@@ -142,7 +137,8 @@ class Player extends StatefulPolygonEntity {
   moveLeft(keyDown){
     var desiredVel;
     if(keyDown){
-      this.sprite.frameIndex = (this.sprite.frameIndex + 1) % this.sprite.sheet.totalFrames;
+      // this.sprite.frameIndex = (this.sprite.frameIndex + 1) % this.sprite.sheet.totalFrames;
+      this.sprite.nextFrame();
       desiredVel = -this.maxVX;
     } else {
       desiredVel = 0;
@@ -180,7 +176,7 @@ class Player extends StatefulPolygonEntity {
     } else if(!keyDown) {
       this.jumping = false;
       if(!this.grounded){
-        this.body.SetGravityScale(this.jumpGravityScale);  
+        this.body.SetGravityScale(this.jumpGravityScale);
       }
     }
   }
@@ -215,43 +211,52 @@ class Player extends StatefulPolygonEntity {
     }
   }
 
-  draw(ctx, delta){
+  draw(ctx, delta) {
     var pos = this.body.GetPosition();
 
 
     ctx.save();
 
     this.applyRotation(ctx);
-    this.animate(ctx);
-
-    //    ctx.translate(pos.get_x(),pos.get_y());
 
 
-    /* ctx.fillStyle = this.color;
-       this.drawFixtures(ctx, delta,()=>{
-       ctx.fill();
-       ctx.strokeStyle = this.color;
-       ctx.lineWidth = 0.04;
-       ctx.lineJoin = 'bevel';
-       ctx.lineCap = 'round';
-       ctx.closePath();
-       ctx.stroke();
-       }); */
+
+
+    // ctx.translate(pos.get_x(),pos.get_y());
+    // ctx.fillStyle = this.color;
+    // this.drawFixtures(ctx, delta, () => {
+    //   ctx.fill();
+    //   ctx.strokeStyle = this.color;
+    //   ctx.lineWidth = 0.04;
+    //   ctx.lineJoin = 'bevel';
+    //   ctx.lineCap = 'round';
+    //   ctx.closePath();
+    //   ctx.stroke();
+    // });
 
     ctx.restore();
+
+    this.animate(ctx);
   }
 
   animate(ctx){
-    var pos = this.body.GetPosition();
-    var currentFrame = this.sprite.frames[this.sprite.frameIndex];
+    var pos = this.getPosition(true);
+    var currentFrame = this.sprite.frame;
+
+    ctx.save();
     if(this.looking === RIGHT){
-      ctx.scale(1, -1);
+      ctx.scale(1,-1); // flip the y
+      ctx.translate(-1.25,-2.42); //  [ -(w/2) , -(?) ]
+      ctx.translate(pos.x,-pos.y);
     } else {
-      ctx.scale(-1, -1);
+      ctx.scale(-1,-1); // flip the y
+      ctx.translate(-1.25,-2.42); //  [ -(w/2) , -(?) ]
+      ctx.translate(-pos.x,-pos.y);
     }
 
-    ctx.drawImage(this.sprite.sheet.image, currentFrame.sx, currentFrame.sy, this.sprite.sheet.frameWidth, this.sprite.sheet.frameHeight, pos.get_x(),pos.get_y() -3, 2.5,3);
+    ctx.drawImage(this.sprite.image, currentFrame.sx, currentFrame.sy, this.sprite.frameWidth, this.sprite.frameHeight, 0, 0, 2.5,3);
 
+    ctx.restore();
   }
 
   parseSpriteSheet(){
@@ -270,11 +275,11 @@ class Player extends StatefulPolygonEntity {
   }
 
 
-    getBlasters(){
-      var mainBlaster = new MainBlaster(this.world, this);
-      EntityManager.addEntity(mainBlaster);
-      this.blasters.push(mainBlaster);
-      this.currentBlaster = this.blasters[0];
+  getBlasters(){
+    var mainBlaster = new MainBlaster(this.world, this);
+    EntityManager.addEntity(mainBlaster);
+    this.blasters.push(mainBlaster);
+    this.currentBlaster = this.blasters[0];
   }
 
 }
