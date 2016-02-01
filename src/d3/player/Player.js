@@ -5,6 +5,7 @@ import Box2D from 'src/components/box2d/box2d';
 import MainBlaster from 'src/d3/blaster/MainBlaster';
 import EntityManager from 'src/components/engine/EntityManager';
 import BaseSprite from 'src/components/sprite/BaseSprite';
+import MultiSprite from 'src/components/sprite/MultiSprite';
 
 const RIGHT = 10;
 const LEFT  = 11;
@@ -27,7 +28,14 @@ class Player extends StatefulPolygonEntity {
     this.getBlasters();
 
     // this.sprite = {};
-    this.sprite = new BaseSprite('playerSpriteSheet', 6, 5);
+    // this.sprite = new BaseSprite('playerSpriteSheet', 6, 5, 1.25, 2.42);
+    // this.sprite.scaleToWidth(2.5);
+    this.sprite = new MultiSprite('megaman', 10, 7, 1.25, 2.26);
+    this.sprite.scaleToHeight(3.5);
+
+    this.sprite.createSlice('running', 3, 3, 4);
+
+
     console.log(this.sprite);
 
 
@@ -119,9 +127,15 @@ class Player extends StatefulPolygonEntity {
     var desiredVel;
     if(keyDown){
       desiredVel = this.maxVX;
-      this.sprite.nextFrame();
+      if(this.jumping || !this.grounded){
+        this.sprite.setFrame(6,'default');
+      } else {
+        this.sprite.nextFrame('running');
+      }
+
     } else {
       desiredVel = 0;
+      this.sprite.setFrame(0,'default');
     }
     if(!this.reverse){
       var vel = this.body.GetLinearVelocity();
@@ -129,6 +143,7 @@ class Player extends StatefulPolygonEntity {
       var impulse = this.body.GetMass() * velChange;
       this.body.ApplyLinearImpulse(new Box2D.b2Vec2(impulse, 0), this.body.GetWorldCenter());
       this.looking = RIGHT;
+      this.sprite.setDirection(this.looking);
     }
 
     return true;
@@ -137,11 +152,15 @@ class Player extends StatefulPolygonEntity {
   moveLeft(keyDown){
     var desiredVel;
     if(keyDown){
-      // this.sprite.frameIndex = (this.sprite.frameIndex + 1) % this.sprite.sheet.totalFrames;
-      this.sprite.nextFrame();
       desiredVel = -this.maxVX;
+      if(this.jumping || !this.grounded){
+        this.sprite.setFrame(6,'default');
+      } else {
+        this.sprite.nextFrame('running');
+      }
     } else {
       desiredVel = 0;
+      this.sprite.setFrame(0,'default');
     }
     if(!this.reverse){
       var vel = this.body.GetLinearVelocity();
@@ -149,6 +168,7 @@ class Player extends StatefulPolygonEntity {
       var impulse = this.body.GetMass() * velChange;
       this.body.ApplyLinearImpulse(new Box2D.b2Vec2(impulse, 0), this.body.GetWorldCenter());
       this.looking = LEFT;
+      this.sprite.setDirection(this.looking);
     }
 
     return true;
@@ -173,6 +193,7 @@ class Player extends StatefulPolygonEntity {
       this.jumping = true;
       this.grounded = false;
       this.body.ApplyLinearImpulse(new Box2D.b2Vec2(0,30),this.body.GetWorldCenter());
+      this.sprite.setFrame(6,'default');
     } else if(!keyDown) {
       this.jumping = false;
       if(!this.grounded){
@@ -183,6 +204,14 @@ class Player extends StatefulPolygonEntity {
 
   shoot(keyDown){
     this.currentBlaster.fire();
+
+    if( (this.jumping || !this.grounded) && keyDown){
+      this.sprite.setFrame(16,'default');
+    } else if(keyDown){
+      this.sprite.setFrame(12,'default');
+    } else {
+      this.sprite.setFrame(0,'default');
+    }
   }
 
   setGrounded(set,obj){
@@ -196,6 +225,7 @@ class Player extends StatefulPolygonEntity {
       this.grounded = true;
       // this.jumping = false;
       this.body.SetGravityScale(this.gravityScale);
+      this.sprite.setFrame(0,'default');
     } else {
       if(b==0) {
         this.grounded = false;
@@ -236,7 +266,9 @@ class Player extends StatefulPolygonEntity {
 
     ctx.restore();
 
-    this.animate(ctx);
+    this.sprite.setPosition(this.getPosition(true));
+    this.sprite.draw(ctx);
+    // this.animate(ctx);
   }
 
   animate(ctx){

@@ -122,8 +122,9 @@ class BaseApp {
     // var frametime = (Date.now() - current);
     // frameTime60 = frameTime60 * (59/60) + frametime * (1/60);
     //
-    this._draw(this.context, timestamp);
     this.input.step(timestamp);
+    this._draw(this.context, timestamp);
+
     // statusUpdateCounter++;
     // if ( statusUpdateCounter > 20 ) {
     //   this.updateStats();
