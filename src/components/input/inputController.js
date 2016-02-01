@@ -178,6 +178,7 @@ class InputController {
   //  -- gamepad
   initGamepads(){
     this.gamepads = {};
+    this.lastGamepads = {};
     this.lastButtonStates = [
       [], // gamepad index 0
       [], // gamepad index 1
@@ -201,6 +202,14 @@ class InputController {
       console.log('Gamepad disconnected: ',e);
       this.getGamepads();
     });
+
+    window.addEventListener('gamepadbuttondown', (e)=>{
+      console.log('gamepad button down: ',e);
+    });
+
+    window.addEventListener('gamepadbuttonup', (e)=>{
+      console.log('gamepad button up: ',e);
+    });
     // console.log(navigator.getGamepads());
 
     // temp
@@ -211,32 +220,62 @@ class InputController {
     var gps = navigator.getGamepads() || [];
     var gp;
     for(var i=0;i<gps.length;i++){
-      gp = this.gamepads[i];
+      gp = gps[i];
       if(gp){
-        this.gamepads[i] = gp;
+        this.gamepads[gp.index] = gp;
       }
     }
-    return gps;
+    return this.gamepads;
   }
 
   step(){
     var gps = this.getGamepads();
     var gp;
-    for(var i=0;i<gps.length;i++){
+    for(var i in gps){
       gp = gps[i];
       if(gp){
+
+        if(gp.timestamp!=this.lastTimestamp){
+          // console.log(gp.timestamp);
+
+          this.lastTimestamp = gp.timestamp;
+        }
+
+        if(!this.__gp){
+          this.__gp = gp;
+          console.log(gp);
+        } else {
+
+          // console.log(this.__gp.buttons[0].pressed);
+        }
+
         gp.buttons.forEach( (b,ix)=>{
           // console.log(b.pressed, b.value);
           var lastState = this.getLastState(i,ix);
+          b.index = ix;
 
           if(b.pressed){
-            b.index = ix;
+            // b.index = ix;
             this.gamepadButtonEvent(gp,b,true);
-          } else if(lastState && lastState.pressed){
-            this.gamepadButtonEvent(gp,b,false);
+            this.setLastState(i,ix,true);
+          } else {
+            if(lastState) {
+
+              if(lastState.pressed) {
+                // console.log('button up: ', ix);
+                this.gamepadButtonEvent(gp,b,false);
+                // this.setLastState(i,ix,false);
+              } else {
+                // console.log('last state !pressed');
+              }
+            } else {
+
+            }
+            this.setLastState(i,ix,false);
           }
 
-          this.setLastState(i,ix,b.pressed);
+
+
         });
 
         gp.axes.forEach( (value,axis)=>{
@@ -259,6 +298,8 @@ class InputController {
           }
 
         });
+      } else {
+        console.log('no gamepad!',i);
       }
     }
   }
@@ -308,6 +349,8 @@ class InputController {
       } else {
         this.onGamepadUp(new GamepadButtonEvent(gamepad,button,down));
       }
+    } else {
+      console.log(arguments);
     }
   }
 
