@@ -32,7 +32,6 @@ class BaseEntity {
     }
   }
 
-
   draw(ctx, delta){
     /* ctx.save();
        ctx.restore(); */

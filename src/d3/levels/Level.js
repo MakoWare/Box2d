@@ -36,7 +36,7 @@ class Level extends BaseLevel {
       switch (body.props.Class.value) {
         case 'Ground':
           var dimIndex = body.props.Dimension.value;
-          var obj = new GroundEntity(body,colors[dimIndex], this.scene);
+          var obj = new GroundEntity(body,colors[dimIndex], this.scene, this.world);
           this.eM.addEntity(obj);
           obj.dimension = this.scene.dimensions[dimIndex];
           // this.dimensions[dimIndex] = dim;

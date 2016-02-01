@@ -8,6 +8,7 @@ class MainBlasterBullet extends Bullet {
     this.world = world;
     this.gravityScale = 0;
     this.color = "#ffeb3b";
+    this.body.entityData = this;
   }
 
   draw(ctx, delta){

@@ -65,7 +65,7 @@ class GameScreen extends Screen {
     var x = this.camera.getViewCenterWorld().x * 5;
     var y = this.camera.getViewCenterWorld().y * 5;
     ctx.translate(-x, y);
-    ctx.drawImage(this.backgroundAsset, -800, -1000);
+    ctx.drawImage(this.backgroundAsset, -200, -1000);
     ctx.restore();
   }
 

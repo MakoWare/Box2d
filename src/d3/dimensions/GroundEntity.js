@@ -2,14 +2,37 @@ import PolygonEntity from 'src/components/engine/PolygonEntity';
 import Util from 'src/components/util/util';
 
 class GroundEntity extends PolygonEntity {
-  constructor(body, color, scene) {
+  constructor(body, color, scene, world) {
     var options = {
       scene: scene
     };
     super(body, null, options);
     this.color = color;
+    this.world = world;
     this.generateBodyImage();
+    this.initContactListeners();
   }
+
+  initContactListeners(){
+    this.contactListener = this.world.newBodyContactListener(this.body, this.onContact.bind(this));
+    this.world.registerBodyContactListener(this.contactListener);
+  }
+
+  onContact(begin, contactObject){
+    if(contactObject.entityData){
+      //If It was hit by an object that inherited from the Bullet Class
+      if(Object.getPrototypeOf(contactObject.entityData.constructor).name === "Bullet"){
+        console.log("Fuck, I was shot");
+
+        //If the object is Fazeable
+        console.log(this);
+        this.dimension = this.dimension.scene.dimensions[0];
+      }
+
+    }
+  }
+
+
 
   draw(ctx, delta, opacity) {
     var pos = this.body.GetPosition();
