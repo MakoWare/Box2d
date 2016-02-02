@@ -30,10 +30,11 @@ class Player extends StatefulPolygonEntity {
     // this.sprite = {};
     // this.sprite = new BaseSprite('playerSpriteSheet', 6, 5, 1.25, 2.42);
     // this.sprite.scaleToWidth(2.5);
-    this.sprite = new MultiSprite('megaman', 10, 7, 1.25, 2.26);
+    this.sprite = new MultiSprite('megaman', 10, 7, 1.25, 2.15);
     this.sprite.scaleToHeight(3.5);
 
     this.sprite.createSlice('running', 3, 3, 4);
+    this.sprite.createSlice('running_shoot', 13, 3, 4);
 
 
     console.log(this.sprite);
@@ -127,15 +128,25 @@ class Player extends StatefulPolygonEntity {
     var desiredVel;
     if(keyDown){
       desiredVel = this.maxVX;
+      this.running = true;
       if(this.jumping || !this.grounded){
         this.sprite.setFrame(6,'default');
       } else {
-        this.sprite.nextFrame('running');
+        if(this.shooting){
+          this.sprite.nextFrame('running_shoot');
+        } else {
+          this.sprite.nextFrame('running');
+        }
       }
 
     } else {
       desiredVel = 0;
-      this.sprite.setFrame(0,'default');
+      this.running = false;
+      if(this.jumping || !this.grounded){
+        this.sprite.setFrame(6,'default');
+      } else {
+        this.sprite.setFrame(0,'default');
+      }
     }
     if(!this.reverse){
       var vel = this.body.GetLinearVelocity();
@@ -153,14 +164,24 @@ class Player extends StatefulPolygonEntity {
     var desiredVel;
     if(keyDown){
       desiredVel = -this.maxVX;
+      this.running = true;
       if(this.jumping || !this.grounded){
         this.sprite.setFrame(6,'default');
       } else {
-        this.sprite.nextFrame('running');
+        if(this.shooting){
+          this.sprite.nextFrame('running_shoot');
+        } else {
+          this.sprite.nextFrame('running');
+        }
       }
     } else {
       desiredVel = 0;
-      this.sprite.setFrame(0,'default');
+      this.running = false;
+      if(this.jumping || !this.grounded){
+        this.sprite.setFrame(6,'default');
+      } else {
+        this.sprite.setFrame(0,'default');
+      }
     }
     if(!this.reverse){
       var vel = this.body.GetLinearVelocity();
@@ -204,14 +225,22 @@ class Player extends StatefulPolygonEntity {
 
   shoot(keyDown){
     this.currentBlaster.fire();
-
     if( (this.jumping || !this.grounded) && keyDown){
-      this.sprite.setFrame(16,'default');
+      if(this.running){
+        this.sprite.nextFrame('running_shoot');
+      } else {
+        this.sprite.setFrame(16,'default');
+      }
+    } else if( (this.jumping || !this.grounded) && !keyDown){
+      this.sprite.setFrame(6,'default');
     } else if(keyDown){
+      this.shooting = true;
       this.sprite.setFrame(12,'default');
     } else {
+      this.shooting = false;
       this.sprite.setFrame(0,'default');
     }
+
   }
 
   setGrounded(set,obj){
@@ -229,6 +258,7 @@ class Player extends StatefulPolygonEntity {
     } else {
       if(b==0) {
         this.grounded = false;
+        this.sprite.setFrame(6,'default');
       }
     }
   }
