@@ -12,6 +12,9 @@ class EntityManager {
   }
 
   step(ctx, delta){
+    this.entities.sort((entA, entB)=>{
+      return entA.zIndex-entB.zIndex;
+    });
     for(var i = 0; i < this.entities.length; i++){
       var entity = this.entities[i];
       this.activateEntity(entity);

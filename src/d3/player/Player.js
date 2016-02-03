@@ -44,6 +44,7 @@ class Player extends StatefulPolygonEntity {
 
 
     // this.parseSpriteSheet();
+    this.zIndex = 10;
   }
 
   destroy(){

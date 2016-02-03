@@ -10,6 +10,7 @@ class Door extends PolygonEntity {
     this.color = "#ffffff";
     this.world = world;
     this.initContactListeners();
+    this.zIndex = 2;
   }
 
   initContactListeners(){

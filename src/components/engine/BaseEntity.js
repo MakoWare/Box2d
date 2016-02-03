@@ -16,6 +16,8 @@ class BaseEntity {
     if(this.body){
       this.body.entityData = this;
     }
+
+    this.zIndex = 0;
   }
 
   activate(){

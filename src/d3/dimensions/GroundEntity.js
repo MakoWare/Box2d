@@ -11,6 +11,8 @@ class GroundEntity extends PolygonEntity {
     this.world = world;
     this.generateBodyImage();
     this.initContactListeners();
+
+    this.zIndex = 1;
   }
 
   initContactListeners(){
@@ -129,11 +131,13 @@ class GroundEntity extends PolygonEntity {
 
   activate() {
     this.active = true;
+    this.zIndex = 11;
     this.body.SetActive(true);
   }
 
   deactivate() {
     this.active = false;
+    this.zIndex = 1;
     this.body.SetActive(false);
   }
 }
