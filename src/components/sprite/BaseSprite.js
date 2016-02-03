@@ -65,7 +65,7 @@ class BaseSprite {
     console.log(this.frames);
   }
 
-  nextFrame(){
+  animate(){
     this.currentFrameIndex = (this.currentFrameIndex + 1) % this.frames.length;
     this.setFrame();
   }
@@ -88,6 +88,10 @@ class BaseSprite {
         y: offsetY
       }
     }
+  }
+
+  setUseShadow(use){
+    this.useShadow = use;
   }
 
   setDirection(dir){
@@ -122,6 +126,13 @@ class BaseSprite {
       ctx.scale(-1,-1); // flip the x & y
       ctx.translate(-this.offset.x,-this.offset.y); //  [ -(w/2) , -(?) ]
       ctx.translate(-this.pos.x,-this.pos.y);
+    }
+
+    if(this.useShadow){
+      ctx.shadowColor = 'black';
+      ctx.shadowBlur = 20;
+      ctx.shadowOffsetX = 5;
+      ctx.shadowOffsetY = 10;
     }
 
     ctx.drawImage(this.image, this.frame.sx, this.frame.sy, this.frameWidth, this.frameHeight, 0, 0, this.drawWidth, this.drawHeight);

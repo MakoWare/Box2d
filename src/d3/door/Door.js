@@ -18,7 +18,7 @@ class Door extends PolygonEntity {
   }
 
   onContact(begin, contactObject){
-    if(contactObject && contactObject.entityData.constructor.name === "Player"){
+    if(contactObject && contactObject.entityData && contactObject.entityData.constructor.name === "Player"){
       this.needsDestroy = true;
       this.scene.finish({nextLevel: this.body.props.Destination.value});
     }

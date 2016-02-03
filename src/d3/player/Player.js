@@ -32,10 +32,13 @@ class Player extends StatefulPolygonEntity {
     // this.sprite.scaleToWidth(2.5);
     this.sprite = new MultiSprite('megaman', 10, 7, 1.25, 2.15);
     this.sprite.scaleToHeight(3.5);
-
+    this.sprite.setUseShadow(true);
     this.sprite.createSlice('running', 3, 3, 4);
     this.sprite.createSlice('running_shoot', 13, 3, 4);
-
+    this.sprite.createState('standing',0);
+    this.sprite.createState('jumping',6);
+    this.sprite.createState('shooting',12);
+    this.sprite.createState('jump_shooting',16);
 
     console.log(this.sprite);
 
@@ -129,24 +132,28 @@ class Player extends StatefulPolygonEntity {
     if(keyDown){
       desiredVel = this.maxVX;
       this.running = true;
-      if(this.jumping || !this.grounded){
-        this.sprite.setFrame(6,'default');
-      } else {
-        if(this.shooting){
-          this.sprite.nextFrame('running_shoot');
-        } else {
-          this.sprite.nextFrame('running');
-        }
-      }
+      // if(this.jumping || !this.grounded){
+      //   if(this.shooting){
+      //     this.sprite.setFrame(16, 'default');
+      //   } else {
+      //     this.sprite.setFrame(6,'default');
+      //   }
+      // } else {
+      //   if(this.shooting){
+      //     this.sprite.nextFrame('running_shoot');
+      //   } else {
+      //     this.sprite.nextFrame('running');
+      //   }
+      // }
 
     } else {
       desiredVel = 0;
       this.running = false;
-      if(this.jumping || !this.grounded){
-        this.sprite.setFrame(6,'default');
-      } else {
-        this.sprite.setFrame(0,'default');
-      }
+      // if(this.jumping || !this.grounded){
+      //   this.sprite.setFrame(6,'default');
+      // } else {
+      //   this.sprite.setFrame(0,'default');
+      // }
     }
     if(!this.reverse){
       var vel = this.body.GetLinearVelocity();
@@ -165,23 +172,27 @@ class Player extends StatefulPolygonEntity {
     if(keyDown){
       desiredVel = -this.maxVX;
       this.running = true;
-      if(this.jumping || !this.grounded){
-        this.sprite.setFrame(6,'default');
-      } else {
-        if(this.shooting){
-          this.sprite.nextFrame('running_shoot');
-        } else {
-          this.sprite.nextFrame('running');
-        }
-      }
+      // if(this.jumping || !this.grounded){
+      //   if(this.shooting){
+      //     this.sprite.setFrame(16, 'default');
+      //   } else {
+      //     this.sprite.setFrame(6,'default');
+      //   }
+      // } else {
+      //   if(this.shooting){
+      //     this.sprite.nextFrame('running_shoot');
+      //   } else {
+      //     this.sprite.nextFrame('running');
+      //   }
+      // }
     } else {
       desiredVel = 0;
       this.running = false;
-      if(this.jumping || !this.grounded){
-        this.sprite.setFrame(6,'default');
-      } else {
-        this.sprite.setFrame(0,'default');
-      }
+      // if(this.jumping || !this.grounded){
+      //   this.sprite.setFrame(6,'default');
+      // } else {
+      //   this.sprite.setFrame(0,'default');
+      // }
     }
     if(!this.reverse){
       var vel = this.body.GetLinearVelocity();
@@ -214,7 +225,7 @@ class Player extends StatefulPolygonEntity {
       this.jumping = true;
       this.grounded = false;
       this.body.ApplyLinearImpulse(new Box2D.b2Vec2(0,30),this.body.GetWorldCenter());
-      this.sprite.setFrame(6,'default');
+      // this.sprite.setFrame(6,'default');
     } else if(!keyDown) {
       this.jumping = false;
       if(!this.grounded){
@@ -225,21 +236,30 @@ class Player extends StatefulPolygonEntity {
 
   shoot(keyDown){
     this.currentBlaster.fire();
-    if( (this.jumping || !this.grounded) && keyDown){
-      if(this.running){
-        this.sprite.nextFrame('running_shoot');
-      } else {
-        this.sprite.setFrame(16,'default');
-      }
-    } else if( (this.jumping || !this.grounded) && !keyDown){
-      this.sprite.setFrame(6,'default');
-    } else if(keyDown){
+
+    if(keyDown){
       this.shooting = true;
-      this.sprite.setFrame(12,'default');
+      // this.sprite.setFrame(12,'default');
     } else {
       this.shooting = false;
-      this.sprite.setFrame(0,'default');
+      // this.sprite.setFrame(0,'default');
     }
+
+    // if( (this.jumping || !this.grounded) && keyDown){
+    //   if(this.running){
+    //     this.sprite.nextFrame('running_shoot');
+    //   } else {
+    //     this.sprite.setFrame(16,'default');
+    //   }
+    // } else if( (this.jumping || !this.grounded) && !keyDown){
+    //   this.sprite.setFrame(6,'default');
+    // } else if(keyDown){
+    //   this.shooting = true;
+    //   this.sprite.setFrame(12,'default');
+    // } else {
+    //   this.shooting = false;
+    //   this.sprite.setFrame(0,'default');
+    // }
 
   }
 
@@ -254,11 +274,11 @@ class Player extends StatefulPolygonEntity {
       this.grounded = true;
       // this.jumping = false;
       this.body.SetGravityScale(this.gravityScale);
-      this.sprite.setFrame(0,'default');
+      // this.sprite.setFrame(0,'default');
     } else {
       if(b==0) {
         this.grounded = false;
-        this.sprite.setFrame(6,'default');
+        // this.sprite.setFrame(6,'default');
       }
     }
   }
@@ -280,7 +300,47 @@ class Player extends StatefulPolygonEntity {
     this.applyRotation(ctx);
 
 
+    // determin animation
+    if(this.running){
+      if(this.jumping || !this.grounded){
+        if(this.shooting){
+          this.sprite.setState('jump_shooting');
+        } else {
+          if(this.grounded){
+            this.sprite.animate('running');
+          } else {
+            this.sprite.setState('jumping');
+          }
+        }
+      } else {
+        if(this.shooting){
+          this.sprite.animate('running_shoot');
+        } else {
+          this.sprite.animate('running');
+        }
+      }
+    } else {
+      if(this.jumping || !this.grounded){
+        if(this.shooting){
+          this.sprite.setState('jump_shooting')
+        } else {
+          if(this.grounded){
+            this.sprite.setState('standing');
+          } else {
+            this.sprite.setState('jumping');
+          }
+        }
+      } else {
+        if(this.shooting){
+          this.sprite.setState('shooting')
+        } else {
+          this.sprite.setState('standing');
+        }
+      }
 
+
+
+    }
 
     // ctx.translate(pos.get_x(),pos.get_y());
     // ctx.fillStyle = this.color;

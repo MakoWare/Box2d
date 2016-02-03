@@ -24,8 +24,21 @@ class MultiSprite extends BaseSprite {
     this.slices[name] = slice;
   }
 
+  createState(name, frameIndex, sliceName){
+    sliceName = sliceName || 'default';
+
+    var state = {};
+
+    state.name = name;
+    state.ix = frameIndex;
+    state.sliceName = sliceName;
+
+    this.states[name] = state;
+  }
+
   parseSpriteSheet(){
     this.slices = this.slices || {};
+    this.states = this.states || {};
     super.parseSpriteSheet.apply(this,arguments);
     var slice = {
       ix: 0,
@@ -43,21 +56,21 @@ class MultiSprite extends BaseSprite {
     this.slice = this.slices[name];
   }
 
-  nextFrame(sliceName){
+  animate(sliceName, optScale){
     if(sliceName){
       this.setSlice(sliceName);
     }
 
-    var scale = this.slice.scale,
+    var scale = optScale || this.slice.scale,
         fl = this.slice.frames.length,
         df = fl * scale,
         _ix = this.slice._ix++;
 
-    this.slice.ix = Math.floor( ((_ix) % (df)) / this.slice.scale);
+    this.slice.ix = Math.floor( ((_ix) % (df)) / scale);
     if(_ix >= df){
       this.slice._ix = 1;
     }
-    
+
     this.setFrame();
   }
 
@@ -68,7 +81,11 @@ class MultiSprite extends BaseSprite {
     } else {
       this.frame = this.slice.frames[frameIndex];
     }
+  }
 
+  setState(name){
+    var state = this.states[name];
+    this.setFrame(state.ix, state.sliceName);
   }
 }
 
