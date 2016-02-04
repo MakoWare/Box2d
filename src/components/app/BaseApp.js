@@ -43,6 +43,7 @@ class BaseApp {
     App.context = this.context;
     App.config = this.config;
     App.b2d = Box2D;
+    App.util = this.util = window.util = Util;
   }
 
   setDebugDraw(debugDraw){

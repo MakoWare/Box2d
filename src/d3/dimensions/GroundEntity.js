@@ -12,6 +12,8 @@ class GroundEntity extends PolygonEntity {
     this.generateBodyImage();
     this.initContactListeners();
 
+    this.config = Util.readConfig('GroundEntity');
+
     this.zIndex = 1;
   }
 
@@ -64,20 +66,23 @@ class GroundEntity extends PolygonEntity {
     });
     ctx.restore();
 
-    this.imageTriangles.forEach(function(poly) {
-      ctx.fillStyle = Util.convertHex(poly[0], this.calculateOpacity());
-      ctx.strokeStyle = poly[0];
-      ctx.lineWidth = .05;
-      ctx.beginPath();
-      ctx.moveTo.apply(ctx, poly[1][0]);
-      ctx.lineTo.apply(ctx, poly[1][1]);
-      ctx.lineTo.apply(ctx, poly[1][2]);
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'bevel';
-      ctx.closePath();
-      ctx.fill();
-      ctx.stroke();
-    }.bind(this));
+    if(!this.config.disableTriangles){
+      this.imageTriangles.forEach(function(poly) {
+        ctx.fillStyle = Util.convertHex(poly[0], this.calculateOpacity());
+        ctx.strokeStyle = poly[0];
+        ctx.lineWidth = .05;
+        ctx.beginPath();
+        ctx.moveTo.apply(ctx, poly[1][0]);
+        ctx.lineTo.apply(ctx, poly[1][1]);
+        ctx.lineTo.apply(ctx, poly[1][2]);
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'bevel';
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      }.bind(this));
+    }
+
 
     ctx.restore();
   }

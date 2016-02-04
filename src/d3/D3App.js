@@ -18,6 +18,8 @@ class D3App extends BaseApp {
 
     this.screenListener = this.screenManager.newListener(true);
 
+    this.util.setParam('GroundEntity', 'disableTriangles', true);
+
 
     // TODO: implement some sort of level management (screen);
     this.currentLevel = "1.1.1";
