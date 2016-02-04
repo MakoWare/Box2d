@@ -236,13 +236,27 @@ class Player extends StatefulPolygonEntity {
   }
 
   shoot(keyDown){
-    this.currentBlaster.fire();
+
 
     if(keyDown){
-      this.shooting = true;
-      // this.sprite.setFrame(12,'default');
+
+      if(!this.shootingDown){
+        this.currentBlaster.fire();
+        this.shooting = true;
+        this.shootingDown = true;
+        this.shootingInterval = 0;
+      } else {
+        this.shootingInterval++;
+        if(this.shootingInterval > 5){
+          this.shooting = false;
+        }
+      }
+
+
+
     } else {
       this.shooting = false;
+      this.shootingDown = false;
       // this.sprite.setFrame(0,'default');
     }
 
