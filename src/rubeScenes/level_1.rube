@@ -43,13 +43,6 @@
     
     {
       "class" : "body",
-      "displayName" : "Number",
-      "name" : "Number",
-      "type" : "string"
-    },
-    
-    {
-      "class" : "body",
       "comboboxEntries" : 
       [
         
@@ -72,8 +65,8 @@
     
     {
       "class" : "body",
-      "displayName" : "Destination",
-      "name" : "Destination",
+      "displayName" : "Number",
+      "name" : "Number",
       "type" : "string"
     },
     
@@ -96,6 +89,13 @@
       ],
       "displayName" : "Class",
       "name" : "Class",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "Destination",
+      "name" : "Destination",
       "type" : "string"
     }
   ],
@@ -712,7 +712,7 @@
           
           {
             "name" : "Destination",
-            "string" : "4.1.1"
+            "string" : "5.0.1"
           },
           
           {

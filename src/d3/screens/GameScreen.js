@@ -24,8 +24,8 @@ class GameScreen extends Screen {
 
     //this.camera.setPTM(34);
     this.camera.setViewCenterWorld(new Box2D.b2Vec2(15,0),true);
-    console.log(this.camera);
-    this.level = new Level(this.scene, this.world);
+    console.log(this.levelAsset);
+    this.level = new Level(this.scene, this.world, this.levelAsset.options);
 
     this.inputListener = App.input.newEventListener({
       '27':'home'

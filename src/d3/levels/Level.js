@@ -14,7 +14,7 @@ const LEFT = 2;
 
 
 class Level extends BaseLevel {
-  constructor(scene, world) {
+  constructor(scene, world, options) {
     super();
 
     this.world = world;
@@ -60,7 +60,9 @@ class Level extends BaseLevel {
       }
     });
 
-    this.resetDimension(1);
+    //Set initial dimension
+    var initialDimension = options.level.split(".")[1];
+    this.resetDimension(initialDimension);
 
     this.inputListener = App.input.newEventListener({},true);
 

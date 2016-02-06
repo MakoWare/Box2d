@@ -29,7 +29,11 @@ class LoadingScreen extends Screen {
     console.log(level);
 
     // load some assets
-    AssetManager.loadResource('level','src/rubeScenes/'+ level +'.json', 'rube', this.world);
+    var options = {
+      world: this.world,
+      level: options.level
+    }
+    AssetManager.loadResource('level','src/rubeScenes/'+ level +'.json', 'rube', options);
     AssetManager.loadResource('background1','src/images/background1.png');
     AssetManager.loadResource('ground1','src/images/ground/ground1.png');
     AssetManager.loadResource('playerSpriteSheet','src/images/player.png');

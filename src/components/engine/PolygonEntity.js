@@ -152,7 +152,7 @@ class PolygonEntity extends BaseEntity {
     var min = this.calculateMinYOfFixture(b2dFixtures[0]);
     for(var i=1;i< b2dFixtures.length;i++){
       var calc = this.calculateMinYOfFixture(b2dFixtures[i]);
-      if(calc < max){
+      if(calc < min){
         min = calc;
       }
     }
