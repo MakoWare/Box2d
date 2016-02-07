@@ -319,7 +319,11 @@ class Player extends StatefulPolygonEntity {
     if(this.running){
       if(this.jumping || !this.grounded){
         if(this.shooting){
-          this.sprite.setState('jump_shooting');
+          if(this.grounded){
+            this.sprite.animate('running_shoot');
+          } else {
+            this.sprite.setState('jump_shooting');
+          }
         } else {
           if(this.grounded){
             this.sprite.animate('running');
@@ -337,7 +341,11 @@ class Player extends StatefulPolygonEntity {
     } else {
       if(this.jumping || !this.grounded){
         if(this.shooting){
-          this.sprite.setState('jump_shooting')
+          if(this.grounded){
+            this.sprite.setState('shooting');
+          } else {
+            this.sprite.setState('jump_shooting');
+          }
         } else {
           if(this.grounded){
             this.sprite.setState('standing');
