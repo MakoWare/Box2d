@@ -37,7 +37,7 @@ class BaseApp {
 
     this._animate = this._animate.bind(this);
 
-    App.input = this.input = new InputController(this.canvas);
+    App.input = this.input = new InputController(this.canvas,this.camera);
     App.camera = this.camera;
     App.canvas = this.canvas;
     App.context = this.context;

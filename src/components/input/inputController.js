@@ -23,15 +23,20 @@ let gamepadMaps = {
 
 let gamepadsAxisDeadZone = 0.08;
 let gamepadsConfig = {};
+
+let mousePosPixel = {};
+let mousePosWorld = {};
+let prevMousePosPixel = {};
 // let gamepadTypeMaps = [{id:'054c',type:'ps4'}];
 
 class InputController {
-  constructor(canvas) {
+  constructor(canvas, camera) {
     this.canvas = canvas;
+    this.camera = camera;
     this.config = Util.readConfig('input');
 
     this.initKeys();
-    // this.initMouse();
+    this.initMouse();
     this.initGamepads();
   }
 
@@ -122,33 +127,35 @@ class InputController {
   initMouse(){
     canvas.addEventListener('mousemove', function(evt) {
       this.onMouseMove(canvas,evt);
-    }, false);
+    }.bind(this), false);
 
-    canvas.addEventListener('mousedown', function(evt) {
-      this.onMouseDown(canvas,evt);
-    }, false);
-
-    canvas.addEventListener('mouseup', function(evt) {
-      this.onMouseUp(canvas,evt);
-    }, false);
-
-    canvas.addEventListener('mouseout', function(evt) {
-      this.onMouseOut(canvas,evt);
-    }, false);
+    // canvas.addEventListener('mousedown', function(evt) {
+    //   this.onMouseDown(canvas,evt);
+    // }.bind(this), false);
+    //
+    // canvas.addEventListener('mouseup', function(evt) {
+    //   this.onMouseUp(canvas,evt);
+    // }.bind(this), false);
+    //
+    // canvas.addEventListener('mouseout', function(evt) {
+    //   this.onMouseOut(canvas,evt);
+    // }.bind(this), false);
   }
 
   onMouseMove(canvas, evt) {
     prevMousePosPixel = mousePosPixel;
-    updateMousePos(canvas, evt);
-    updateStats();
-    if ( shiftDown ) {
-      canvasOffset.x += (mousePosPixel.x - prevMousePosPixel.x);
-      canvasOffset.y -= (mousePosPixel.y - prevMousePosPixel.y);
-      draw();
-    }
-    else if ( mouseDown && mouseJoint != null ) {
-      mouseJoint.SetTarget( new Box2D.b2Vec2(mousePosWorld.x, mousePosWorld.y) );
-    }
+    this.updateMousePos(canvas, evt);
+
+    console.log(mousePosPixel, mousePosWorld);
+    // updateStats();
+    // if ( shiftDown ) {
+    //   canvasOffset.x += (mousePosPixel.x - prevMousePosPixel.x);
+    //   canvasOffset.y -= (mousePosPixel.y - prevMousePosPixel.y);
+    //   draw();
+    // }
+    // else if ( mouseDown && mouseJoint != null ) {
+    //   mouseJoint.SetTarget( new Box2D.b2Vec2(mousePosWorld.x, mousePosWorld.y) );
+    // }
   }
 
   onMouseDown(canvas, evt) {
@@ -174,6 +181,14 @@ class InputController {
   }
 
   //    -- mouse helper function
+  updateMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    mousePosPixel = {
+      x: evt.clientX - rect.left,
+      y: canvas.height - (evt.clientY - rect.top)
+    };
+    mousePosWorld = this.camera.getWorldPointFromPixelPoint(mousePosPixel);
+  }
 
   //  -- gamepad
   initGamepads(){
